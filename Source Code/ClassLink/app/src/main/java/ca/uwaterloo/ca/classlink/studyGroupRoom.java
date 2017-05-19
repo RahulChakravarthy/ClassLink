@@ -11,8 +11,13 @@ public class studyGroupRoom extends AppCompatActivity implements activityParamet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_group_room);
+
+        layoutSetup();
     }
 
+    /**
+     * @Method  layoutSetup : Sets up all UI components of the activity
+     */
     @Override
     public void layoutSetup() {
 

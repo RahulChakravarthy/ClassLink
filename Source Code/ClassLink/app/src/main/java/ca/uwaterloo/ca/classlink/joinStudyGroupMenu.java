@@ -11,8 +11,13 @@ public class joinStudyGroupMenu extends AppCompatActivity implements activityPar
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_study_group_menu);
+
+        layoutSetup();
     }
 
+    /**
+     * @Method  layoutSetup : Sets up all UI components of the activity
+     */
     @Override
     public void layoutSetup() {
 

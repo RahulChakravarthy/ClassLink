@@ -11,8 +11,13 @@ public class createStudyGroupMenu extends AppCompatActivity implements activityP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_study_group_menu);
+
+        layoutSetup();
     }
 
+    /**
+     * @Method  layoutSetup : Sets up all UI components of the activity
+     */
     @Override
     public void layoutSetup() {
 

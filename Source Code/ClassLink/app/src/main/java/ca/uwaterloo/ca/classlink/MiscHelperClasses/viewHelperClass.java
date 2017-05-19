@@ -54,6 +54,5 @@ public class viewHelperClass {
         objectView.setX(xPosition);
         objectView.setY(yPosition);
         this.activityLayout.addView(objectView);
-
     }
 }

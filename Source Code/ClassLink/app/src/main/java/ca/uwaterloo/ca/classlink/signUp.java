@@ -11,8 +11,13 @@ public class signUp extends AppCompatActivity implements activityParameters {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        layoutSetup();
     }
 
+    /**
+     * @Method  layoutSetup : Sets up all UI components of the activity
+     */
     @Override
     public void layoutSetup() {
 
