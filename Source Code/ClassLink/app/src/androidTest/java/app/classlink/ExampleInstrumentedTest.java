@@ -1,4 +1,4 @@
-package ca.uwaterloo.ca.classlink;
+package app.classlink;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("ca.uwaterloo.ca.classlink", appContext.getPackageName());
+        assertEquals("app.classlink", appContext.getPackageName());
     }
 }

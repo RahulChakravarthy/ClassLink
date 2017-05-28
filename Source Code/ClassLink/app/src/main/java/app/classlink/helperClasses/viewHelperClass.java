@@ -1,10 +1,7 @@
-package ca.uwaterloo.ca.classlink.MiscHelperClasses;
-
+package app.classlink.helperClasses;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +26,7 @@ public class viewHelperClass {
     }
 
     /**
-     * @Method addText : Programmatic way of quickly adding custom text to the activity
+     * @Method addText : Programmatic way of quickly adding custom text to the activity (try to add font parameter)
      * @param message : Message to be outputted to activity
      * @param color : Message color
      * @param size: Message size
@@ -49,6 +46,9 @@ public class viewHelperClass {
     /**
      * @Method addGraphics : Programmatic way of adding visuals such as vector graphics to the Activity Screen
      * @param objectView : object that you want added to screen
+     * @param xPosition : set Object x-position
+     * @param yPosition : set Object y-position
+     * (Add an optional argument to pass on click listener functions via lambdas and instantaitiate them)
      */
     public void addGraphics(View objectView, float xPosition, float yPosition){
         objectView.setX(xPosition);

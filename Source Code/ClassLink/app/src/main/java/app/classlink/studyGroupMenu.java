@@ -1,11 +1,11 @@
-package ca.uwaterloo.ca.classlink;
+package app.classlink;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import ca.uwaterloo.ca.classlink.MiscHelperClasses.activityParameters;
+import app.classlink.helperClasses.activityParameters;
 
-public class studyGroupMenu extends AppCompatActivity  implements activityParameters {
+public class studyGroupMenu extends AppCompatActivity implements activityParameters {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class studyGroupMenu extends AppCompatActivity  implements activityParame
     }
 
     /**
-     * @Method  layoutSetup : Sets up all UI components of the activity
+     * @Method  layoutSetup : Sets up all static UI components of the activity
      */
     @Override
     public void layoutSetup() {
