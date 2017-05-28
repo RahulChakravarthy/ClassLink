@@ -46,8 +46,8 @@ public class login extends AppCompatActivity implements activityParameters {
 
         //Text Settings
         this.viewHelperClass = new viewHelperClass(loginLayout, getApplicationContext());
-        this.viewHelperClass.addText("UserName: ", "BLACK", 12, 400, 420);
-        this.viewHelperClass.addText("Password", "BLACK", 12, 100,100);
+        this.viewHelperClass.addText("UserName: ", "BLACK", 15, 450, 1000);
+        this.viewHelperClass.addText("Password:", "BLACK", 15, 450,1200);
 
         //Graphical Settings (only static images and logos)
 
@@ -65,14 +65,17 @@ public class login extends AppCompatActivity implements activityParameters {
     public void loginListener(){
         //Create login button
         Button login = new Button(getApplicationContext());
-        String buttonText = "To the main app menu";
+        String buttonText = "Login";
         login.setText(buttonText);
-        this.viewHelperClass.addGraphics(login, 300, 1000);
+        this.viewHelperClass.addGraphics(login, 325, 1400, 0.75f, 0.75f);
 
         //Trigger firebase query to validate user credentials when button is clicked
         login.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.mainAppMenu.class));}
+            public void onClick(View v) {
+                viewHelperClass.addText("Error invalid Username/Password", "RED", 15, 250, 925);
+               //startActivity(new Intent(login.this, app.classlink.mainAppMenu.class));
+            }
         });
 
     }
@@ -82,9 +85,9 @@ public class login extends AppCompatActivity implements activityParameters {
      */
     public void signUpListener(){
         Button signUp = new Button(getApplicationContext());
-        String buttonText = "To the sign up page";
+        String buttonText = "SignUp";
         signUp.setText(buttonText);
-        this.viewHelperClass.addGraphics(signUp, 300, 1200);
+        this.viewHelperClass.addGraphics(signUp, 525, 1400, 0.75f,0.75f);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.mainAppMenu.class));}

@@ -48,9 +48,13 @@ public class viewHelperClass {
      * @param objectView : object that you want added to screen
      * @param xPosition : set Object x-position
      * @param yPosition : set Object y-position
+     * @param xScale : set the Objects x-scale
+     * @param yScale : set Object y-scale
      * (Add an optional argument to pass on click listener functions via lambdas and instantaitiate them)
      */
-    public void addGraphics(View objectView, float xPosition, float yPosition){
+    public void addGraphics(View objectView, float xPosition, float yPosition, float xScale, float yScale){
+        objectView.setScaleX((xScale <= 0)? 1: xScale);
+        objectView.setScaleY((yScale <= 0)? 1: yScale);
         objectView.setX(xPosition);
         objectView.setY(yPosition);
         this.activityLayout.addView(objectView);
