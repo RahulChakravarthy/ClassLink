@@ -46,7 +46,8 @@ public class login extends AppCompatActivity implements activityParameters {
 
         //Text Settings
         this.viewHelperClass = new viewHelperClass(loginLayout, getApplicationContext());
-        this.viewHelperClass.addText("CLASS LINK BITCHES", "BLUE", 20, 69, 420);
+        this.viewHelperClass.addText("UserName: ", "BLACK", 12, 400, 420);
+        this.viewHelperClass.addText("Password", "BLACK", 12, 100,100);
 
         //Graphical Settings (only static images and logos)
 
