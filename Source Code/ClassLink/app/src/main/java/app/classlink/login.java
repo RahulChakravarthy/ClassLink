@@ -1,4 +1,4 @@
-package ca.uwaterloo.ca.classlink;
+package app.classlink;
 
 
 import android.content.Intent;
@@ -9,11 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import ca.uwaterloo.ca.classlink.MiscHelperClasses.activityParameters;
-import ca.uwaterloo.ca.classlink.MiscHelperClasses.viewHelperClass;
+import app.classlink.helperClasses.activityParameters;
+import app.classlink.helperClasses.viewHelperClass;
 
 /**
- * @Class loginLayout: This is the loginLayout activity for Class Link
+ * @Class login: This is the login activity for Class Link
  */
 public class login extends AppCompatActivity implements activityParameters {
 
@@ -71,7 +71,7 @@ public class login extends AppCompatActivity implements activityParameters {
         //Trigger firebase query to validate user credentials when button is clicked
         login.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {startActivity(new Intent(login.this, ca.uwaterloo.ca.classlink.mainAppMenu.class));}
+            public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.mainAppMenu.class));}
         });
 
     }
@@ -80,16 +80,16 @@ public class login extends AppCompatActivity implements activityParameters {
      * @Method signUpListener : Take user to the sign up activity where they can make a new account
      */
     public void signUpListener(){
-
         Button signUp = new Button(getApplicationContext());
         String buttonText = "To the sign up page";
         signUp.setText(buttonText);
         this.viewHelperClass.addGraphics(signUp, 300, 1200);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {startActivity(new Intent(login.this, ca.uwaterloo.ca.classlink.signUp.class));}
+            public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.mainAppMenu.class));}
         });
     }
 
 
 }
+

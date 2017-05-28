@@ -1,4 +1,4 @@
-package ca.uwaterloo.ca.classlink.MiscHelperClasses;
+package app.classlink.helperClasses;
 
 /**
  * @Interface activityParameters: Guidelines for creating new activities
@@ -6,6 +6,4 @@ package ca.uwaterloo.ca.classlink.MiscHelperClasses;
 public interface activityParameters {
 
     void layoutSetup();
-
-
 }

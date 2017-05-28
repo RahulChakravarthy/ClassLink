@@ -1,81 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ca.uwaterloo.ca.classlink">
+    package="app.classlink">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
-        <!--Main Activity onStartUp-->
-        <activity
-            android:name=".login"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name">
+        android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!--Child Activities -->
-        <activity
-            android:name=".mainAppMenu"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-
-        <activity
-            android:name=".classLectureMenu"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-
-        <activity
-            android:name=".studyGroupMenu"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-
-        <activity
-            android:name=".userProfile"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-
-        <activity
-            android:name=".settings"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".signUp"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".createStudyGroupMenu"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-
-        <activity
-            android:name=".joinStudyGroupMenu"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".createLectureGroupMenu"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".joinLectureGroupMenu"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-
-        <activity
-            android:name=".LectureGroupRoom"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-
-        <activity
-            android:name=".studyGroupRoom"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/app_name"/>
-
+        <activity android:name=".lectureGroupRoom" />
+        <activity android:name=".classLectureMenu" />
+        <activity android:name=".createLectureGroupMenu" />
+        <activity android:name=".createStudyGroupMenu" />
+        <activity android:name=".joinLectureGroupMenu" />
+        <activity android:name=".joinStudyGroupMenu" />
+        <activity android:name=".mainAppMenu" />
+        <activity android:name=".settings" />
+        <activity android:name=".signUp" />
+        <activity android:name=".studyGroupMenu" />
+        <activity android:name=".studyGroupRoom" />
+        <activity android:name=".userProfile"></activity>
     </application>
+
 </manifest>

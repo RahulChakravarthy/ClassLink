@@ -1,4 +1,4 @@
-package ca.uwaterloo.ca.classlink;
+package app.classlink;
 
 import org.junit.Test;
 
