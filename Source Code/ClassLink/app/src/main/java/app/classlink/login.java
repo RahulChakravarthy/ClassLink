@@ -73,8 +73,8 @@ public class login extends AppCompatActivity implements activityParameters {
         login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                viewHelperClass.addText("Error invalid Username/Password", "RED", 15, 250, 925);
-               //startActivity(new Intent(login.this, app.classlink.mainAppMenu.class));
+                //viewHelperClass.addText("Error invalid Username/Password", "RED", 15, 250, 925);
+                startActivity(new Intent(login.this, app.classlink.mainAppMenu.class));
             }
         });
 
