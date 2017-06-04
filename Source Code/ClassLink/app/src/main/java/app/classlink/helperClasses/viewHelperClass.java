@@ -1,8 +1,13 @@
 package app.classlink.helperClasses;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -50,7 +55,7 @@ public class viewHelperClass {
      * @param yPosition : set Object y-position
      * @param xScale : set the Objects x-scale
      * @param yScale : set Object y-scale
-     * (Add an optional argument to pass on click listener functions via lambdas and instantaitiate them)
+     * (Add an optional argument to pass on click listener functions via lambdas and instantiate them)
      */
     public void addGraphics(View objectView, float xPosition, float yPosition, float xScale, float yScale){
         objectView.setScaleX((xScale <= 0)? 1: xScale);
@@ -58,5 +63,49 @@ public class viewHelperClass {
         objectView.setX(xPosition);
         objectView.setY(yPosition);
         this.activityLayout.addView(objectView);
+    }
+
+    /**
+     * @Method addButtonImage : Take an ImageView, give it a resource to display, turn it into a button along with up/down animation, and add it to the Activity screen
+     * @param imageView : resource for the button to display
+     * @param resourceId : id for the resource, in res folder
+     * @param xPosition : object x-position
+     * @param yPosition : object y-position
+     * @param xScale : object x-scale
+     * @param yScale : object y-scale
+     * @param button : true turns the image into a button, false means no onTouchListener
+     */
+    public void addButtonImage(final ImageView imageView, int resourceId, float xPosition, float yPosition, float xScale, float yScale, boolean button) {
+        imageView.setImageResource(resourceId);
+        imageView.setScaleX((xScale <= 0) ? 1 : xScale);
+        imageView.setScaleY((yScale <= 0) ? 1 : yScale);
+        imageView.setX(xPosition);
+        imageView.setY(yPosition);
+
+        if(button) {
+
+            //Setting up the animation: on action down, grey out the image
+            imageView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            imageView.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
+                            imageView.invalidate();
+
+                            break;
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL:
+                            imageView.getDrawable().clearColorFilter();
+                            imageView.invalidate();
+                            break;
+                    }
+                    return false;
+                }
+            });
+        }
+
+        this.activityLayout.addView(imageView);
     }
 }

@@ -6,4 +6,5 @@ package app.classlink.helperClasses;
 public interface activityParameters {
 
     void layoutSetup();
+    //void buttonSetup();
 }
