@@ -4,8 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import app.classlink.helperClasses.activityParameters;
+import app.classlink.parents.baseActivity;
 
-public class joinStudyGroupMenu extends AppCompatActivity implements activityParameters {
+public class joinStudyGroupMenu extends baseActivity implements activityParameters {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
