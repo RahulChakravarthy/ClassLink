@@ -10,10 +10,9 @@ import android.widget.RelativeLayout;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
+import app.classlink.parents.baseActivity;
 
-public class mainAppMenu extends AppCompatActivity implements activityParameters {
-    protected RelativeLayout mainAppMenuLayout;
-    protected viewHelperClass viewHelperClass;
+public class mainAppMenu extends baseActivity implements activityParameters {
 
     //Setting up ImageViews that become buttons
     private ImageView studyGroup;
@@ -27,8 +26,8 @@ public class mainAppMenu extends AppCompatActivity implements activityParameters
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_app_menu);
 
-        mainAppMenuLayout = (RelativeLayout) findViewById(R.id.activity_main_app_menu);
-        viewHelperClass = new viewHelperClass(mainAppMenuLayout, getApplicationContext());
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_main_app_menu);
+        viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext());
 
         layoutSetup();
         buttonSetup();
@@ -40,22 +39,22 @@ public class mainAppMenu extends AppCompatActivity implements activityParameters
      */
     @Override
     public void layoutSetup() {
-        this.mainAppMenuLayout.setBackgroundColor(Color.parseColor("#3d80b0"));
+        this.activityLayout.setBackgroundColor(Color.parseColor("#3d80b0"));
 
         studyGroup = new ImageView(getApplicationContext());
-        viewHelperClass.addButtonImage(studyGroup, R.drawable.button_study_group_up, -265, 350, 0.475f, 0.475f, true);
+        viewHelperClass.addGraphics(studyGroup, R.drawable.button_study_group_up, -265, 350, 0.475f, 0.475f, true);
 
         lecture = new ImageView(getApplicationContext());
-        viewHelperClass.addButtonImage(lecture, R.drawable.button_lecture_up, 265, 350, 0.475f, 0.475f, true);
+        viewHelperClass.addGraphics(lecture, R.drawable.button_lecture_up, 265, 350, 0.475f, 0.475f, true);
 
         settings = new ImageView(getApplicationContext());
-        viewHelperClass.addButtonImage(settings, R.drawable.button_wide, 0, 1090, 0.969f, 1.0f, true);
+        viewHelperClass.addGraphics(settings, R.drawable.button_wide, 0, 1090, 0.969f, 1.0f, true);
 
         profile = new ImageView(getApplicationContext());
-        viewHelperClass.addButtonImage(profile, R.drawable.button_profile, -145, -150, 0.55f, 0.55f, true);
+        viewHelperClass.addGraphics(profile, R.drawable.button_profile, -145, -150, 0.55f, 0.55f, true);
 
         notifications = new ImageView(getApplicationContext());
-        viewHelperClass.addButtonImage(notifications, R.drawable.field_notification, 260, -150, 0.45f, 0.6f, false);
+        viewHelperClass.addGraphics(notifications, R.drawable.field_notification, 260, -150, 0.45f, 0.6f, false);
 
     }
 

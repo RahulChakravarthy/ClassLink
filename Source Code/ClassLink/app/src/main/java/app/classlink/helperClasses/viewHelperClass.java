@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 /**
  * @Class viewHelperClass : This class has implemented static methods to aid with output views to various activities
  */
@@ -49,7 +51,7 @@ public class viewHelperClass {
     }
 
     /**
-     * @Method addGraphics : Programmatic way of adding visuals such as vector graphics to the Activity Screen
+     * @Method editGraphics : Programmatic way of editing visuals such as vector graphics to the Activity Screen
      * @param objectView : object that you want added to screen
      * @param xPosition : set Object x-position
      * @param yPosition : set Object y-position
@@ -57,16 +59,15 @@ public class viewHelperClass {
      * @param yScale : set Object y-scale
      * (Add an optional argument to pass on click listener functions via lambdas and instantiate them)
      */
-    public void addGraphics(View objectView, float xPosition, float yPosition, float xScale, float yScale){
+    public void editGraphics(View objectView, float xPosition, float yPosition, float xScale, float yScale){
         objectView.setScaleX((xScale <= 0)? 1: xScale);
         objectView.setScaleY((yScale <= 0)? 1: yScale);
         objectView.setX(xPosition);
         objectView.setY(yPosition);
-        this.activityLayout.addView(objectView);
     }
 
     /**
-     * @Method addButtonImage : Take an ImageView, give it a resource to display, turn it into a button along with up/down animation, and add it to the Activity screen
+     * @Method addGraphics : Take an ImageView, give it a resource to display, turn it into a button along with up/down animation, and add it to the Activity screen
      * @param imageView : resource for the button to display
      * @param resourceId : id for the resource, in res folder
      * @param xPosition : object x-position
@@ -75,15 +76,11 @@ public class viewHelperClass {
      * @param yScale : object y-scale
      * @param button : true turns the image into a button, false means no onTouchListener
      */
-    public void addButtonImage(final ImageView imageView, int resourceId, float xPosition, float yPosition, float xScale, float yScale, boolean button) {
+    public void addGraphics(final ImageView imageView, int resourceId, float xPosition, float yPosition, float xScale, float yScale, boolean button) {
         imageView.setImageResource(resourceId);
-        imageView.setScaleX((xScale <= 0) ? 1 : xScale);
-        imageView.setScaleY((yScale <= 0) ? 1 : yScale);
-        imageView.setX(xPosition);
-        imageView.setY(yPosition);
+        this.editGraphics(imageView, xPosition, yPosition, xScale, yScale);
 
         if(button) {
-
             //Setting up the animation: on action down, grey out the image
             imageView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -105,7 +102,6 @@ public class viewHelperClass {
                 }
             });
         }
-
         this.activityLayout.addView(imageView);
     }
 }

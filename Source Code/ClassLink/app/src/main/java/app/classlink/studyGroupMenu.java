@@ -7,19 +7,17 @@ import android.widget.RelativeLayout;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
+import app.classlink.parents.baseActivity;
 
-public class studyGroupMenu extends AppCompatActivity implements activityParameters {
-
-    protected RelativeLayout studyGroupMenuLayout;
-    protected app.classlink.helperClasses.viewHelperClass viewHelperClass;
+public class studyGroupMenu extends baseActivity implements activityParameters {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_group_menu);
 
-        studyGroupMenuLayout = (RelativeLayout) findViewById(R.id.activity_study_group_menu);
-        viewHelperClass = new viewHelperClass(studyGroupMenuLayout, getApplicationContext());
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_group_menu);
+        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext());
 
         layoutSetup();
     }
@@ -29,6 +27,6 @@ public class studyGroupMenu extends AppCompatActivity implements activityParamet
      */
     @Override
     public void layoutSetup() {
-        this.studyGroupMenuLayout.setBackgroundColor(Color.parseColor("#3d80b0"));
+        this.activityLayout.setBackgroundColor(Color.parseColor("#3d80b0"));
     }
 }

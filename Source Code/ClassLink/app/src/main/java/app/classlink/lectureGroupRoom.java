@@ -4,8 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import app.classlink.helperClasses.activityParameters;
+import app.classlink.parents.baseActivity;
 
-public class lectureGroupRoom extends AppCompatActivity implements activityParameters {
+public class lectureGroupRoom extends baseActivity implements activityParameters {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
