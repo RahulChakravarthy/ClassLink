@@ -1,7 +1,5 @@
 package app.classlink;
 
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,11 +10,8 @@ import app.classlink.parents.baseActivity;
 
 public class userProfile extends baseActivity implements activityParameters {
 
+    private ImageView blockBackground;
     private ImageView profilePhotoField;
-    private ImageView scoreField;
-    private ImageView userDetails;
-    private ImageView bestQuestions;
-    private ImageView bestAnswers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +29,12 @@ public class userProfile extends baseActivity implements activityParameters {
      */
     @Override
     public void layoutSetup() {
-        this.activityLayout.setBackgroundColor(Color.parseColor("#3d80b0"));
+        //this.activityLayout.setBackgroundColor(Color.parseColor("#3d80b0"));
+        this.activityLayout.setBackgroundResource(R.drawable.bg);
 
-        profilePhotoField = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(profilePhotoField, R.drawable.button_profile, -145, -150, 0.55f, 0.55f, false);
+        profilePhotoField = (ImageView) findViewById(R.id.imgProfile);
 
-        scoreField = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(scoreField, R.drawable.button_wide, -258, 420, 0.4f, 0.6f, false);
-
-        userDetails = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(userDetails, R.drawable.field_large, 250, -220, 0.5f, 1.4f, false);
-
-        bestQuestions = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(bestQuestions, R.drawable.field_large, 0, 790, 1.0f, 1.0f, false);
-
-        bestAnswers = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(bestAnswers, R.drawable.field_large, 0, 350, 1.0f, 1.0f, false);
+        blockBackground = new ImageView(getApplicationContext());
+        viewHelperClass.addGraphics(blockBackground, R.drawable.button_wide_grey, 0, 700, 0.975f, 8.0f, false);
     }
 }

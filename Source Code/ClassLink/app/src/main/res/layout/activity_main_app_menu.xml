@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_app_menu"
     android:layout_width="match_parent"
@@ -8,6 +9,93 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/bg"
     tools:context="app.classlink.mainAppMenu">
+
+    <ImageView
+        android:layout_width="match_parent"
+        app:srcCompat="@drawable/circle_grey"
+        android:id="@+id/buttonProfile"
+        android:layout_height="175dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp"
+        android:contentDescription=""
+        android:cropToPadding="false"
+        android:adjustViewBounds="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        app:srcCompat="@drawable/button_study_group_grey"
+        android:layout_marginTop="62dp"
+        android:id="@+id/buttonStudyGroup"
+        android:layout_marginEnd="194dp"
+        android:layout_height="175dp"
+        android:layout_below="@+id/buttonProfile"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        app:srcCompat="@drawable/button_lecture_grey"
+        android:id="@+id/buttonLecture"
+        android:layout_height="175dp"
+        android:layout_marginStart="196dp"
+        android:layout_alignTop="@+id/buttonStudyGroup"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        app:srcCompat="@drawable/button_wide_grey"
+        android:layout_marginTop="24dp"
+        android:id="@+id/imageView9"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:scaleType="matrix"
+        android:layout_width="400dp"
+        android:layout_below="@+id/buttonProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_height="2dp"
+        tools:alpha="0.75f"
+        android:clickable="false" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/settings"
+        android:layout_marginStart="38dp"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/buttonSettings"
+        android:layout_above="@+id/buttonStudyGroup"
+        android:layout_alignStart="@+id/line" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/mail"
+        android:layout_marginEnd="38dp"
+        android:id="@+id/buttonMail"
+        android:layout_alignTop="@+id/buttonSettings"
+        android:layout_alignEnd="@+id/line" />
+
+    <ImageView
+        app:srcCompat="@drawable/button_wide_grey"
+        android:layout_marginTop="33dp"
+        android:id="@+id/line"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:scaleType="matrix"
+        android:layout_width="400dp"
+        android:layout_height="2dp"
+        tools:alpha="0.75f"
+        android:clickable="false"
+        android:layout_below="@+id/buttonStudyGroup"
+        android:layout_alignStart="@+id/imageView9" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:id="@+id/recyclerFavourites"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="180dp" />
 
 </RelativeLayout>

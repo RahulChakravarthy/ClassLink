@@ -2,15 +2,19 @@ package app.classlink;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 
 import app.classlink.helperClasses.activityParameters;
+import app.classlink.parents.baseActivity;
 
-public class createStudyGroupMenu extends AppCompatActivity implements activityParameters {
+public class createStudyGroupMenu extends baseActivity implements activityParameters {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_study_group_menu);
+
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_create_study_group_menu);
 
         layoutSetup();
     }
@@ -20,6 +24,6 @@ public class createStudyGroupMenu extends AppCompatActivity implements activityP
      */
     @Override
     public void layoutSetup() {
-
+        this.activityLayout.setBackgroundResource(R.drawable.bg);
     }
 }
