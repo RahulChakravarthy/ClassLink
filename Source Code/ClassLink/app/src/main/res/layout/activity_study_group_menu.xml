@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_study_group_menu"
     android:layout_width="match_parent"
@@ -10,4 +11,46 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="app.classlink.studyGroupMenu">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="175dp"
+        app:srcCompat="@drawable/button_square_grey"
+        android:layout_marginStart="193dp"
+        android:id="@+id/buttonJoinStudyGroup"
+        android:layout_marginBottom="228dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="175dp"
+        app:srcCompat="@drawable/button_square_grey"
+        android:id="@+id/buttonCreateStudyGroup"
+        android:layout_marginEnd="198dp"
+        android:layout_alignTop="@+id/buttonJoinStudyGroup"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCreate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textSize="24sp"
+        android:layout_alignBottom="@+id/buttonCreateStudyGroup"
+        android:layout_alignEnd="@+id/buttonCreateStudyGroup"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="72dp" />
+
+    <TextView
+        android:text="Join"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:id="@+id/txtJoin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textSize="24sp"
+        android:layout_alignBaseline="@+id/txtCreate"
+        android:layout_alignBottom="@+id/txtCreate"
+        android:layout_toEndOf="@+id/txtCreate" />
 </RelativeLayout>

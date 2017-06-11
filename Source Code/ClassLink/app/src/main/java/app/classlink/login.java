@@ -42,21 +42,22 @@ public class login extends baseActivity implements activityParameters {
     public void layoutSetup() {
         //Layout Settings
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_login);
-        this.activityLayout.setBackgroundColor(Color.WHITE);
+        this.activityLayout.setBackgroundResource(R.drawable.bg);
 
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext());
 
         //Graphical Settings (only static images and logos)
         logo = new ImageView(getApplicationContext());
         this.viewHelperClass.addGraphics(logo, R.drawable.logo, 0, 0, 1,1, false);
+        logo.setAlpha(0.75f);
         login = new ImageView(getApplicationContext());
-        this.viewHelperClass.addGraphics(login, R.drawable.button_wide, -150,1400,0.25f,1,true);
+        this.viewHelperClass.addGraphics(login, R.drawable.button_wide_grey, -150, 1325, 0.25f, 0.5f, true);
         signUp = new ImageView(getApplicationContext());
-        this.viewHelperClass.addGraphics(signUp, R.drawable.button_wide, 200,1400,0.25f,1,true);
+        this.viewHelperClass.addGraphics(signUp, R.drawable.button_wide_grey, 200, 1325, 0.25f, 0.5f, true);
 
         //Text Settings
-        this.viewHelperClass.addText("Login", "BLACK", 15, 340, 1550);
-        this.viewHelperClass.addText("Sign Up", "BLACK", 15, 670, 1550);
+        this.viewHelperClass.addText("Login", "BLACK", 15, 330, 1450);
+        this.viewHelperClass.addText("Sign Up", "BLACK", 15, 660, 1450);
         this.viewHelperClass.addText("UserName:", "BLACK", 15, 450, 1000);
         this.viewHelperClass.addText("Password:", "BLACK", 15, 450,1200);
 
