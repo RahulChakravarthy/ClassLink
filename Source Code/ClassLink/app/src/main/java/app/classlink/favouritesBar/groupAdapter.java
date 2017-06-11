@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,13 +21,14 @@ public class groupAdapter extends RecyclerView.Adapter<groupAdapter.MyViewHolder
     private List<studyGroup> groupList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, description, id;
+        public TextView name, description;
+        public ImageView image;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
             description = (TextView) view.findViewById(R.id.description);
-            id = (TextView) view.findViewById(R.id.id);
+            image = (ImageView) view.findViewById(R.id.image);
         }
     }
 
@@ -45,7 +47,8 @@ public class groupAdapter extends RecyclerView.Adapter<groupAdapter.MyViewHolder
         studyGroup studyGroup = groupList.get(position);
         holder.name.setText(studyGroup.getGroupName());
         holder.description.setText(studyGroup.getGroupDescription());
-//        holder.id.setText(studyGroup.getGroupId());
+        //holder.image.setImageResource();
+        //fill this in when database is working
 
     }
 
