@@ -1,7 +1,10 @@
-package app.classlink.favouritesBar;
+package app.classlink.recyclerHelperClasses;
 
 /**
  * Created by jaywe on 2017-06-09.
+ * Adapter for gathering studyGroup information and feeding it to a recyclerView.
+ * It takes in a list of studyGroups and inflates the recyclerView.
+ * Probably will rewrite this more generally or write separate adapters for notifications/other recyclerViews.
  */
 
 import android.support.v7.widget.RecyclerView;

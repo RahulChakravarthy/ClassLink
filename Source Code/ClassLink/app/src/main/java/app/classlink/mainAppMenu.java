@@ -1,16 +1,15 @@
 package app.classlink;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -21,7 +20,7 @@ import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
 
 import app.classlink.backend.*;
-import app.classlink.favouritesBar.groupAdapter;
+import app.classlink.recyclerHelperClasses.groupAdapter;
 
 public class mainAppMenu extends baseActivity implements activityParameters {
 
@@ -63,6 +62,9 @@ public class mainAppMenu extends baseActivity implements activityParameters {
         groupList.add(group);
 
         group = new studyGroup(GROUP_TYPE.STUDY_GROUP, 3, "group3", "test group 3");
+        groupList.add(group);
+
+        group = new studyGroup(GROUP_TYPE.STUDY_GROUP, 99, "Add a new favourite", "Click here");
         groupList.add(group);
     }
 
@@ -139,10 +141,45 @@ public class mainAppMenu extends baseActivity implements activityParameters {
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(mainAppMenu.this, app.classlink.notificationsMenu.class));
             }
         });
 
+
+        favourites.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            int actions;       //onInterceptTouchEvent fires once onPress and once again onRelease so this is a quick fix to only fire onClick once for these two actions... also sometimes on scroll it will increment as well
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                actions++;
+                View child = rv.findChildViewUnder(e.getX(), e.getY());
+                if (child != null && actions >= 2) {
+                    onClick(child, rv.getChildPosition(child));
+                    actions = 0;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+
+            public void onClick(View view, int position) {
+                studyGroup studyGroup = groupList.get(position);
+                Log.d("Testing onClick", "description: " + studyGroup.getGroupDescription());
+
+                if(studyGroup.getGroupId() == 99) {
+                    studyGroup newFavourite = new studyGroup(GROUP_TYPE.STUDY_GROUP, 5, "new favourite", "added a new favourite");
+                    groupList.add(newFavourite);
+                    gAdapter.notifyDataSetChanged();
+                }
+            }
+        });
 
     }
 }
