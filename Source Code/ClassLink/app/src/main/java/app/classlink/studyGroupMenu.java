@@ -2,7 +2,6 @@ package app.classlink;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,7 +22,7 @@ public class studyGroupMenu extends baseActivity implements activityParameters {
         setContentView(R.layout.activity_study_group_menu);
 
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_group_menu);
-        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext());
+        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
         buttonSetup();

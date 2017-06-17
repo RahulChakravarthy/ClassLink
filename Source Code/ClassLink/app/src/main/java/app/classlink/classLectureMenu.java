@@ -19,7 +19,7 @@ public class classLectureMenu extends AppCompatActivity implements activityParam
         setContentView(R.layout.activity_class_lecture_menu);
 
         classLectureMenuLayout = (RelativeLayout) findViewById(R.id.activity_class_lecture_menu);
-        viewHelperClass = new viewHelperClass(classLectureMenuLayout, getApplicationContext());
+        viewHelperClass = new viewHelperClass(classLectureMenuLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
     }

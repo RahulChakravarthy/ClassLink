@@ -4,10 +4,14 @@ package app.classlink;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import java.util.Arrays;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
@@ -18,7 +22,9 @@ import app.classlink.parents.baseActivity;
  */
 public class login extends baseActivity implements activityParameters {
 
-    ImageView logo, login, signUp;
+    TextView forgotPassword; //forgot password button
+    ImageView login, signUp, line; //front end graphic buttons/models
+    EditText usernameInput, passwordInput; //textinput boxes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +35,10 @@ public class login extends baseActivity implements activityParameters {
          * Set up all activity listeners and textboxes
          */
         layoutSetup();
-        usernameInput();
-        passwordInput();
         loginListener();
         signUpListener();
+        forgotPasswordListener();
+
     }
 
     /**
@@ -42,45 +48,44 @@ public class login extends baseActivity implements activityParameters {
     public void layoutSetup() {
         //Layout Settings
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_login);
-        this.activityLayout.setBackgroundResource(R.drawable.bg);
 
-        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext());
+        this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
+        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         //Graphical Settings (only static images and logos)
-        logo = new ImageView(getApplicationContext());
-        this.viewHelperClass.addGraphics(logo, R.drawable.logo, 0, 0, 1,1, false);
-        logo.setAlpha(0.75f);
+        line = new ImageView(getApplicationContext());
+        this.viewHelperClass.addGraphics(line, R.drawable.line, 50, 18, 0.75f, 1, false);
+
+        usernameInput = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox(usernameInput,R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 30, 0.75f, 0.8f);
+
+        passwordInput = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox(passwordInput, R.drawable.inputbox, InputType.TYPE_TEXT_VARIATION_PASSWORD, 50, 44, 0.75f, 0.8f);
+
         login = new ImageView(getApplicationContext());
-        this.viewHelperClass.addGraphics(login, R.drawable.button_wide_grey, -150, 1325, 0.25f, 0.5f, true);
+        this.viewHelperClass.addTextToButton(login, "Login", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 34, 55, 0.3f, 0.4f);
+
         signUp = new ImageView(getApplicationContext());
-        this.viewHelperClass.addGraphics(signUp, R.drawable.button_wide_grey, 200, 1325, 0.25f, 0.5f, true);
+        this.viewHelperClass.addTextToButton(signUp, "Sign Up", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 66, 55, 0.3f, 0.4f);
 
         //Text Settings
-        this.viewHelperClass.addText("Login", "BLACK", 15, 330, 1450);
-        this.viewHelperClass.addText("Sign Up", "BLACK", 15, 660, 1450);
-        this.viewHelperClass.addText("UserName:", "BLACK", 15, 450, 1000);
-        this.viewHelperClass.addText("Password:", "BLACK", 15, 450,1200);
+        this.viewHelperClass.addText("CLASS-LINK", "OpenSans-ExtraBoldItalic", "BLACK", 50, 50, 13);//title
+        this.viewHelperClass.addText("User Name:", "OpenSans-Regular", "BLACK", 15, 50, 23); //User Name
+        this.viewHelperClass.addText("Password:", "OpenSans-Regular", "BLACK", 15, 50, 37);// Password
 
-    }
-
-    public void usernameInput(){
-
-    }
-
-    public void passwordInput(){
+        forgotPassword = new TextView(getApplicationContext());
+        this.viewHelperClass.addText(forgotPassword, "Forgot Password?",  "OpenSans-Bold", "BLACK", 15, 50, 65, true);
 
     }
 
     /**
-     * @Method loginListener : Take user to the main app menu
+     *@Method loginListener : Processes login and verifies user information
      */
-    public void loginListener(){
-        //Trigger firebase query to validate user credentials when button is clicked
-        login.setOnClickListener(new View.OnClickListener(){
+    private void loginListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.mainAppMenu.class));}
         });
-
     }
 
     /**
@@ -88,6 +93,16 @@ public class login extends baseActivity implements activityParameters {
      */
     public void signUpListener(){
         signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.signUp.class));}
+        });
+    }
+
+    /**
+     * @Method forgotPasswordHandler : handles case where user has forgotten password
+     */
+    public void forgotPasswordListener(){
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.signUp.class));}
         });
