@@ -27,7 +27,9 @@
         <activity android:name=".signUp" />
         <activity android:name=".studyGroupMenu" />
         <activity android:name=".studyGroupRoom" />
-        <activity android:name=".userProfile"></activity>
+        <activity android:name=".userProfile"/>
+            <activity android:name=".notificationsMenu">
+        </activity>
     </application>
 
 </manifest>

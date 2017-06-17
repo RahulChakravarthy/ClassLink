@@ -29,6 +29,6 @@ public class classLectureMenu extends AppCompatActivity implements activityParam
      */
     @Override
     public void layoutSetup() {
-        this.classLectureMenuLayout.setBackgroundColor(Color.parseColor("#3d80b0"));
+        this.classLectureMenuLayout.setBackgroundResource(R.drawable.bg);
     }
 }

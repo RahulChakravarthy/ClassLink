@@ -2,6 +2,7 @@ package app.classlink;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import app.classlink.helperClasses.activityParameters;
@@ -10,6 +11,7 @@ import app.classlink.parents.baseActivity;
 
 public class settings extends baseActivity implements activityParameters {
 
+    private ImageView blockBackground;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,9 @@ public class settings extends baseActivity implements activityParameters {
      */
     @Override
     public void layoutSetup() {
-        this.activityLayout.setBackgroundColor(Color.parseColor("#3d80b0"));
+        this.activityLayout.setBackgroundResource(R.drawable.bg);
+
+        blockBackground = new ImageView(getApplicationContext());
+        viewHelperClass.addGraphics(blockBackground, R.drawable.button_wide_grey, 0, 700, 0.975f, 8.0f, false);
     }
 }

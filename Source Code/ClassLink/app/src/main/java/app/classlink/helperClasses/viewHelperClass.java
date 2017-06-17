@@ -169,6 +169,34 @@ public class viewHelperClass {
     }
 
     /**
+     * @Method imageToButton : Take an existing ImageView and turn it into a button with an onTouchListener animation
+     * @param imageView : ImageView to turn into button
+     */
+    public void imageToButton(final ImageView imageView) {
+        imageView.setAlpha(0.75f);
+        imageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        imageView.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
+                        imageView.setAlpha(1.0f);
+                        imageView.invalidate();
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        imageView.getDrawable().clearColorFilter();
+                        imageView.setAlpha(0.75f);
+                        imageView.invalidate();
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
      * @Method addGraphics : Take an ImageView, give it a resource to display, turn it into a button along with up/down animation, and add it to the Activity screen
      * @param imageView : resource for the button to display
      * @param resourceId : id for the resource, in res folder
@@ -181,6 +209,7 @@ public class viewHelperClass {
     public void addGraphics(final ImageView imageView, int resourceId, float xPosition, float yPosition, float xScale, float yScale, boolean button) {
         imageView.setImageResource(resourceId);
         this.editGraphics(imageView, xPosition, yPosition, xScale, yScale);
+        imageView.setAlpha(0.75f);
 
         if(button) {
             //Setting up the animation: on action down, grey out the image
@@ -191,6 +220,7 @@ public class viewHelperClass {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             imageView.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
+                            imageView.setAlpha(1.0f);
                             imageView.invalidate();
                             break;
                         case MotionEvent.ACTION_UP:
@@ -199,6 +229,7 @@ public class viewHelperClass {
                             break;
                         case MotionEvent.ACTION_CANCEL:
                             imageView.getDrawable().clearColorFilter();
+                            imageView.setAlpha(0.75f);
                             imageView.invalidate();
                             break;
                     }

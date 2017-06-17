@@ -48,6 +48,7 @@ public class login extends baseActivity implements activityParameters {
     public void layoutSetup() {
         //Layout Settings
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_login);
+
         this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 

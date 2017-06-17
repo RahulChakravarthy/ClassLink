@@ -2,3 +2,10 @@
 -Went over coding convention
 -Configured github repos and forks
 -Planned items for next meeting
+
+2017-06-04
+-Added an editGraphics method to change position/scale of graphics
+-Worked on changeActivity method to minimize code repetition for button onClickListeners - this needs work
+-Front end methods are implemented, should be able to have a completed front end by next meeting
+-Planned items for next meeting
+
