@@ -2,7 +2,6 @@ package app.classlink;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,7 +26,7 @@ public class mainAppMenu extends baseActivity implements activityParameters {
         setContentView(R.layout.activity_main_app_menu);
 
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_main_app_menu);
-        viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext());
+        viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
         buttonSetup();

@@ -1,7 +1,6 @@
 package app.classlink;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,7 +23,7 @@ public class userProfile extends baseActivity implements activityParameters {
         setContentView(R.layout.activity_user_profile);
 
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_user_profile);
-        viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext());
+        viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
     }

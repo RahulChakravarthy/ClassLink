@@ -16,7 +16,7 @@ public class settings extends baseActivity implements activityParameters {
         setContentView(R.layout.activity_settings);
 
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_settings);
-        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext());
+        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
     }
