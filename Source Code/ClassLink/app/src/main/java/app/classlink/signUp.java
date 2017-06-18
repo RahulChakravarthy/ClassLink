@@ -1,13 +1,16 @@
 package app.classlink;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,10 +29,18 @@ class field {
     public EditText inputBox;
     public ImageView imageBox;
 
+    public boolean error;
+    public String errorMessage;
+
     public field(String name, Context context){
         this.name = name;
         this.inputBox = new EditText(context);
         this.imageBox = new ImageView(context);
+        this.error = false;
+    }
+
+    public void setErrorMessage(String message){
+        this.errorMessage = message;
     }
 }
 
@@ -41,6 +52,8 @@ public class signUp extends baseActivity implements activityParameters {
     /** The functionality of this UI is such that if you want to include another field, just append  to this list*/
     ArrayList<String> keys = new ArrayList<>(Arrays.asList("First Name", "Last Name", "Email", "Username", "Password", "Confirm Password"));
     HashMap<String, field> fields = new HashMap<>();
+
+    ImageView submit,line;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +74,28 @@ public class signUp extends baseActivity implements activityParameters {
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         //Text Setup
-        this.viewHelperClass.addText("Sign-Up", "OpenSans-Regular", "BLACK", 18f, 15, 5);
+        this.viewHelperClass.addText("Class-Link Sign UP: ", "OpenSans-Bold", "BLACK", 18f, 25, 5);
 
         //Graphical Setup
+        line = new ImageView(getApplicationContext());
+        this.viewHelperClass.addGraphics(line, R.drawable.line, 40, 8, 0.75f, 1, false);
         /** Field graphics*/
         for (int i = 0; i < keys.size(); i++){
             //Add each field to a hashmap
             fields.put(keys.get(i), new field(keys.get(i), this.viewHelperClass.getActivityContext()));
-            //store fields in temp values just for code readability
+
             EditText tempEdit = fields.get(keys.get(i)).inputBox;
-            ImageView tempImage = fields.get(keys.get(i)).imageBox;
-            //add fields
-            this.viewHelperClass.addText(keys.get(i), "OpenSans-Regular", "BLACK", 16f, 50,10*i + 20);
-            this.viewHelperClass.addGraphicInputBox(tempEdit, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 33, 10*i + 22, 0.5f, 0.5f);
+
+            this.viewHelperClass.addText(keys.get(i) + ":", "OpenSans-Regular", "BLACK", 16f, 50,16*i + 12);
+            this.viewHelperClass.addGraphicInputBox(tempEdit, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 16*i + 18, 0.75f, 0.75f);
+        }
+
+        submit = new ImageView(getApplicationContext());
+        this.viewHelperClass.addTextToButton(submit, "Submit", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50,keys.size()*16 + 15f, 0.4f, 0.5f);
+
+        ScrollView signUpScrollView = (ScrollView) findViewById(R.id.signUpScrollView);
+        if (signUpScrollView.getScrollY() >  20){
+            signUpScrollView.setOnTouchListener(null);
         }
     }
 
@@ -81,6 +103,14 @@ public class signUp extends baseActivity implements activityParameters {
      * @Method Submit button to store information in database
      */
     private void submitButton() {
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /** Verify if entered information is correct*/
+                boolean validInformation;
+                startActivity(new Intent(signUp.this, login.class));
+            }
+        });
     }
 
 

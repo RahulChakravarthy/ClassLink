@@ -7,24 +7,14 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Objects;
-
-import app.classlink.R;
-import app.classlink.parents.baseActivity;
 
 /**
  * @Class viewHelperClass : This class has implemented methods to aid with output views to various activities
@@ -269,7 +259,7 @@ public class viewHelperClass {
      */
     public void addGraphicInputBox(EditText textInput, int resourceId, int inputType, float xPosition, float yPosition, float xScale, float yScale){
         this.editGraphics(textInput,xPosition,yPosition,xScale,yScale);
-        textInput.setPadding(20,0,0,0);
+        textInput.setPadding(20,0,20,0);
         textInput.setBackground(this.activityContext.getDrawable(resourceId));
         textInput.setTextColor(Color.BLACK);
         textInput.setInputType(inputType);

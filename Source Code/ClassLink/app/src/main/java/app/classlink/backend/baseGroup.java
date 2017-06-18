@@ -2,10 +2,6 @@ package app.classlink.backend;
 
 import java.util.LinkedList;
 
-/**
- * Created by jaywe on 2017-06-09.
- */
-
 public abstract class baseGroup {
 
     public GROUP_TYPE groupType;

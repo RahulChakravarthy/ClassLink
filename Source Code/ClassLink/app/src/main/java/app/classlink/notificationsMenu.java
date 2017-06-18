@@ -21,10 +21,6 @@ import app.classlink.parents.baseActivity;
 
 import app.classlink.backend.*;
 
-/**
- * Created by jaywe on 2017-06-11.
- */
-
 public class notificationsMenu extends baseActivity implements activityParameters {
 
     private RecyclerView notifications;
@@ -37,7 +33,7 @@ public class notificationsMenu extends baseActivity implements activityParameter
         setContentView(R.layout.activity_notifications);
 
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_notifications);
-        viewHelperClass = new viewHelperClass(activityLayout, getApplicationContext());
+        viewHelperClass = new viewHelperClass(activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
         buttonSetup();
