@@ -9,3 +9,8 @@
 -Front end methods are implemented, should be able to have a completed front end by next meeting
 -Planned items for next meeting
 
+2017-06-18
+-Did not actually meet
+-Finished front end
+-Planned tasks for back end
+

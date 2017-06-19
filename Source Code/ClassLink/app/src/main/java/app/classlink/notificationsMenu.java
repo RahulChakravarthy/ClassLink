@@ -37,7 +37,7 @@ public class notificationsMenu extends baseActivity implements activityParameter
         setContentView(R.layout.activity_notifications);
 
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_notifications);
-        viewHelperClass = new viewHelperClass(activityLayout, getApplicationContext());
+        viewHelperClass = new viewHelperClass(activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
         buttonSetup();
