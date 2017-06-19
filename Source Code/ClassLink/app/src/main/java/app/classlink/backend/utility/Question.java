@@ -1,4 +1,4 @@
-package app.classlink.backend;
+package app.classlink.backend.utility;
 
 /**
  * Created by jaywe on 2017-06-09.

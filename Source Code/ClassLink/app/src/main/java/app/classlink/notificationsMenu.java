@@ -12,18 +12,13 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.classlink.backend.studyGroup;
+import app.classlink.backend.groups.GROUP_TYPE;
+import app.classlink.backend.groups.studyGroup;
 import app.classlink.recyclerHelperClasses.groupAdapter;
 import app.classlink.helperClasses.activityParameters;
 
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
-
-import app.classlink.backend.*;
-
-/**
- * Created by jaywe on 2017-06-11.
- */
 
 public class notificationsMenu extends baseActivity implements activityParameters {
 
@@ -37,7 +32,7 @@ public class notificationsMenu extends baseActivity implements activityParameter
         setContentView(R.layout.activity_notifications);
 
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_notifications);
-        viewHelperClass = new viewHelperClass(activityLayout, getApplicationContext());
+        viewHelperClass = new viewHelperClass(activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
         buttonSetup();
