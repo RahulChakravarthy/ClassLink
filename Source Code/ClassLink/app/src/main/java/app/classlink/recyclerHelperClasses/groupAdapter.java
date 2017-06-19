@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.classlink.R;
-import app.classlink.backend.studyGroup;
+import app.classlink.backend.groups.studyGroup;
 
 public class groupAdapter extends RecyclerView.Adapter<groupAdapter.MyViewHolder> {
 

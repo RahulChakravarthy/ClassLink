@@ -2,8 +2,6 @@ package app.classlink;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -50,7 +48,7 @@ class field {
 public class signUp extends baseActivity implements activityParameters {
 
     /** The functionality of this UI is such that if you want to include another field, just append  to this list*/
-    ArrayList<String> keys = new ArrayList<>(Arrays.asList("First Name", "Last Name", "Email", "Username", "Password", "Confirm Password"));
+    ArrayList<String> keys = new ArrayList<>(Arrays.asList("First Name:", "Last Name:", "Email:", "Username:", "Password:", "Confirm Password:", "Create a Security Question:", "Security Question Answer"));
     HashMap<String, field> fields = new HashMap<>();
 
     ImageView submit,line;
@@ -74,7 +72,7 @@ public class signUp extends baseActivity implements activityParameters {
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         //Text Setup
-        this.viewHelperClass.addText("Class-Link Sign UP: ", "OpenSans-Bold", "BLACK", 18f, 25, 5);
+        this.viewHelperClass.addText("Class-Link Sign Up: ", "OpenSans-Bold", "BLACK", 2, 18f, 25, 5);
 
         //Graphical Setup
         line = new ImageView(getApplicationContext());
@@ -86,17 +84,14 @@ public class signUp extends baseActivity implements activityParameters {
 
             EditText tempEdit = fields.get(keys.get(i)).inputBox;
 
-            this.viewHelperClass.addText(keys.get(i) + ":", "OpenSans-Regular", "BLACK", 16f, 50,16*i + 12);
-            this.viewHelperClass.addGraphicInputBox(tempEdit, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 16*i + 18, 0.75f, 0.75f);
+            this.viewHelperClass.addText(keys.get(i), "OpenSans-Regular", "BLACK", 1, 16f, 5,16*i + 12);
+            this.viewHelperClass.addGraphicInputBox(tempEdit, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 42, 16*i + 19, 0.75f, 0.75f);
         }
+
+        this.viewHelperClass.addText("What type of account is this?", "OpenSans-Regular", "BLACK", 1, 16f, 5, keys.size()*16 + 12);
 
         submit = new ImageView(getApplicationContext());
-        this.viewHelperClass.addTextToButton(submit, "Submit", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50,keys.size()*16 + 15f, 0.4f, 0.5f);
-
-        ScrollView signUpScrollView = (ScrollView) findViewById(R.id.signUpScrollView);
-        if (signUpScrollView.getScrollY() >  20){
-            signUpScrollView.setOnTouchListener(null);
-        }
+        this.viewHelperClass.addTextToButton(submit, "Submit", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50,keys.size()*16 + 30f, 0.4f, 0.5f);
     }
 
     /**

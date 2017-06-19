@@ -1,6 +1,9 @@
-package app.classlink.backend;
+package app.classlink.backend.groups;
 
 import java.util.LinkedList;
+
+import app.classlink.backend.utility.Question;
+import app.classlink.backend.user.user;
 
 public abstract class baseGroup {
 
@@ -8,7 +11,7 @@ public abstract class baseGroup {
     private int groupId;
     private String groupName;
     private String groupDescription;
-    private LinkedList<User> userList;
+    private LinkedList<user> userList;
     private LinkedList<Question> questionList;
 
     public GROUP_TYPE getGroupType() {
