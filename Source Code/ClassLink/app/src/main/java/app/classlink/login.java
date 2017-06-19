@@ -2,7 +2,6 @@ package app.classlink;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -10,8 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.util.Arrays;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
@@ -69,9 +66,9 @@ public class login extends baseActivity implements activityParameters {
         this.viewHelperClass.addTextToButton(signUp, "Sign Up", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 66, 55, 0.3f, 0.4f);
 
         //Text Settings
-        this.viewHelperClass.addText("CLASS-LINK", "OpenSans-ExtraBoldItalic", "BLACK", 50, 50, 13);//title
-        this.viewHelperClass.addText("User Name:", "OpenSans-Regular", "BLACK", 15, 50, 23); //User Name
-        this.viewHelperClass.addText("Password:", "OpenSans-Regular", "BLACK", 15, 50, 37);// Password
+        this.viewHelperClass.addText("CLASS-LINK", "OpenSans-ExtraBoldItalic", "BLACK", 2, 50, 50, 13);//title
+        this.viewHelperClass.addText("User Name:", "OpenSans-Regular", "BLACK", 2, 15, 50, 23); //user Name
+        this.viewHelperClass.addText("Password:", "OpenSans-Regular", "BLACK", 2, 15, 50, 37);// Password
 
         forgotPassword = new TextView(getApplicationContext());
         this.viewHelperClass.addText(forgotPassword, "Forgot Password?",  "OpenSans-Bold", "BLACK", 15, 50, 65, true);
@@ -104,7 +101,7 @@ public class login extends baseActivity implements activityParameters {
     public void forgotPasswordListener(){
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.signUp.class));}
+            public void onClick(View v) {startActivity(new Intent(login.this, login.class));}
         });
     }
 }

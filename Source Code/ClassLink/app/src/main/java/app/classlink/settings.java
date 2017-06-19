@@ -11,14 +11,10 @@ import app.classlink.parents.baseActivity;
 
 public class settings extends baseActivity implements activityParameters {
 
-    private ImageView blockBackground;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_settings);
-        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
     }
@@ -28,9 +24,9 @@ public class settings extends baseActivity implements activityParameters {
      */
     @Override
     public void layoutSetup() {
-        this.activityLayout.setBackgroundResource(R.drawable.bg);
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_settings);
+        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
+        this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
 
-        blockBackground = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(blockBackground, R.drawable.button_wide_grey, 0, 700, 0.975f, 8.0f, false);
     }
 }

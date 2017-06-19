@@ -2,7 +2,6 @@ package app.classlink;
 
 import android.content.Intent;
 
-import android.graphics.Color;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,11 +17,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import app.classlink.backend.groups.GROUP_TYPE;
+import app.classlink.backend.groups.studyGroup;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
 
-import app.classlink.backend.*;
 import app.classlink.recyclerHelperClasses.groupAdapter;
 
 public class mainAppMenu extends baseActivity implements activityParameters {
@@ -36,7 +36,7 @@ public class mainAppMenu extends baseActivity implements activityParameters {
     private LinkedList<ImageView> imageViews;
 
     private RecyclerView favourites;
-    private List<studyGroup> groupList = new ArrayList<>();
+    private List<app.classlink.backend.groups.studyGroup> groupList = new ArrayList<>();
     private groupAdapter gAdapter;
 
     @Override

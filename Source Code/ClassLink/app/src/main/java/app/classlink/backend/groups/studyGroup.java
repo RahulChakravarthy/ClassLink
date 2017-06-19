@@ -1,8 +1,8 @@
-package app.classlink.backend;
+package app.classlink.backend.groups;
 
-/**
- * Created by jaywe on 2017-06-09.
- */
+
+import app.classlink.backend.groups.GROUP_TYPE;
+import app.classlink.backend.groups.baseGroup;
 
 public class studyGroup extends baseGroup {
 
