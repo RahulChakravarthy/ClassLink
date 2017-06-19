@@ -23,7 +23,7 @@ import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
 
-import app.classlink.recyclerHelperClasses.groupAdapter;
+import app.classlink.helperClasses.groupAdapter;
 
 public class mainAppMenu extends baseActivity implements activityParameters {
 

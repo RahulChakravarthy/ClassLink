@@ -14,7 +14,7 @@ import java.util.List;
 
 import app.classlink.backend.groups.GROUP_TYPE;
 import app.classlink.backend.groups.studyGroup;
-import app.classlink.recyclerHelperClasses.groupAdapter;
+import app.classlink.helperClasses.groupAdapter;
 import app.classlink.helperClasses.activityParameters;
 
 import app.classlink.helperClasses.viewHelperClass;
