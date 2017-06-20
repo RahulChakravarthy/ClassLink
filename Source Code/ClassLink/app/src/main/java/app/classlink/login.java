@@ -19,9 +19,9 @@ import app.classlink.parents.baseActivity;
  */
 public class login extends baseActivity implements activityParameters {
 
-    TextView forgotPassword; //forgot password button
-    ImageView login, signUp, line; //front end graphic buttons/models
-    EditText usernameInput, passwordInput; //textinput boxes
+    private TextView forgotPassword; //forgot password button
+    private ImageView login, signUp, line; //front end graphic buttons/models
+    private EditText usernameInput, passwordInput; //textinput boxes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
