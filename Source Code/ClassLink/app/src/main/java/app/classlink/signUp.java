@@ -48,10 +48,10 @@ class field {
 public class signUp extends baseActivity implements activityParameters {
 
     /** The functionality of this UI is such that if you want to include another field, just append  to this list*/
-    private ArrayList<String> keys = new ArrayList<>(Arrays.asList("First Name:", "Last Name:", "Email:", "Username:", "Password:", "Confirm Password:", "Create a Security Question:", "Security Question Answer"));
+    private ArrayList<String> keys = new ArrayList<>(Arrays.asList("First Name:", "Last Name:", "Email:", "Phone Number:", "Username:", "Password:", "Confirm Password:", "Create a Security Question:", "Security Question Answer"));
     private HashMap<String, field> fields = new HashMap<>();
 
-    ImageView submit,line;
+    private ImageView submit,line;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
