@@ -121,7 +121,7 @@ public class mainAppMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainAppMenu.this, app.classlink.classLectureMenu.class));
+                startActivity(new Intent(mainAppMenu.this, app.classlink.joinLectureGroupMenu.class));
             }
         });
 

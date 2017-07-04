@@ -1,6 +1,5 @@
 package app.classlink;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -28,5 +27,10 @@ public class settings extends baseActivity implements activityParameters {
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
         this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
 
+        /** Text based graphics */
+        this.viewHelperClass.addText("Settings", "OpenSans-ExtraBold", "BLACK", 2, 25, 50, 5);
+
+        /** Graphical Graphics */
+        this.viewHelperClass.addGraphics(new ImageView(getApplicationContext()), R.drawable.line, 50, 8, 0.5f, 1, false);
     }
 }

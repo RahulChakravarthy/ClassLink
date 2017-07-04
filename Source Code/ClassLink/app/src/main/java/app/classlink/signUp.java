@@ -48,10 +48,10 @@ class field {
 public class signUp extends baseActivity implements activityParameters {
 
     /** The functionality of this UI is such that if you want to include another field, just append  to this list*/
-    ArrayList<String> keys = new ArrayList<>(Arrays.asList("First Name:", "Last Name:", "Email:", "Username:", "Password:", "Confirm Password:", "Create a Security Question:", "Security Question Answer"));
-    HashMap<String, field> fields = new HashMap<>();
+    private ArrayList<String> keys = new ArrayList<>(Arrays.asList("First Name:", "Last Name:", "Email:", "Phone Number:", "Username:", "Password:", "Confirm Password:", "Create a Security Question:", "Security Question Answer"));
+    private HashMap<String, field> fields = new HashMap<>();
 
-    ImageView submit,line;
+    private ImageView submit,line;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,8 @@ public class signUp extends baseActivity implements activityParameters {
         //Graphical Setup
         line = new ImageView(getApplicationContext());
         this.viewHelperClass.addGraphics(line, R.drawable.line, 40, 8, 0.75f, 1, false);
-        /** Field graphics*/
+
+        /**Text Field graphics*/
         for (int i = 0; i < keys.size(); i++){
             //Add each field to a hashmap
             fields.put(keys.get(i), new field(keys.get(i), this.viewHelperClass.getActivityContext()));
@@ -88,8 +89,10 @@ public class signUp extends baseActivity implements activityParameters {
             this.viewHelperClass.addGraphicInputBox(tempEdit, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 42, 16*i + 19, 0.75f, 0.75f);
         }
 
+        /** Radio button field graphics */
         this.viewHelperClass.addText("What type of account is this?", "OpenSans-Regular", "BLACK", 1, 16f, 5, keys.size()*16 + 12);
 
+        /**Check box field graphics */
         submit = new ImageView(getApplicationContext());
         this.viewHelperClass.addTextToButton(submit, "Submit", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50,keys.size()*16 + 30f, 0.4f, 0.5f);
     }

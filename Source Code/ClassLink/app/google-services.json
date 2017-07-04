@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "848458682279-g7g277tfn10c5n99biu76hfd20eqcpsl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.classlink",
+            "certificate_hash": "aeb69404b5b5d045615334629d9baa216f4be7bc"
+          }
+        },
+        {
           "client_id": "848458682279-73j0rgvbk5t2jdsirhuhfacbll89n4k2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -30,6 +38,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyAkC7zW_1CQ-KcaILK-35Bhs9raqYs3KeU"
+        },
+        {
+          "current_key": "AIzaSyB7U2TTNNkSTq_Gvs0z06hKMYKTCNor4BU"
         }
       ],
       "services": {
