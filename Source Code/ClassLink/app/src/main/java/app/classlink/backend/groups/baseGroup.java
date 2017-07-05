@@ -3,7 +3,7 @@ package app.classlink.backend.groups;
 import java.util.LinkedList;
 
 import app.classlink.backend.utility.Question;
-import app.classlink.backend.user.user;
+import app.classlink.backend.users.user.user;
 
 public abstract class baseGroup {
 
