@@ -16,19 +16,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".lectureGroupRoom" />
-        <activity android:name=".classLectureMenu" />
-        <activity android:name=".createLectureGroupMenu" />
-        <activity android:name=".createStudyGroupMenu" />
-        <activity android:name=".joinLectureGroupMenu" />
-        <activity android:name=".joinStudyGroupMenu" />
-        <activity android:name=".mainAppMenu" />
+        <activity android:name=".lectureRoom" />
+        <activity android:name=".lectureMenu" />
+        <activity android:name=".lectureCreate" />
+        <activity android:name=".studyCreate" />
+        <activity android:name=".lectureJoin" />
+        <activity android:name=".studyJoin" />
+        <activity android:name=".mainMenu" />
         <activity android:name=".settings" />
         <activity android:name=".signUp" />
-        <activity android:name=".studyGroupMenu" />
-        <activity android:name=".studyGroupRoom" />
+        <activity android:name=".studyMenu" />
+        <activity android:name=".studyRoom" />
         <activity android:name=".userProfile"/>
-            <activity android:name=".notificationsMenu">
+            <activity android:name=".notifications">
         </activity>
     </application>
 

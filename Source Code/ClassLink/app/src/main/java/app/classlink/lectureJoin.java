@@ -12,7 +12,7 @@ import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
 
-public class joinLectureGroupMenu extends baseActivity implements activityParameters {
+public class lectureJoin extends baseActivity implements activityParameters {
 
     private ImageView createLectureGroup, line;
     private RecyclerView groupList;
@@ -21,7 +21,7 @@ public class joinLectureGroupMenu extends baseActivity implements activityParame
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_join_lecture_group_menu);
+        setContentView(R.layout.acitivty_lecture_join);
 
         layoutSetup();
         groupListSetup();
@@ -68,7 +68,7 @@ public class joinLectureGroupMenu extends baseActivity implements activityParame
         createLectureGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(joinLectureGroupMenu.this, createLectureGroupMenu.class));
+                startActivity(new Intent(lectureJoin.this, lectureCreate.class));
             }
         });
     }

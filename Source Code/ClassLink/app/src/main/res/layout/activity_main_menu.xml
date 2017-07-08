@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/bg"
-    tools:context="app.classlink.mainAppMenu">
+    tools:context="app.classlink.mainMenu">
 
     <ImageView
         android:layout_width="match_parent"

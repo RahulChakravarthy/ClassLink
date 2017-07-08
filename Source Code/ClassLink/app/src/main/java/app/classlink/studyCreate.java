@@ -1,20 +1,19 @@
 package app.classlink;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.parents.baseActivity;
 
-public class joinStudyGroupMenu extends baseActivity implements activityParameters {
+public class studyCreate extends baseActivity implements activityParameters {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_join_study_group_menu);
+        setContentView(R.layout.activity_study_create);
 
-        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_join_study_group_menu);
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_create_study_group_menu);
 
         layoutSetup();
     }
