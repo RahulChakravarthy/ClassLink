@@ -8,7 +8,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.helperClasses.activityParameters;
+import app.classlink.helperClasses.recyclerAdapters.displayLectureGroupsAdapter;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
 
@@ -16,6 +21,7 @@ public class joinLectureGroupMenu extends baseActivity implements activityParame
 
     private ImageView createLectureGroup, line;
     private RecyclerView groupList;
+    private displayLectureGroupsAdapter groupListAdapter;
     private LinearLayoutManager groupLayout;
 
     @Override
@@ -58,6 +64,13 @@ public class joinLectureGroupMenu extends baseActivity implements activityParame
         this.groupList = (RecyclerView) findViewById(R.id.groupList);
         this.groupLayout = new LinearLayoutManager(this.viewHelperClass.getActivityContext());
         groupList.setLayoutManager(this.groupLayout);
+
+        //style the recycleViewer
+
+        //Geta all lecture groups
+        LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
+        this.groupListAdapter = new displayLectureGroupsAdapter(new ArrayList<>(Arrays.asList(lectureGroupDAO.getAllLectureGroups())));
+        this.groupList.setAdapter(this.groupListAdapter);
 
     }
 

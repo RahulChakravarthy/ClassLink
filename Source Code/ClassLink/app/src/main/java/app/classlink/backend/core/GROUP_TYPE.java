@@ -1,4 +1,4 @@
-package app.classlink.backend.groups;
+package app.classlink.backend.core;
 
 
 public enum GROUP_TYPE {

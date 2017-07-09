@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import app.classlink.backend.groups.GROUP_TYPE;
-import app.classlink.backend.groups.studyGroup;
+import app.classlink.backend.core.GROUP_TYPE;
+import app.classlink.backend.groups.study.studyGroup;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
@@ -36,7 +36,7 @@ public class mainAppMenu extends baseActivity implements activityParameters {
     private LinkedList<ImageView> imageViews;
 
     private RecyclerView favourites;
-    private List<app.classlink.backend.groups.studyGroup> groupList = new ArrayList<>();
+    private List<app.classlink.backend.groups.study.studyGroup> groupList = new ArrayList<>();
     private groupAdapter gAdapter;
 
     @Override
