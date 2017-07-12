@@ -15,13 +15,15 @@ import android.view.MenuItem;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.parents.baseActivity;
 
-public class lectureRoom extends baseActivity implements activityParameters,
+public class lectureGroupRoom extends baseActivity implements activityParameters,
          NavigationView.OnNavigationItemSelectedListener {
+
+    private lectureGroupRoom lectureGroupRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lecture_room);
+        setContentView(R.layout.activity_lecture_group_room);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -42,6 +44,8 @@ public class lectureRoom extends baseActivity implements activityParameters,
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Call all activity methods
     }
 
     @Override

@@ -28,7 +28,7 @@
         <activity android:name=".userProfile" />
         <activity android:name=".notificationsMenu"></activity>
         <activity
-            android:name=".lectureRoom"
+            android:name=".lectureGroupRoom"
             android:label="@string/title_activity_join_lecture_room"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
