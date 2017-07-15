@@ -46,6 +46,7 @@ public class lectureGroupRoom extends baseActivity implements activityParameters
         navigationView.setNavigationItemSelectedListener(this);
 
         //Call all activity methods
+        layoutSetup();
     }
 
     @Override
@@ -108,7 +109,6 @@ public class lectureGroupRoom extends baseActivity implements activityParameters
     /**
      * Activity Methods
      */
-
     @Override
     public void layoutSetup() {
 
