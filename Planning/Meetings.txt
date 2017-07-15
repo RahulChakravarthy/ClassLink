@@ -14,3 +14,9 @@
 -Finished front end
 -Planned tasks for back end
 
+2017-07-15
+-Met!
+-Back end structure is done, now get working on developping it
+-Firebase is working, now work on streamlining it
+
+
