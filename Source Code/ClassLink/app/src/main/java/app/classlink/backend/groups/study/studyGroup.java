@@ -1,8 +1,11 @@
 package app.classlink.backend.groups.study;
 
 
+import java.util.LinkedList;
+
 import app.classlink.backend.core.GROUP_TYPE;
 import app.classlink.backend.core.baseGroup;
+import app.classlink.backend.statement.statementGrouping.groupedStatement;
 
 public class studyGroup extends baseGroup {
 
@@ -13,4 +16,8 @@ public class studyGroup extends baseGroup {
         this.groupDescription = groupDescription;
     }
 
+    @Override
+    public LinkedList<groupedStatement> getGroupStatements() {
+        return null;
+    }
 }
