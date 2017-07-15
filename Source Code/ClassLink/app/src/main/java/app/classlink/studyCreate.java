@@ -13,7 +13,7 @@ public class studyCreate extends baseActivity implements activityParameters {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_create);
 
-        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_create_study_group_menu);
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_create);
 
         layoutSetup();
     }

@@ -20,7 +20,7 @@ public class studyMenu extends baseActivity implements activityParameters {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_menu);
 
-        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_group_menu);
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_menu);
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();

@@ -34,7 +34,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
      */
     @Override
     public void layoutSetup() {
-        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_join_lecture_group_menu);
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_lecture_join);
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
         this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
 

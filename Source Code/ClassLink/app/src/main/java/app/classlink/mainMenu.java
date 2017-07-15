@@ -44,7 +44,7 @@ public class mainMenu extends baseActivity implements activityParameters {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_main_app_menu);
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_main_menu);
         viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
@@ -113,7 +113,7 @@ public class mainMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainMenu.this, studyMenu.class));
+                startActivity(new Intent(mainMenu.this, studyRoom.class));
             }
         });
 

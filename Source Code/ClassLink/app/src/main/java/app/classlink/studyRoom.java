@@ -22,18 +22,22 @@ import app.classlink.parents.baseActivity;
 
 public class studyRoom extends baseActivity implements activityParameters {
 
+    LinearLayout l;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_room);
+        //this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_room);
 
-        final RelativeLayout l = (RelativeLayout) findViewById(R.id.activity_study_room);
+        l = (LinearLayout) findViewById(R.id.activity_study_room);
 
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
 
         final EditText field = new EditText(getApplicationContext());
         l.addView(field);
         field.setTextColor(Color.BLACK);
+        field.setText("text...");
 
         Button ask = new Button(getApplicationContext());
         ask.setText("Ask!");
@@ -94,6 +98,6 @@ public class studyRoom extends baseActivity implements activityParameters {
      */
     @Override
     public void layoutSetup() {
-
+        l.setBackgroundColor(Color.WHITE);
     }
 }

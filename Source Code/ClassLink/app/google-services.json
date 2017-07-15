@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "848458682279-q6vjcgmpbtjn6go5v9aslmfj2guq2uqh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.classlink",
+            "certificate_hash": "0e767c3e638f0c3765f2161dfc1180a29659a5a2"
+          }
+        },
+        {
           "client_id": "848458682279-g7g277tfn10c5n99biu76hfd20eqcpsl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -17,7 +17,7 @@ public class lectureMenu extends AppCompatActivity implements activityParameters
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecture_menu);
 
-        classLectureMenuLayout = (RelativeLayout) findViewById(R.id.activity_class_lecture_menu);
+        classLectureMenuLayout = (RelativeLayout) findViewById(R.id.activity_lecture_menu);
         viewHelperClass = new viewHelperClass(classLectureMenuLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
