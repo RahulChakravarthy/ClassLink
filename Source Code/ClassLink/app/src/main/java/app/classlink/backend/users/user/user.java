@@ -1,9 +1,13 @@
-package app.classlink.backend.user;
+package app.classlink.backend.users.user;
 
 
 public abstract class user {
-    private int userId;
-    private String userName;
+    protected int userId;
+    protected String userName;
+    protected String firstName;
+    protected String lastName;
+    protected int permissionLevel;
+
 
     public int getUserId() {
         return userId;
