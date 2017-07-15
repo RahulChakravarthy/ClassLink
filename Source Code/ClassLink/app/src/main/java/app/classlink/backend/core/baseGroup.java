@@ -2,6 +2,7 @@ package app.classlink.backend.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import app.classlink.backend.users.user.user;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
@@ -46,5 +47,5 @@ public abstract class baseGroup {
         this.groupDescription = groupDescription;
     }
 
-    abstract public ArrayList<groupedStatement> getGroupStatements();
+    abstract public LinkedList<groupedStatement> getGroupStatements();
 }
