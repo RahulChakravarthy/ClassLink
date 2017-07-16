@@ -1,7 +1,6 @@
 package app.classlink;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +10,7 @@ import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
 
-public class studyGroupMenu extends baseActivity implements activityParameters {
+public class studyMenu extends baseActivity implements activityParameters {
 
     private ImageView create;
     private ImageView join;
@@ -19,9 +18,9 @@ public class studyGroupMenu extends baseActivity implements activityParameters {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_study_group_menu);
+        setContentView(R.layout.activity_study_menu);
 
-        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_group_menu);
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_menu);
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
@@ -48,14 +47,14 @@ public class studyGroupMenu extends baseActivity implements activityParameters {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(studyGroupMenu.this, createStudyGroupMenu.class));
+                startActivity(new Intent(studyMenu.this, studyCreate.class));
             }
         });
 
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(studyGroupMenu.this, joinStudyGroupMenu.class));
+                startActivity(new Intent(studyMenu.this, studyJoin.class));
             }
         });
     }

@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,7 +19,7 @@ import app.classlink.helperClasses.recyclerAdapters.displayLectureGroupsAdapter;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
 
-public class joinLectureGroupMenu extends baseActivity implements activityParameters {
+public class lectureJoin extends baseActivity implements activityParameters {
 
     private ImageView createLectureGroup, genericLectureRoom, line;
     private EditText searchBox;
@@ -32,7 +30,7 @@ public class joinLectureGroupMenu extends baseActivity implements activityParame
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_join_lecture_group_menu);
+        setContentView(R.layout.acitivty_lecture_join);
 
         layoutSetup();
         groupListSetup();
@@ -40,14 +38,12 @@ public class joinLectureGroupMenu extends baseActivity implements activityParame
         genericLectureRoomListener();
     }
 
-
-
     /**
      * @Method  layoutSetup : Sets up all static UI components of the activity
      */
     @Override
     public void layoutSetup() {
-        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_join_lecture_group_menu);
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_lecture_join);
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
         this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
 
@@ -101,7 +97,7 @@ public class joinLectureGroupMenu extends baseActivity implements activityParame
         createLectureGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(joinLectureGroupMenu.this, createLectureGroupMenu.class));
+                startActivity(new Intent(lectureJoin.this, lectureCreate.class));
             }
         });
     }
@@ -110,7 +106,7 @@ public class joinLectureGroupMenu extends baseActivity implements activityParame
         genericLectureRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(joinLectureGroupMenu.this, lectureGroupRoom.class));
+                startActivity(new Intent(lectureJoin.this, lectureRoom.class));
             }
         });
     }

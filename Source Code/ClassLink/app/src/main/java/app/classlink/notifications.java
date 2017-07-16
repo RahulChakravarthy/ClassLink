@@ -20,7 +20,7 @@ import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
 
-public class notificationsMenu extends baseActivity implements activityParameters {
+public class notifications extends baseActivity implements activityParameters {
 
     private RecyclerView notifications;
     private List<studyGroup> notificationList = new ArrayList<>();

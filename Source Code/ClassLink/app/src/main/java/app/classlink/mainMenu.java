@@ -25,7 +25,7 @@ import app.classlink.parents.baseActivity;
 
 import app.classlink.helperClasses.recyclerAdapters.groupAdapter;
 
-public class mainAppMenu extends baseActivity implements activityParameters {
+public class mainMenu extends baseActivity implements activityParameters {
 
     //Setting up ImageViews that become buttons
     private ImageView studyGroup;
@@ -42,9 +42,9 @@ public class mainAppMenu extends baseActivity implements activityParameters {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_app_menu);
+        setContentView(R.layout.activity_main_menu);
 
-        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_main_app_menu);
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_main_menu);
         viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
@@ -113,7 +113,7 @@ public class mainAppMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainAppMenu.this, app.classlink.studyGroupMenu.class));
+                startActivity(new Intent(mainMenu.this, studyRoom.class));
             }
         });
 
@@ -121,7 +121,7 @@ public class mainAppMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainAppMenu.this, app.classlink.joinLectureGroupMenu.class));
+                startActivity(new Intent(mainMenu.this, lectureJoin.class));
             }
         });
 
@@ -129,7 +129,7 @@ public class mainAppMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainAppMenu.this, app.classlink.settings.class));
+                startActivity(new Intent(mainMenu.this, app.classlink.settings.class));
             }
         });
 
@@ -137,14 +137,14 @@ public class mainAppMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainAppMenu.this, app.classlink.userProfile.class));
+                startActivity(new Intent(mainMenu.this, app.classlink.userProfile.class));
             }
         });
 
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainAppMenu.this, app.classlink.notificationsMenu.class));
+                startActivity(new Intent(mainMenu.this, app.classlink.notifications.class));
             }
         });
 

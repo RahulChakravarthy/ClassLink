@@ -1,17 +1,19 @@
 package app.classlink;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.parents.baseActivity;
 
-public class studyGroupRoom extends baseActivity implements activityParameters {
+public class studyCreate extends baseActivity implements activityParameters {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_study_group_room);
+        setContentView(R.layout.activity_study_create);
+
+        this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_create);
 
         layoutSetup();
     }
@@ -21,6 +23,6 @@ public class studyGroupRoom extends baseActivity implements activityParameters {
      */
     @Override
     public void layoutSetup() {
-
+        this.activityLayout.setBackgroundResource(R.drawable.bg);
     }
 }

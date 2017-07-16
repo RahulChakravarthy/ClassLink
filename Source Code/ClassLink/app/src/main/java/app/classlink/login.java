@@ -82,7 +82,7 @@ public class login extends baseActivity implements activityParameters {
     private void loginListener() {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.mainAppMenu.class));}
+            public void onClick(View v) {startActivity(new Intent(login.this, mainMenu.class));}
         });
     }
 
