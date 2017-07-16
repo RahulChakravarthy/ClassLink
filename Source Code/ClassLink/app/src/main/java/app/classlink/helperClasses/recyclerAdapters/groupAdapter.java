@@ -1,4 +1,4 @@
-package app.classlink.helperClasses;
+package app.classlink.helperClasses.recyclerAdapters;
 
 /**
  * Created by jaywe on 2017-06-09.
@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.classlink.R;
-import app.classlink.backend.groups.studyGroup;
+import app.classlink.backend.groups.study.studyGroup;
 
 public class groupAdapter extends RecyclerView.Adapter<groupAdapter.MyViewHolder> {
 

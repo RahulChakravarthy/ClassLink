@@ -18,4 +18,14 @@ public class administrator extends user {
         //generate admin and user Id
 
     }
+
+    @Override
+    public int getUserPermission() {
+        return 3;
+    }
+
+    @Override
+    public void setPermissionLevel(int permissionLevel) {
+        this.permissionLevel = permissionLevel;
+    }
 }

@@ -1,18 +1,19 @@
-package app.classlink.backend.groups;
+package app.classlink.backend.core;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
-import app.classlink.backend.utility.Question;
 import app.classlink.backend.users.user.user;
+import app.classlink.backend.statement.statementGrouping.groupedStatement;
 
 public abstract class baseGroup {
 
     public GROUP_TYPE groupType;
-    private int groupId;
-    private String groupName;
-    private String groupDescription;
-    private LinkedList<user> userList;
-    private LinkedList<Question> questionList;
+    protected int groupId;
+    protected String groupName;
+    protected String groupDescription;
+    protected HashMap<Integer, user> userList;
 
     public GROUP_TYPE getGroupType() {
         return groupType;
@@ -46,5 +47,5 @@ public abstract class baseGroup {
         this.groupDescription = groupDescription;
     }
 
-
+    abstract public LinkedList<groupedStatement> getGroupStatements();
 }

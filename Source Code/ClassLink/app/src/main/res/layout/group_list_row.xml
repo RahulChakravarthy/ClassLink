@@ -39,6 +39,5 @@
         android:layout_below="@+id/name"
         android:layout_alignParentEnd="true"
         android:textColor="?attr/colorButtonNormal" />
-    >
 
 </RelativeLayout>

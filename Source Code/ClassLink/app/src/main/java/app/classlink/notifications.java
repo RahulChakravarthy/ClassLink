@@ -12,9 +12,9 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.classlink.backend.groups.GROUP_TYPE;
-import app.classlink.backend.groups.studyGroup;
-import app.classlink.helperClasses.groupAdapter;
+import app.classlink.backend.core.GROUP_TYPE;
+import app.classlink.backend.groups.study.studyGroup;
+import app.classlink.helperClasses.recyclerAdapters.groupAdapter;
 import app.classlink.helperClasses.activityParameters;
 
 import app.classlink.helperClasses.viewHelperClass;

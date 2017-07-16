@@ -3,25 +3,45 @@ package app.classlink.backend.users.user;
 
 public abstract class user {
     protected int userId;
-    protected String userName;
-    protected String firstName;
-    protected String lastName;
-    protected int permissionLevel;
+    protected String userName, password, firstName, lastName, email, securityQuestion, securityAnswer;
+    protected int permissionLevel; // 1 = student, 2 = teacher, 3 = administrator, 4 = god?????
 
+    abstract public int getUserPermission();
 
-    public int getUserId() {
-        return userId;
-    }
+    abstract public void setPermissionLevel(int permissionLevel);
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    /**
+     *Getters and Setters for the user class
+     */
+    public int getUserId() {return userId;}
 
-    public String getUserName() {
-        return userName;
-    }
+    public void setUserId(int userId) {this.userId = userId;}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    public String getUserName() {return userName;}
+
+    public void setUserName(String userName) {this.userName = userName;}
+
+    public String getPassword(){return this.password;}
+
+    public void setPassword(String password){this.password = password;}
+
+    public String getFirstName(){return this.firstName;}
+
+    public void setFirstName(String firstName){this.firstName = firstName;}
+
+    public String getLastName(){return this.lastName;}
+
+    public void setLastName(String lastName){this.lastName = lastName;}
+
+    public String getEmail(){return this.email;}
+
+    public void setEmail(String email){this.email = email;}
+
+    public String getSecurityQuestion() {return securityQuestion;}
+
+    public void setSecurityQuestion(String securityQuestion) {this.securityQuestion = securityQuestion;}
+
+    public String getSecurityAnswer() {return securityAnswer;}
+
+    public void setSecurityAnswer(String securityAnswer) {this.securityAnswer = securityAnswer;}
 }
