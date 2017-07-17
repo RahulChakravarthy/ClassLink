@@ -6,15 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-
-import app.classlink.backend.core.firebaseHelper;
-import app.classlink.backend.utility.Question;
+import app.classlink.backend.statement.statementType.question;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.parents.baseActivity;
@@ -55,7 +48,7 @@ public class studyRoom extends baseActivity implements activityParameters {
             @Override
             public void onClick(View v) {
 
-                Question q = new Question(0, field.getText().toString());
+                question q = new question(field.getText().toString(), 0);
                 f.addItem(q);
                 field.setText(null);
 

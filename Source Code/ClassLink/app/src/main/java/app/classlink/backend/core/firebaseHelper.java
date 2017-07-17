@@ -8,7 +8,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import app.classlink.backend.utility.Question;
+import app.classlink.backend.statement.statementType.question;
 
 /**
  *
@@ -40,7 +40,7 @@ public class firebaseHelper {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.exists()) {
-                    Question q = new Question(dataSnapshot.getValue(Question.class));
+                    question q = new question(dataSnapshot.getValue(question.class));
                     Log.d("Good", "Question is: " + q.getField());
                 }
             }

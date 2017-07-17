@@ -14,8 +14,15 @@ public class question extends statements {
         this.score = 0;
     }
 
+    public question(question q) {
+        this.questionText = q.getField();
+
+    }
+
     @Override
     public String getStatementType() {
         return this.statementType;
     }
+
+    public String getField() { return this.questionText; }
 }
