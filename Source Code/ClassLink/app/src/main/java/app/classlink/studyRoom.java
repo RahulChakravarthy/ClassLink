@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import app.classlink.backend.core.firebaseHelper;
 import app.classlink.backend.utility.Question;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.parents.baseActivity;
@@ -28,67 +29,10 @@ public class studyRoom extends baseActivity implements activityParameters {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_room);
-        //this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_room);
 
         l = (LinearLayout) findViewById(R.id.activity_study_room);
 
-        final FirebaseDatabase db = FirebaseDatabase.getInstance();
-
-        final EditText field = new EditText(getApplicationContext());
-        l.addView(field);
-        field.setTextColor(Color.BLACK);
-        field.setText("text...");
-
-        Button ask = new Button(getApplicationContext());
-        ask.setText("Ask!");
-        l.addView(ask);
-
-        final DatabaseReference questionList = db.getReference("Questions: " );
-        questionList.addChildEventListener((new ChildEventListener() {
-
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.exists()) {
-                    Question q1 = new Question(dataSnapshot.getValue(Question.class));
-                    Log.d("Good", "Question is: " + q1.getField());
-
-                    TextView tv1 = new TextView(getApplicationContext());
-                    tv1.setText(q1.getField());
-                    tv1.setTextColor(Color.BLACK);
-                    l.addView(tv1);
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        }));
-
-        ask.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Question q = new Question(0, field.getText().toString());
-                questionList.push().setValue(q, 0);
-                field.setText(null);
-            }
-        });
+        f.startList("Questions: ");
 
         layoutSetup();
     }
@@ -99,5 +43,23 @@ public class studyRoom extends baseActivity implements activityParameters {
     @Override
     public void layoutSetup() {
         l.setBackgroundColor(Color.WHITE);
+        final EditText field = new EditText(getApplicationContext());
+        l.addView(field);
+        field.setTextColor(Color.BLACK);
+        field.setText("text...");
+
+        Button ask = new Button(getApplicationContext());
+        ask.setText("Ask!");
+        l.addView(ask);
+
+        ask.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Question q = new Question(0, field.getText().toString());
+                f.addItem(q);
+                field.setText(null);
+            }
+        });
     }
 }
