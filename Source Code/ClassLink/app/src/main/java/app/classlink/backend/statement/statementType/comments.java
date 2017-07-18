@@ -10,7 +10,7 @@ public class comments extends statements {
 
     public comments(String commentText, int userId){
         this.commentText = commentText;
-        this.userIdWhoIssuedStatement = userId;
+        this.userId = userId;
         this.score = 0;
     }
 

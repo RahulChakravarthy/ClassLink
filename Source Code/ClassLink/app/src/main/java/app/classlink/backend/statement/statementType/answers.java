@@ -9,7 +9,7 @@ public class answers extends statements {
 
     public answers(String answerText, int userId){
         this.answerText = answerText;
-        this.userIdWhoIssuedStatement = userId;
+        this.userId = userId;
         this.score = 0;
     }
 

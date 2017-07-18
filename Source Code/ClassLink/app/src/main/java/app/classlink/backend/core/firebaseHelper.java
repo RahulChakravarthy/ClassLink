@@ -8,6 +8,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 import app.classlink.backend.statement.statementType.question;
 
 /**
@@ -17,6 +19,7 @@ public class firebaseHelper {
 
     protected DatabaseReference list;
     protected FirebaseDatabase db;
+    protected HashMap<Integer, question> listContents;
 
     /**
      * @Constructor: initializes the connection
@@ -32,13 +35,15 @@ public class firebaseHelper {
      */
     public DatabaseReference startList(String listName) {
         this.list = this.db.getReference(listName);
+        this.listContents = new HashMap<>();
 
         this.list.addChildEventListener((new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.exists()) {
                     question q = new question(dataSnapshot.getValue(question.class));
-                    Log.d("Good", "Question is: " + q.getField());
+                    Log.d("Addition: ", "Question is: " + q.getQuestionText());
+                    listContents.put(q.getUserId(), q);
                 }
             }
 
@@ -70,4 +75,6 @@ public class firebaseHelper {
     public void addItem(Object o) {
         this.list.push().setValue(o);
     }
+
+    public HashMap<Integer, question> getListContents() { return this.listContents; }
 }
