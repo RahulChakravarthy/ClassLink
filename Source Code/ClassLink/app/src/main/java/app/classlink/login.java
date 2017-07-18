@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import app.classlink.backend.users.student.student;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
@@ -55,10 +54,10 @@ public class login extends baseActivity implements activityParameters {
         this.viewHelperClass.addGraphics(line, R.drawable.line, 50, 18, 0.75f, 1, false);
 
         usernameInput = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(usernameInput,R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 30, 0.75f, 0.8f);
+        this.viewHelperClass.addGraphicInputBox(usernameInput, null, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 30, 0.75f, 0.8f);
 
         passwordInput = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(passwordInput, R.drawable.inputbox, InputType.TYPE_TEXT_VARIATION_PASSWORD, 50, 44, 0.75f, 0.8f);
+        this.viewHelperClass.addGraphicInputBox(passwordInput, null, R.drawable.inputbox, InputType.TYPE_TEXT_VARIATION_PASSWORD, 50, 44, 0.75f, 0.8f);
 
         login = new ImageView(getApplicationContext());
         this.viewHelperClass.addTextToButton(login, "Login", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 34, 55, 0.3f, 0.4f);

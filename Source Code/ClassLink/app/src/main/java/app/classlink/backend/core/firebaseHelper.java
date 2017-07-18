@@ -11,11 +11,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import app.classlink.backend.statement.statementType.question;
 
 /**
- *
- * Created by jaywe on 2017-07-15.
- *
+ * @Class firebaseHelper : adapter class that enables our app data to interact with firebase cloud servers
  */
-
 public class firebaseHelper {
 
     protected DatabaseReference list;
@@ -47,22 +44,19 @@ public class firebaseHelper {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.w("Database Error", "Failed to execute value", databaseError.toException());
             }
         }));
 

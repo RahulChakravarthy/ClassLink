@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,7 +85,7 @@ public class signUp extends baseActivity implements activityParameters {
             EditText tempEdit = fields.get(keys.get(i)).inputBox;
 
             this.viewHelperClass.addText(keys.get(i), "OpenSans-Regular", "BLACK", 1, 16f, 5,16*i + 12);
-            this.viewHelperClass.addGraphicInputBox(tempEdit, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 42, 16*i + 19, 0.75f, 0.75f);
+            this.viewHelperClass.addGraphicInputBox(tempEdit, null, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 42, 16*i + 19, 0.75f, 0.75f);
         }
 
         /** Radio button field graphics */

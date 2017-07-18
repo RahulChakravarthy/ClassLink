@@ -260,18 +260,20 @@ public class viewHelperClass {
     /**
      * @Method addGraphicInputBox : programmatic way of adding a text input box on top of a graphic layout
      * @param textInput : EditText object reference
+     * @param hint : optional placeholder text
      * @param resourceId : image resource ID
      * @param xPosition : x positon of view in %
      * @param yPosition : y position of view in %
      * @param xScale : x scale
      * @param yScale : y scale
      */
-    public void addGraphicInputBox(EditText textInput, int resourceId, int inputType, float xPosition, float yPosition, float xScale, float yScale){
+    public void addGraphicInputBox(EditText textInput, String hint, int resourceId, int inputType, float xPosition, float yPosition, float xScale, float yScale){
         this.editGraphics(textInput,xPosition,yPosition,xScale,yScale);
         textInput.setPadding(20,0,20,0);
         textInput.setBackground(this.activityContext.getDrawable(resourceId));
         textInput.setTextColor(Color.BLACK);
         textInput.setInputType(inputType);
+
 
         if (inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD){
             textInput.setTransformationMethod(PasswordTransformationMethod.getInstance());

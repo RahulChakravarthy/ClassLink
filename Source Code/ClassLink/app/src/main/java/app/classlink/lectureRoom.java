@@ -3,6 +3,7 @@ package app.classlink;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,15 +13,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 import app.classlink.backend.groups.lecture.lectureGroup;
 import app.classlink.helperClasses.activityParameters;
+import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
 
 public class lectureRoom extends baseActivity
         implements NavigationView.OnNavigationItemSelectedListener, activityParameters {
 
-    private lectureGroup thisLectureRoom;
+    private lectureGroup lectureGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class lectureRoom extends baseActivity
 
         //Call activity methods here
         layoutSetup();
+        loadLectureStatements();
     }
 
     @Override
@@ -83,6 +87,11 @@ public class lectureRoom extends baseActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * @Method onNavigationItemSelected : handles displaying and actions when statements are clikced
+     * @param item : Displays all lecture statements
+     * @return whether or not an item was pressed
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -90,7 +99,7 @@ public class lectureRoom extends baseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Log.d("Testing button", "YES");
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -113,6 +122,16 @@ public class lectureRoom extends baseActivity
      */
     @Override
     public void layoutSetup() {
+//        this.activityLayout = (RelativeLayout) findViewById(R.id.drawer_layout);
+//        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
+//        this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
+    }
+
+    /**
+     * @Method loadLectureStatements : loads all firebase data from a specific lecture group into a cache
+     */
+    private void loadLectureStatements() {
+        //do a one time load if all grouped statements into the linked list
 
     }
 }

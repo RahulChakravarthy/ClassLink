@@ -59,7 +59,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
         this.viewHelperClass.addTextToButton(this.createLectureGroup, "Create Lecture Group", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 30f, 90f, 0.5f,0.5f);
 
         this.searchBox = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(this.searchBox, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 22, 0.75f, 0.8f);
+        this.viewHelperClass.addGraphicInputBox(this.searchBox, null, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 22, 0.75f, 0.8f);
 
         //For testing purposes add button to take to generic Lecture Room
         this.genericLectureRoom = new ImageView(getApplicationContext());
