@@ -27,10 +27,17 @@ public class settings extends baseActivity implements activityParameters {
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
         this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
 
-        /** Text based graphics */
+        // Text based graphics
         this.viewHelperClass.addText("Settings", "OpenSans-ExtraBold", "BLACK", 2, 25, 50, 5);
+        this.viewHelperClass.addText("First Name:", "OpenSans-Regular", "BLACK", 1, 15, 10, 13);
+        this.viewHelperClass.addText("Last Name:", "OpenSans-Regular", "BLACK", 1, 15, 10, 15);
+        this.viewHelperClass.addText("Username:", "OpenSans-Regular", "BLACK", 1, 15, 10, 20);
+        this.viewHelperClass.addText("Email:", "OpenSans-Regular", "BLACK", 1, 15, 10, 25);
+        this.viewHelperClass.addText("Enable Notifications:", "OpenSans-Regular", "BLACK", 1, 15, 10, 30);
+        //Get user information
 
-        /** Graphical Graphics */
+
+        // Graphical Graphics
         this.viewHelperClass.addGraphics(new ImageView(getApplicationContext()), R.drawable.line, 50, 8, 0.5f, 1, false);
     }
 }

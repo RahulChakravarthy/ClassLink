@@ -28,7 +28,7 @@ public class studyRoom extends baseActivity implements activityParameters {
 
         l = (LinearLayout) findViewById(R.id.activity_study_room);
 
-        f.startList("Questions: ");
+        firebaseHelper.startList("Questions: ");
 
         layoutSetup();
     }
@@ -54,9 +54,8 @@ public class studyRoom extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-
                 question q = new question(field.getText().toString(), rand.nextInt());
-                f.addItem(q);
+                firebaseHelper.addItem(q);
                 field.setText(null);
 
             }

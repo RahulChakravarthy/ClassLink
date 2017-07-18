@@ -3,6 +3,7 @@ package app.classlink.backend.groups.lecture;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.concurrent.CompletableFuture;
 
 import app.classlink.backend.core.GROUP_TYPE;
 import app.classlink.backend.core.baseGroup;
@@ -17,7 +18,7 @@ import app.classlink.backend.statement.statementType.question;
 public class lectureGroup extends baseGroup {
 
     protected HashMap<String, String> lectureGroupTags; // Used for searching for the group
-    protected LinkedList<groupedStatement> statements; //Linkedlist stores all statements in order of which they were asked
+    protected LinkedList<groupedStatement> statements; //Linkedlist stores all statements in order of which they were asked THIS MIGHT NOT BE NEEDED
 
     public lectureGroup(GROUP_TYPE groupType, String groupName, int groupId, String groupDescription){
         this.groupType = groupType;
@@ -33,7 +34,7 @@ public class lectureGroup extends baseGroup {
      * @Method createLectureTags : creates tags in which the group can be accessed while performing a search query
      */
     private void createLectureTags() {
-        lectureGroupTags.put("Group Name", this.groupName);
+        lectureGroupTags.put("groupName", this.groupName);
         //add more tags as you go on (use these keys to provide categories in which users can search by
     }
 
@@ -54,7 +55,7 @@ public class lectureGroup extends baseGroup {
     }
 
     /**
-     * @Method addGroupedStatement :
+     * @Method addGroupedStatement : create a new grouped statement and add it to the lecture room database
      * @param questionText : text for question
      * @param userId : user id of user who asked question
      */
