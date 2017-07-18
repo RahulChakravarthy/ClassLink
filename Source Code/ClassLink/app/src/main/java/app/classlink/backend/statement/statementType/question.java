@@ -8,14 +8,20 @@ public class question extends statements {
     protected String questionText;
     protected final String statementType = "QUESTION";
 
+    public question() {
+
+    }
+
     public question(String questionText, int userId){
         this.questionText = questionText;
-        this.userIdWhoIssuedStatement = userId;
+        this.userId = userId;
         this.score = 0;
     }
 
     public question(question q) {
-        this.questionText = q.getField();
+        this.questionText = q.getQuestionText();
+        this.userId = q.getUserId();
+        this.score = q.getScore();
 
     }
 
@@ -24,5 +30,5 @@ public class question extends statements {
         return this.statementType;
     }
 
-    public String getField() { return this.questionText; }
+    public String getQuestionText() { return this.questionText; }
 }

@@ -4,7 +4,7 @@ package app.classlink.backend.statement.statementType;
  * @Class statements: wrapper class for the question, classes
  */
 abstract public class statements {
-    protected int userIdWhoIssuedStatement;
+    protected int userId;
     protected int statementId;
     protected int score;
     protected String writtenTime;
@@ -15,11 +15,13 @@ abstract public class statements {
         return this.statementId;
     }
 
-    public int getUserIdWhoIssuedStatement(){
-        return this.userIdWhoIssuedStatement;
+    public int getUserId(){
+        return this.userId;
     }
 
     public String getWrittenTime(){
         return this.writtenTime;
     }
+
+    public int getScore() { return this.score; }
 }
