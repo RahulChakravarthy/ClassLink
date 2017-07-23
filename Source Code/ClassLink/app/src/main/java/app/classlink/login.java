@@ -28,9 +28,8 @@ public class login extends baseActivity implements activityParameters {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        /**
-         * Set up all activity listeners and textboxes
-         */
+
+         // Set up all activity listeners and textboxes
         layoutSetup();
         loginListener();
         signUpListener();
@@ -54,10 +53,10 @@ public class login extends baseActivity implements activityParameters {
         this.viewHelperClass.addGraphics(line, R.drawable.line, 50, 18, 0.75f, 1, false);
 
         usernameInput = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(usernameInput, null, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 30, 0.75f, 0.8f);
+        this.viewHelperClass.addGraphicInputBox(usernameInput, "Username...", R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 30, 0.75f, 0.8f);
 
         passwordInput = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(passwordInput, null, R.drawable.inputbox, InputType.TYPE_TEXT_VARIATION_PASSWORD, 50, 44, 0.75f, 0.8f);
+        this.viewHelperClass.addGraphicInputBox(passwordInput, "Password...", R.drawable.inputbox, InputType.TYPE_TEXT_VARIATION_PASSWORD, 50, 44, 0.75f, 0.8f);
 
         login = new ImageView(getApplicationContext());
         this.viewHelperClass.addTextToButton(login, "Login", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 34, 55, 0.3f, 0.4f);

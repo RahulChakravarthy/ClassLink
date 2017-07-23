@@ -6,21 +6,12 @@ import app.classlink.backend.users.user.userDAO;
  * @Class studentDAO : DAO for student class individuals
  */
 public class studentDAO extends userDAO {
-
     /**
-     * @Method Add student methods
+     * @param listName : Name of list
+     * @Constructor: initializes the connection
      */
+    public studentDAO(String listName) {
+        super(listName);
+    }
 
-    /**
-     * @Methods Get student methods
-     */
-
-
-    /**
-     * @Methods Modify student methods
-     */
-
-    /**
-     * @Method Delete student methods
-     */
 }

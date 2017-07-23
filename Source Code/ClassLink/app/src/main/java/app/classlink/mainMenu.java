@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import app.classlink.backend.core.GROUP_TYPE;
 import app.classlink.backend.groups.study.studyGroup;
@@ -58,16 +59,16 @@ public class mainMenu extends baseActivity implements activityParameters {
      * @Method exampleGroups: set up some example groups to populate the RecyclerView
      */
     public void exampleGroups() {
-        studyGroup group = new studyGroup(GROUP_TYPE.STUDY_GROUP, 1, "group1", "test group 1");
+        studyGroup group = new studyGroup(GROUP_TYPE.STUDY_GROUP, "1", "group1", "test group 1");
         groupList.add(group);
 
-        group = new studyGroup(GROUP_TYPE.STUDY_GROUP, 2, "group2", "test group 2");
+        group = new studyGroup(GROUP_TYPE.STUDY_GROUP, "2", "group2", "test group 2");
         groupList.add(group);
 
-        group = new studyGroup(GROUP_TYPE.STUDY_GROUP, 3, "group3", "test group 3");
+        group = new studyGroup(GROUP_TYPE.STUDY_GROUP, "3", "group3", "test group 3");
         groupList.add(group);
 
-        group = new studyGroup(GROUP_TYPE.STUDY_GROUP, 99, "Add a new favourite", "Click here");
+        group = new studyGroup(GROUP_TYPE.STUDY_GROUP, "99", "Add a new favourite", "Click here");
         groupList.add(group);
     }
 
@@ -176,8 +177,8 @@ public class mainMenu extends baseActivity implements activityParameters {
                 studyGroup studyGroup = groupList.get(position);
                 Log.d("Testing onClick", "description: " + studyGroup.getGroupDescription());
 
-                if(studyGroup.getGroupId() == 99) {
-                    studyGroup newFavourite = new studyGroup(GROUP_TYPE.STUDY_GROUP, 5, "new favourite", "added a new favourite");
+                if(Objects.equals(studyGroup.getGroupId(), "99")) {
+                    studyGroup newFavourite = new studyGroup(GROUP_TYPE.STUDY_GROUP, "5", "new favourite", "added a new favourite");
                     groupList.add(newFavourite);
                     gAdapter.notifyDataSetChanged();
                 }

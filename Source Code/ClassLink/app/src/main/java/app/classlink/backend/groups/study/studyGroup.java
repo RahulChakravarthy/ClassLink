@@ -16,7 +16,7 @@ public class studyGroup extends baseGroup {
     protected HashMap<String, String> lectureGroupTags; // Used for searching for the group
     protected LinkedList<groupedStatement> statements; //Linkedlist stores all statements in order of which they were asked
 
-    public studyGroup(GROUP_TYPE groupType, int groupId, String groupName, String groupDescription) {
+    public studyGroup(GROUP_TYPE groupType, String groupId, String groupName, String groupDescription) {
         this.groupType = groupType;
         this.groupName = groupName;
         this.groupId = groupId;

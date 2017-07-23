@@ -97,6 +97,14 @@ public class lectureJoin extends baseActivity implements activityParameters {
         createLectureGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //create a check to see if current user is a teacher
+                /*
+                if (user.permissions == 2){
+                    start new activity
+                } else {
+                    toast message that they are not allowed to do this
+                }
+                 */
                 startActivity(new Intent(lectureJoin.this, lectureCreate.class));
             }
         });

@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 /**
  * @Class viewHelperClass : This class has implemented methods to aid with output views to various activities
@@ -273,6 +275,8 @@ public class viewHelperClass {
         textInput.setBackground(this.activityContext.getDrawable(resourceId));
         textInput.setTextColor(Color.BLACK);
         textInput.setInputType(inputType);
+        textInput.setHint((hint != null)? hint : "");
+        textInput.setHintTextColor(Color.parseColor("#C7C7CD"));
 
 
         if (inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD){
@@ -293,14 +297,19 @@ public class viewHelperClass {
     }
 
     /**
-     * @Method addRadioButtons : adds a list of radio buttons (horizontally)
-     * @param listNames : text name for each radio button
-     * @param spacing : how much spacing there is between each radio button
+     * @Method isEditTextEmpty : checks to see if any of the inputted edit texts are empty
+     * @param inputs : Edit text inputs that need to be verified
+     * @return boolean
      */
-    public void addRadioButtons(String[] listNames, float spacing){
-
+    public boolean isEditTextEmpty(ArrayList<EditText> inputs){
+        for (EditText input : inputs){
+            String cleanedInput = input.getText().toString().trim();
+            if (cleanedInput == null || cleanedInput.isEmpty()){
+                return false;
+            }
+        }
+        return true;
     }
-
 
     /**
      * Getters and Setters

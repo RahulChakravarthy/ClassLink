@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
 import app.classlink.backend.groups.lecture.lectureGroup;
+import app.classlink.backend.statement.statementGrouping.groupedStatement;
+import app.classlink.backend.statement.statementGrouping.groupedStatementDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
@@ -128,10 +130,15 @@ public class lectureRoom extends baseActivity
     }
 
     /**
-     * @Method loadLectureStatements : loads all firebase data from a specific lecture group into a cache
+     * @Method loadLectureStatements : Loads statements from the specific lecture group into buffer to be displayed on the screen
      */
     private void loadLectureStatements() {
-        //do a one time load if all grouped statements into the linked list
+//        for (groupedStatement statement : this.lectureGroup.getGroupStatements()){
+//            displayStatements();
+//        }
+    }
 
+    private void displayStatements() {
+        //add all the code for displaying each statement
     }
 }

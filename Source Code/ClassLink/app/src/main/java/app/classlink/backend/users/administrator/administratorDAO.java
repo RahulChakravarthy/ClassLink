@@ -6,4 +6,11 @@ import app.classlink.backend.users.user.userDAO;
  * @Class administratorDAO : DAO for the administrator class individuals
  */
 public class administratorDAO extends userDAO {
+    /**
+     * @param listName : Name of list
+     * @Constructor: initializes the connection
+     */
+    public administratorDAO(String listName) {
+        super(listName);
+    }
 }

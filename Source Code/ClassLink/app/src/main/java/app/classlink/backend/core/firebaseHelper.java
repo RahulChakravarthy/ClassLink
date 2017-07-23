@@ -15,36 +15,27 @@ import app.classlink.backend.statement.statementType.question;
 /**
  * @Class firebaseHelper : adapter class that enables our app data to interact with firebase cloud servers
  */
-public class firebaseHelper {
+public class firebaseHelper implements listNames{
 
     protected DatabaseReference list;
     protected FirebaseDatabase db;
-    protected HashMap<Integer, question> listContents;
 
     /**
      * @Constructor: initializes the connection
      */
-    public firebaseHelper() {
+    public firebaseHelper(String listName) {
         this.db = FirebaseDatabase.getInstance();
+        this.list = this.db.getReference(listName);
     }
 
     /**
      * @Method startList: start the reference to the specified list/table/entry in firebase
-     * @param listName: the name of the entry
      * @return: DatabaseReference of the list you're looking at
      */
-    public DatabaseReference startList(String listName) {
-        this.list = this.db.getReference(listName);
-        this.listContents = new HashMap<>();
-
+    public DatabaseReference startList() {
         this.list.addChildEventListener((new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.exists()) {
-                    question q = new question(dataSnapshot.getValue(question.class));
-                    Log.d("Addition: ", "Question is: " + q.getQuestionText());
-                    listContents.put(q.getUserId(), q);
-                }
             }
 
             @Override
@@ -53,6 +44,7 @@ public class firebaseHelper {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+
             }
 
             @Override
@@ -76,5 +68,4 @@ public class firebaseHelper {
         this.list.push().setValue(o);
     }
 
-    public HashMap<Integer, question> getListContents() { return this.listContents; }
 }

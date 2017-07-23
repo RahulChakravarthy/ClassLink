@@ -3,7 +3,6 @@ package app.classlink.backend.groups.lecture;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.concurrent.CompletableFuture;
 
 import app.classlink.backend.core.GROUP_TYPE;
 import app.classlink.backend.core.baseGroup;
@@ -11,20 +10,23 @@ import app.classlink.backend.statement.statementGrouping.groupedStatement;
 import app.classlink.backend.statement.statementType.answers;
 import app.classlink.backend.statement.statementType.comments;
 import app.classlink.backend.statement.statementType.question;
+import app.classlink.backend.users.teacher.teacher;
 
 /**
  * @Class lectureGroup : Handles internal functions of a lecture group (ALL GROUPS MUST BE STORED IN FIREBASE)
  */
 public class lectureGroup extends baseGroup {
 
+    protected teacher lectureCreator; //The object of the teacher who created the group
     protected HashMap<String, String> lectureGroupTags; // Used for searching for the group
     protected LinkedList<groupedStatement> statements; //Linkedlist stores all statements in order of which they were asked THIS MIGHT NOT BE NEEDED
 
-    public lectureGroup(GROUP_TYPE groupType, String groupName, int groupId, String groupDescription){
+    public lectureGroup(GROUP_TYPE groupType, String groupName, String groupId, String groupDescription, teacher lectureCreator){
         this.groupType = groupType;
         this.groupName = groupName;
         this.groupId = groupId;
         this.groupDescription = groupDescription;
+        this.lectureCreator = lectureCreator;
 
         this.lectureGroupTags = new HashMap<>();
         this.createLectureTags();

@@ -12,6 +12,6 @@ public class baseActivity extends AppCompatActivity {
 
     protected RelativeLayout activityLayout; //Activity Layout
     protected viewHelperClass viewHelperClass; //Helper class to output views to the activity
-    public final firebaseHelper firebaseHelper = new firebaseHelper(); //Firebase Helper class connects our activities to the firebase database
+    public final firebaseHelper firebaseHelper = new firebaseHelper("YEET"); //Firebase Helper class connects our activities to the firebase database
 
 }
