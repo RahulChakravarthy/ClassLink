@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import app.classlink.backend.core.firebaseHelper;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.users.teacher.teacher;
 import app.classlink.helperClasses.activityParameters;
@@ -21,7 +21,7 @@ import app.classlink.parents.baseActivity;
 
 public class lectureCreate extends baseActivity implements activityParameters {
 
-    protected ImageView line, submitForm;
+    protected ImageView line, submitForm, createRootNode;
     protected EditText lectureName, lectureDescription;
 
     @Override
@@ -54,11 +54,11 @@ public class lectureCreate extends baseActivity implements activityParameters {
      * @Method createForm : Display all the front end to create a lectureGroup
      */
     private void createForm() {
-        this.viewHelperClass.addText("Lecture Group Name", "OpenSans-Semibold", "BLACK", 2, 15, 50, 19);
+        this.viewHelperClass.addText("Lecture Group Name:", "OpenSans-Semibold", "BLACK", 2, 15, 50, 19);
         this.lectureName = new EditText(getApplicationContext());
         this.viewHelperClass.addGraphicInputBox(lectureName, "e.g: ECE 155, Calculus 1", R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 25, 0.8f, 0.8f);
 
-        this.viewHelperClass.addText("Lecture Group description", "OpenSans-Semibold", "BLACK", 2, 15, 50, 33);
+        this.viewHelperClass.addText("Lecture Group description:", "OpenSans-Semibold", "BLACK", 2, 15, 50, 33);
         this.lectureDescription = new EditText(getApplicationContext());
         this.viewHelperClass.addGraphicInputBox(lectureDescription, "e.g: Taught by Akosh Nagy" , R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 39, 0.8f, 0.8f);
 

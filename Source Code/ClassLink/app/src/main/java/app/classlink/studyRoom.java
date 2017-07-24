@@ -28,7 +28,7 @@ public class studyRoom extends baseActivity implements activityParameters {
 
         l = (LinearLayout) findViewById(R.id.activity_study_room);
 
-        firebaseHelper.startList();
+        //firebaseHelper.startList();
 
         layoutSetup();
     }

@@ -1,6 +1,7 @@
 package app.classlink.backend.groups.study;
 
 import app.classlink.backend.core.DAO;
+import app.classlink.backend.core.listNames;
 
 
 /**
@@ -9,10 +10,9 @@ import app.classlink.backend.core.DAO;
 public class StudyGroupDAO extends DAO {
 
     /**
-     * @param listName : Name of list
      * @Constructor: initializes the connection
      */
-    public StudyGroupDAO(String listName) {
-        super(listName);
+    public StudyGroupDAO() {
+        super(listNames.STUDYGROUP);
     }
 }

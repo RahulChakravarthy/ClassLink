@@ -1,16 +1,16 @@
 package app.classlink.backend.users.administrator;
 
-import app.classlink.backend.users.user.userDAO;
+import app.classlink.backend.core.DAO;
+import app.classlink.backend.core.listNames;
 
 /**
  * @Class administratorDAO : DAO for the administrator class individuals
  */
-public class administratorDAO extends userDAO {
+public class administratorDAO extends DAO {
     /**
-     * @param listName : Name of list
      * @Constructor: initializes the connection
      */
-    public administratorDAO(String listName) {
-        super(listName);
+    public administratorDAO() {
+        super(listNames.ADMIN);
     }
 }
