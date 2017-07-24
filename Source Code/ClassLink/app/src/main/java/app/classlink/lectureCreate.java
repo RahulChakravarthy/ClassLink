@@ -12,7 +12,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import app.classlink.backend.core.firebaseHelper;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.users.teacher.teacher;
 import app.classlink.helperClasses.activityParameters;
@@ -21,7 +20,7 @@ import app.classlink.parents.baseActivity;
 
 public class lectureCreate extends baseActivity implements activityParameters {
 
-    protected ImageView line, submitForm, createRootNode;
+    protected ImageView line, submitForm;
     protected EditText lectureName, lectureDescription;
 
     @Override
