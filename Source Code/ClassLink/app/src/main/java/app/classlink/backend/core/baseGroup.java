@@ -10,7 +10,7 @@ import app.classlink.backend.statement.statementGrouping.groupedStatement;
 public abstract class baseGroup {
 
     public GROUP_TYPE groupType;
-    protected int groupId;
+    protected String groupId;
     protected String groupName;
     protected String groupDescription;
     protected HashMap<Integer, user> userList;
@@ -23,11 +23,11 @@ public abstract class baseGroup {
         this.groupType = groupType;
     }
 
-    public int getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 

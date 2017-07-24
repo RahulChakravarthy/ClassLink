@@ -1,26 +1,17 @@
 package app.classlink.backend.users.student;
 
-import app.classlink.backend.users.user.userDAO;
+import app.classlink.backend.core.DAO;
+import app.classlink.backend.core.listNames;
 
 /**
  * @Class studentDAO : DAO for student class individuals
  */
-public class studentDAO extends userDAO {
-
+public class studentDAO extends DAO {
     /**
-     * @Method Add student methods
+     * @Constructor: initializes the connection
      */
+    public studentDAO() {
+        super(listNames.STUDENTS);
+    }
 
-    /**
-     * @Methods Get student methods
-     */
-
-
-    /**
-     * @Methods Modify student methods
-     */
-
-    /**
-     * @Method Delete student methods
-     */
 }

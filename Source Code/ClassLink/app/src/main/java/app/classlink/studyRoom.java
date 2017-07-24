@@ -28,7 +28,7 @@ public class studyRoom extends baseActivity implements activityParameters {
 
         l = (LinearLayout) findViewById(R.id.activity_study_room);
 
-        firebaseHelper.startList("Questions: ");
+        //firebaseHelper.startList();
 
         layoutSetup();
     }
@@ -65,19 +65,19 @@ public class studyRoom extends baseActivity implements activityParameters {
         get.setText("Get!");
         l.addView(get);
 
-        get.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<Integer, question> questions = f.getListContents();
-
-                for (question q : questions.values()) {
-                    TextView t = new TextView(getApplicationContext());
-                    t.setText(q.getQuestionText());
-                    t.setTextColor(Color.BLACK);
-                    l.addView(t);
-                    Log.d("Displaying...", "Displayed question " + q.getQuestionText());
-                }
-            }
-        });
+//        get.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                HashMap<Integer, question> questions = firebaseHelper.getListContents();
+//
+//                for (question q : questions.values()) {
+//                    TextView t = new TextView(getApplicationContext());
+//                    t.setText(q.getQuestionText());
+//                    t.setTextColor(Color.BLACK);
+//                    l.addView(t);
+//                    Log.d("Displaying...", "Displayed question " + q.getQuestionText());
+//                }
+//            }
+//        });
     }
 }

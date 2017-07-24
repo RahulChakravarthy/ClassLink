@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
@@ -21,21 +25,33 @@ public class login extends baseActivity implements activityParameters {
 
     private TextView forgotPassword; //forgot password button
     private ImageView login, signUp, line; //front end graphic buttons/models
-    private EditText usernameInput, passwordInput; //textinput boxes
+    private EditText usernameInput, passwordInput; //text input boxes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        /**
-         * Set up all activity listeners and textboxes
-         */
+        //User authentication
+        userAuth = FirebaseAuth.getInstance();
+
+         // Set up all activity listeners
         layoutSetup();
         loginListener();
         signUpListener();
         forgotPasswordListener();
+    }
 
+    /**
+     * @Method onStart : verify if the user is already logged in
+     */
+    @Override
+    protected void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = this.userAuth.getCurrentUser();
+        if (currentUser != null){
+            startActivity(new Intent(login.this, mainMenu.class));
+        }
     }
 
     /**
@@ -54,10 +70,10 @@ public class login extends baseActivity implements activityParameters {
         this.viewHelperClass.addGraphics(line, R.drawable.line, 50, 18, 0.75f, 1, false);
 
         usernameInput = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(usernameInput, null, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 30, 0.75f, 0.8f);
+        this.viewHelperClass.addGraphicInputBox(usernameInput, "", R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 30, 0.75f, 0.8f);
 
         passwordInput = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(passwordInput, null, R.drawable.inputbox, InputType.TYPE_TEXT_VARIATION_PASSWORD, 50, 44, 0.75f, 0.8f);
+        this.viewHelperClass.addGraphicInputBox(passwordInput, "", R.drawable.inputbox, InputType.TYPE_TEXT_VARIATION_PASSWORD, 50, 44, 0.75f, 0.8f);
 
         login = new ImageView(getApplicationContext());
         this.viewHelperClass.addTextToButton(login, "Login", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 34, 55, 0.3f, 0.4f);
@@ -101,7 +117,10 @@ public class login extends baseActivity implements activityParameters {
     public void forgotPasswordListener(){
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {startActivity(new Intent(login.this, login.class));}
+            public void onClick(View v) {
+                Toast.makeText(viewHelperClass.getActivityContext(), "Feature not implemented yet", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(login.this, login.class));
+            }
         });
     }
 }
