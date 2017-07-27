@@ -1,8 +1,16 @@
 package app.classlink;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
@@ -10,12 +18,17 @@ import app.classlink.parents.baseActivity;
 
 public class settings extends baseActivity implements activityParameters {
 
+    EditText changeUsername, changePassword, confirmPassword, changeEmail;
+    ImageView submitForm, logout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
         layoutSetup();
+        logUserOut();
+        updateUserDetails();
     }
 
     /**
@@ -28,16 +41,56 @@ public class settings extends baseActivity implements activityParameters {
         this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
 
         // Text based graphics
-        this.viewHelperClass.addText("Settings", "OpenSans-ExtraBold", "BLACK", 2, 25, 50, 5);
-        this.viewHelperClass.addText("First Name:", "OpenSans-Regular", "BLACK", 1, 15, 10, 13);
-        this.viewHelperClass.addText("Last Name:", "OpenSans-Regular", "BLACK", 1, 15, 10, 15);
-        this.viewHelperClass.addText("Username:", "OpenSans-Regular", "BLACK", 1, 15, 10, 20);
-        this.viewHelperClass.addText("Email:", "OpenSans-Regular", "BLACK", 1, 15, 10, 25);
-        this.viewHelperClass.addText("Enable Notifications:", "OpenSans-Regular", "BLACK", 1, 15, 10, 30);
-        //Get user information
+        this.viewHelperClass.addText("Settings", "OpenSans-ExtraBold", "BLACK", 2, 30, 50, 5);
+        this.viewHelperClass.addText("Change User Details:", "OpenSans-Semibold", "BLACK", 2, 21, 50, 13);
+        this.viewHelperClass.addText("(only filled boxes will modify profile data)", "OpenSans-Semibold", "BLACK", 2, 17, 50, 18);
 
+        this.viewHelperClass.addText("New Username:", "OpenSans-Regular", "BLACK", 1, 15, 2, 25);
+        this.changeUsername = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox(changeUsername, "", R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 66.7f, 26.5f, 0.64f, 0.75f);
+
+        this.viewHelperClass.addText("New Password:", "OpenSans-Regular", "BLACK", 1, 15, 2, 33);
+        this.changePassword = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox(changePassword, "", R.drawable.inputbox, InputType.TYPE_TEXT_VARIATION_PASSWORD, 66.7f, 34.5f, 0.64f, 0.75f);
+
+        this.viewHelperClass.addText("Confirm\nPassword:", "OpenSans-Regular", "BLACK", 1, 15, 2, 39);
+        this.changePassword = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox(changePassword, "", R.drawable.inputbox, InputType.TYPE_TEXT_VARIATION_PASSWORD, 66.7f, 42.5f, 0.64f, 0.75f);
+
+        this.viewHelperClass.addText("New Email:", "OpenSans-Regular", "BLACK", 1, 15, 2, 49);
+        this.changeEmail = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox(changeEmail, "", R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 66.7f, 50.5f, 0.64f, 0.75f);
+
+        this.viewHelperClass.addText("New Institution:", "OpenSans-Regular", "BLACK", 1, 15, 2, 57);
 
         // Graphical Graphics
-        this.viewHelperClass.addGraphics(new ImageView(getApplicationContext()), R.drawable.line, 50, 8, 0.5f, 1, false);
+        this.viewHelperClass.addGraphics(new ImageView(getApplicationContext()), R.drawable.line, 50, 9, 0.5f, 1, false);
+
+        this.submitForm = new ImageView(getApplicationContext());
+        this.viewHelperClass.addTextToButton(submitForm, "Update Profile!", 15, "OpenSans-Semibold", "BLACK", R.drawable.curvedbutton, 50, 70, 0.5f, 0.5f);
+
+        this.logout = new ImageView(getApplicationContext());
+        this.viewHelperClass.addTextToButton(logout, "Logout", 15, "OpenSans-Semibold", "BLACK", R.drawable.curvedbutton, 25, 90, 0.4f, 0.5f);
+    }
+
+    private void updateUserDetails() {
+        submitForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //viewHelperClass.clearAllEditTexts(new ArrayList<>(Arrays.asList(changeUsername, changePassword, confirmPassword, changeEmail)));
+                Toast.makeText(viewHelperClass.getActivityContext(), "Profile Details Updated", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void logUserOut() {
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //userAuth.signOut(); call this when you get user Auth working
+                Toast.makeText(viewHelperClass.getActivityContext(), "Logging Out...", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(settings.this, login.class));
+            }
+        });
     }
 }

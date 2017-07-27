@@ -14,7 +14,6 @@ abstract public class baseActivity extends AppCompatActivity {
 
     protected RelativeLayout activityLayout; //Activity Layout
     protected viewHelperClass viewHelperClass; //Helper class to output views to the activity
-    protected firebaseHelper firebaseHelper; //Firebase Helper class connects our activities to the firebase database
     protected FirebaseAuth userAuth; //Current user session
 
 }

@@ -1,9 +1,14 @@
 package app.classlink.backend.users.user;
 
 
+import java.util.HashMap;
+
+import app.classlink.backend.groups.lecture.lectureGroup;
+
 public abstract class user {
     protected int userId;
     protected String userName, password, firstName, lastName, email, securityQuestion, securityAnswer;
+    protected HashMap<lectureGroup, String> banList; //lecture Group you are banned from, and String date that you will be unbanned
     protected int permissionLevel; // 1 = student, 2 = teacher, 3 = administrator, 4 = god?????
 
     abstract public int getUserPermission();

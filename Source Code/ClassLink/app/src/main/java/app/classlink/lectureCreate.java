@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
+import app.classlink.backend.misc.School;
 import app.classlink.backend.users.teacher.teacher;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
@@ -61,8 +62,10 @@ public class lectureCreate extends baseActivity implements activityParameters {
         this.lectureDescription = new EditText(getApplicationContext());
         this.viewHelperClass.addGraphicInputBox(lectureDescription, "e.g: Taught by Akosh Nagy" , R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 39, 0.8f, 0.8f);
 
+        this.viewHelperClass.addText("Choose your institution", "OpenSans-Semibold", "BLACK", 2, 15, 50, 47);
+
         this.submitForm = new ImageView(getApplicationContext());
-        this.viewHelperClass.addTextToButton(submitForm, "Create Group!", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50, 50, 0.5f, 0.5f);
+        this.viewHelperClass.addTextToButton(submitForm, "Create Group!", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50, 65, 0.5f, 0.5f);
     }
 
     /**
@@ -77,10 +80,11 @@ public class lectureCreate extends baseActivity implements activityParameters {
                    LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
                    //temp new teacher
                    teacher testTeacher = new teacher("Rahul", "Chakravarthy", "SaltyDoge", "NOOT", "How old am I?", "19");
-                   lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(), testTeacher);
+                   lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(), testTeacher, School.UNIVERSITY_OF_WATERLOO);
 
                    Toast.makeText(viewHelperClass.getActivityContext(), "Lecture Group Created to view/change settings visit the settings menu", Toast.LENGTH_LONG).show();
                    startActivity(new Intent(lectureCreate.this, lectureRoom.class));
+
                } else {
                    Toast.makeText(viewHelperClass.getActivityContext(), "Error, all fields must be filled", Toast.LENGTH_LONG).show();
                }
