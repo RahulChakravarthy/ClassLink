@@ -1,5 +1,6 @@
 package app.classlink.helperClasses;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -10,11 +11,14 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -290,7 +294,7 @@ public class viewHelperClass {
      * @Method clearAllEditTexts : Call this method after every activity switch to ensure fields are cleared
      * @param fields : fields that must be cleared
      */
-    public void clearAllEditTexts(EditText[] fields){
+    public void clearAllEditTexts(ArrayList<EditText> fields){
         for (EditText field : fields){
             field.setText("");
         }
@@ -309,6 +313,18 @@ public class viewHelperClass {
             }
         }
         return true;
+    }
+
+    /**
+     * @Method addDropDownMenu : adds a default dropdown menu to be used in an activity view
+     * @param contents : the contents of what the drop down menu should contain
+     *@param  activityResourceFile : the resource file used to create the front end of the spinner
+     */
+    public void addDropDownMenu(ArrayList<String> contents, int activityResourceFile){
+        Spinner dropDownMenu = new Spinner(this.activityContext);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this.activityContext, activityResourceFile, contents);
+        dropDownMenu.setAdapter(spinnerArrayAdapter);
+        this.activityLayout.addView(dropDownMenu);
     }
 
     /**

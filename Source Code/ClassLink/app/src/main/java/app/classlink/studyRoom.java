@@ -50,16 +50,16 @@ public class studyRoom extends baseActivity implements activityParameters {
 
         final Random rand = new Random();
 
-        ask.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                question q = new question(field.getText().toString(), rand.nextInt());
-                firebaseHelper.addItem(q);
-                field.setText(null);
-
-            }
-        });
+//        ask.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                question q = new question(field.getText().toString(), rand.nextInt());
+//                firebaseHelper.addItem(q);
+//                field.setText(null);
+//
+//            }
+//        });
 
         Button get = new Button(getApplicationContext());
         get.setText("Get!");

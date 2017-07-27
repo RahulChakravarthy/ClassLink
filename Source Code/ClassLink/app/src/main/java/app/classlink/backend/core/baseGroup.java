@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.user;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
 
@@ -13,7 +14,7 @@ public abstract class baseGroup {
     protected String groupId;
     protected String groupName;
     protected String groupDescription;
-    protected HashMap<Integer, user> userList;
+    protected School schoolName;
 
     public GROUP_TYPE getGroupType() {
         return groupType;
