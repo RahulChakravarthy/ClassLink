@@ -53,15 +53,6 @@ public class lectureGroup extends baseGroup {
     }
 
     /**
-     * @Method getGroupStatements returns and array of all group statements (questions, answers, comments) in order of when they were asked
-     * @return array of all grouped statements
-     */
-    @Override
-    public LinkedList<groupedStatement> getGroupStatements() {
-        return this.statements;
-    }
-
-    /**
      * @Method addGroupedStatement : create a new grouped statement and add it to the lecture room database
      * @param questionText : text for question
      * @param userId : user id of user who asked question
@@ -94,5 +85,18 @@ public class lectureGroup extends baseGroup {
         statement.addComment(userAnswer, new comments(commentText, userId));
         LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
         lectureGroupDAO.updateLectureGroup(this);
+    }
+
+    /**
+     * Getters and Setters
+     */
+    @Override
+    public LinkedList<groupedStatement> getGroupStatements() {
+        return this.statements;
+    }
+
+    @Override
+    public void setGroupedStatements(LinkedList<groupedStatement> newGroupedStatements) {
+        this.statements = newGroupedStatements;
     }
 }

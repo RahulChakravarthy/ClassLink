@@ -79,7 +79,7 @@ public class lectureCreate extends baseActivity implements activityParameters {
                     //create the group and append it to the database
                    LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
                    //temp new teacher
-                   teacher testTeacher = new teacher("Rahul", "Chakravarthy", "SaltyDoge", "NOOT", "How old am I?", "19");
+                   teacher testTeacher = new teacher("Rahul", "Chakravarthy", "SaltyDoge", "NOOT", "How old am I?", "19", School.UNIVERSITY_OF_WATERLOO);
                    lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(), testTeacher, School.UNIVERSITY_OF_WATERLOO);
 
                    Toast.makeText(viewHelperClass.getActivityContext(), "Lecture Group Created to view/change settings visit the settings menu", Toast.LENGTH_LONG).show();
