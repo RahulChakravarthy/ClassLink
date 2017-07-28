@@ -4,11 +4,12 @@ package app.classlink.backend.users.user;
 import java.util.HashMap;
 
 import app.classlink.backend.groups.lecture.lectureGroup;
+import app.classlink.backend.misc.School;
 
 public abstract class user {
     protected int userId;
     protected String userName, password, firstName, lastName, email, securityQuestion, securityAnswer;
-    protected HashMap<lectureGroup, String> banList; //lecture Group you are banned from, and String date that you will be unbanned
+    protected School school;
     protected int permissionLevel; // 1 = student, 2 = teacher, 3 = administrator, 4 = god?????
 
     abstract public int getUserPermission();
@@ -49,4 +50,12 @@ public abstract class user {
     public String getSecurityAnswer() {return securityAnswer;}
 
     public void setSecurityAnswer(String securityAnswer) {this.securityAnswer = securityAnswer;}
+
+    public School getSchool(){
+        return this.school;
+    }
+
+    public void setSchool(School school){
+        this.school = school;
+    }
 }

@@ -49,4 +49,6 @@ public abstract class baseGroup {
     }
 
     abstract public LinkedList<groupedStatement> getGroupStatements();
+
+    abstract public void setGroupedStatements(LinkedList<groupedStatement> newGroupedStatements);
 }

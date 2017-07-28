@@ -76,10 +76,10 @@ public class lectureJoin extends baseActivity implements activityParameters {
         //style the recycleViewer
 
 
-        //Geta all lecture groups
-        LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
-        this.groupListAdapter = new displayLectureGroupsAdapter(new ArrayList<>(Arrays.asList(lectureGroupDAO.getAllLectureGroups())));
-        this.groupList.setAdapter(this.groupListAdapter);
+        //Get all lecture groups
+//        LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
+//        this.groupListAdapter = new displayLectureGroupsAdapter(new ArrayList<>(Arrays.asList(lectureGroupDAO.getLectureGroupById("0"))));
+//        this.groupList.setAdapter(this.groupListAdapter);
 
     }
 

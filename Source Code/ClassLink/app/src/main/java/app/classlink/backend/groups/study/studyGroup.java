@@ -38,4 +38,9 @@ public class studyGroup extends baseGroup {
     public LinkedList<groupedStatement> getGroupStatements() {
         return this.statements;
     }
+
+    @Override
+    public void setGroupedStatements(LinkedList<groupedStatement> newGroupedStatements) {
+        this.statements = newGroupedStatements;
+    }
 }

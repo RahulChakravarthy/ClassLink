@@ -15,6 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
 import app.classlink.backend.statement.statementGrouping.groupedStatementDAO;
@@ -26,6 +30,7 @@ public class lectureRoom extends baseActivity
         implements NavigationView.OnNavigationItemSelectedListener, activityParameters {
 
     private lectureGroup lectureGroup;
+    private LectureGroupDAO lectureGroupDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,8 @@ public class lectureRoom extends baseActivity
 
         //Call activity methods here
         layoutSetup();
-        loadLectureStatements();
+//        coreSetup();
+//        syncStatements();
     }
 
     @Override
@@ -127,6 +133,29 @@ public class lectureRoom extends baseActivity
 //        this.activityLayout = (RelativeLayout) findViewById(R.id.drawer_layout);
 //        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 //        this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
+
+    }
+
+    /**
+     * @Method coreSetup : sets up all all information for this activity including intents and DAOs
+     */
+    private void coreSetup() {
+        //capture Intent values here and set the activity lecture group equal to the passed in group
+        this.lectureGroupDAO.registerDAOListeners(this.lectureGroup);
+    }
+
+    /**
+     * @Method syncStatements : timer thread that periodically syncs statements with database
+     */
+    public void syncStatements(){
+        Timer syncLoop = new Timer();
+        TimerTask syncTask = new TimerTask() {
+            @Override
+            public void run() {
+                lectureGroup.setGroupedStatements(lectureGroupDAO.getCachedStatements());
+            }
+        };
+        syncLoop.schedule(syncTask, 1000); //modify this based on how often you want to ping the cached for changed statements
     }
 
     /**
@@ -139,6 +168,6 @@ public class lectureRoom extends baseActivity
     }
 
     private void displayStatements() {
-        //add all the code for displaying each statement
+        //add all the code for displaying each statement in the side view bar
     }
 }
