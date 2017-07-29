@@ -15,6 +15,7 @@ import java.util.Arrays;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.teacher.teacher;
+import app.classlink.backend.users.teacher.teacherDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.parents.baseActivity;
@@ -76,12 +77,17 @@ public class lectureCreate extends baseActivity implements activityParameters {
             @Override
             public void onClick(View view) {
                if (viewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(lectureName,lectureDescription)))){
-                    //create the group and append it to the database
-                   LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
                    //temp new teacher
-                   teacher testTeacher = new teacher("Rahul", "Chakravarthy", "SaltyDoge", "NOOT", "How old am I?", "19", School.UNIVERSITY_OF_WATERLOO);
-                   lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(), testTeacher, School.UNIVERSITY_OF_WATERLOO);
+                   teacher testTeacher = new teacher("Rahul", "Chakravarthy", "SaltyDoge", "How old am I?", "19", School.UNIVERSITY_OF_WATERLOO);
+                   teacherDAO teacherDAO = new teacherDAO();
+                   teacherDAO.createTeacher(testTeacher);
 
+                   //create the group and append it to the database
+                   LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
+                   if (!lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(), testTeacher, School.UNIVERSITY_OF_WATERLOO)){
+                       Toast.makeText(viewHelperClass.getActivityContext(), "Error! Group Name already exists", Toast.LENGTH_LONG).show();
+                       return;
+                   }
                    Toast.makeText(viewHelperClass.getActivityContext(), "Lecture Group Created to view/change settings visit the settings menu", Toast.LENGTH_LONG).show();
                    startActivity(new Intent(lectureCreate.this, lectureRoom.class));
 

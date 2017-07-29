@@ -1,14 +1,11 @@
 package app.classlink.backend.users.user;
 
 
-import java.util.HashMap;
-
-import app.classlink.backend.groups.lecture.lectureGroup;
 import app.classlink.backend.misc.School;
 
 public abstract class user {
-    protected int userId;
-    protected String userName, password, firstName, lastName, email, securityQuestion, securityAnswer;
+    protected String userId;
+    protected String userName, firstName, lastName, email, securityQuestion, securityAnswer;
     protected School school;
     protected int permissionLevel; // 1 = student, 2 = teacher, 3 = administrator, 4 = god?????
 
@@ -19,17 +16,13 @@ public abstract class user {
     /**
      *Getters and Setters for the user class
      */
-    public int getUserId() {return userId;}
+    public String getUserId() {return userId;}
 
-    public void setUserId(int userId) {this.userId = userId;}
+    public void setUserId(String userId) {this.userId = userId;}
 
     public String getUserName() {return userName;}
 
     public void setUserName(String userName) {this.userName = userName;}
-
-    public String getPassword(){return this.password;}
-
-    public void setPassword(String password){this.password = password;}
 
     public String getFirstName(){return this.firstName;}
 

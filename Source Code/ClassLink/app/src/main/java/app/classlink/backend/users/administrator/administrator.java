@@ -1,5 +1,6 @@
 package app.classlink.backend.users.administrator;
 
+import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.user;
 
 /**
@@ -8,24 +9,30 @@ import app.classlink.backend.users.user.user;
 
 public class administrator extends user {
 
-    private int adminId;
+    private int adminScore;
 
-    public administrator(String firstName, String lastName){
+    public administrator(String adminFirstName, String adminLastName, String userName, String securityQuestion, String securityAnswer, School school){
+        this.firstName = adminFirstName;
+        this.lastName = adminLastName;
+        this.userName = userName;
+        this.securityQuestion = securityQuestion;
+        this.securityAnswer = securityAnswer;
+        this.school = school;
         this.permissionLevel = 3;
-        this.firstName = firstName;
-        this.lastName = lastName;
-
-        //generate admin and user Id
-
+        this.adminScore = 100; //cuz they are admins lol
     }
 
     @Override
     public int getUserPermission() {
-        return 3;
+        return this.permissionLevel;
     }
 
     @Override
     public void setPermissionLevel(int permissionLevel) {
         this.permissionLevel = permissionLevel;
     }
+
+    public int getAdminScore() {return this.adminScore;}
+
+    public void setAdminScore(int adminScore) {this.adminScore = adminScore;}
 }

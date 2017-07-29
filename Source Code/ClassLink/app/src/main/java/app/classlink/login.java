@@ -83,7 +83,7 @@ public class login extends baseActivity implements activityParameters {
 
         //Text Settings
         this.viewHelperClass.addText("CLASS-LINK", "OpenSans-ExtraBoldItalic", "BLACK", 2, 50, 50, 13);//title
-        this.viewHelperClass.addText("User Name:", "OpenSans-Regular", "BLACK", 2, 15, 50, 23); //user Name
+        this.viewHelperClass.addText("Email Address:", "OpenSans-Regular", "BLACK", 2, 15, 50, 23); //user Name
         this.viewHelperClass.addText("Password:", "OpenSans-Regular", "BLACK", 2, 15, 50, 37);// Password
 
         forgotPassword = new TextView(getApplicationContext());

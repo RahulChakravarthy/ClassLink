@@ -13,6 +13,7 @@ public class StudyGroupDAO extends DAO {
      * @Constructor: initializes the connection
      */
     public StudyGroupDAO() {
-        super(listNames.STUDYGROUP);
+        super(listNames.GROUPS);
+        this.list = this.list.child(listNames.STUDYGROUPS);
     }
 }

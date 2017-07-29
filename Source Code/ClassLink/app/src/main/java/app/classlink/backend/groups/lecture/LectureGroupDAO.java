@@ -29,7 +29,8 @@ public class LectureGroupDAO extends DAO {
      * @Consructor LectureGroupDAO
      */
     public LectureGroupDAO(){
-        super(listNames.LECTUREGROUP);
+        super(listNames.GROUPS);
+        this.list = this.list.child(listNames.LECTUREGROUPS);
         this.groupedStatementsCache = new LinkedList<>();
     }
 
@@ -39,13 +40,29 @@ public class LectureGroupDAO extends DAO {
      * @param lectureGroupDescription : description of the group
      * @param lectureCreator : teacher who created the group
      * @param schoolName : School that this group belongs to
+     * @return boolean : whether group was created or not
      */
     public boolean createLectureGroup(String lectureGroupName, String lectureGroupDescription, teacher lectureCreator, School schoolName){
-        //add a check here to make sure the same group doesn't already exist
-        String lectureGroupId = this.list.push().getKey();
-        lectureGroup newGroup = new lectureGroup(schoolName, lectureGroupName, lectureGroupId, lectureGroupDescription, lectureCreator);
-        this.list.child(lectureGroupId).setValue(newGroup);
-        return true;
+        if (this.getLectureGroup(null, lectureGroupName, lectureCreator.getFirstName(), lectureCreator.getLastName(), schoolName).size() == 0){
+            String lectureGroupId = this.list.push().getKey();
+            lectureGroup newGroup = new lectureGroup(schoolName, lectureGroupName, lectureGroupId, lectureGroupDescription, lectureCreator);
+            this.list.child(lectureGroupId).setValue(newGroup);
+            return true; //lecture group is not a duplicate
+        }
+        return false;//it is a duplicate throw a an error
+    }
+
+    /**
+     * @Method createLectureGroup programmatically creates a group in and stores it in the database
+     * @param lectureGroup : reference to lecture Group object
+     */
+    public boolean createLectureGroup(lectureGroup lectureGroup){
+        if (this.getLectureGroup(lectureGroup.getGroupId(), lectureGroup.getGroupName(),lectureGroup.getLectureCreator().getFirstName(), lectureGroup.getLectureCreator().getLastName(), lectureGroup.getLectureCreator().getSchool()).size() == 0){
+            String lectureGroupId = this.list.push().getKey();
+            this.list.child(lectureGroupId).setValue(lectureGroup);
+            return true; //lecture group is not a duplicate
+        }
+        return false;
     }
 
     /**
@@ -101,29 +118,30 @@ public class LectureGroupDAO extends DAO {
      * @param School : School the group is part of
      * @return Array of Lecture groups Matching the desired query
      */
+    @SuppressWarnings("WeakerAccess")
     public ArrayList<lectureGroup> getLectureGroup(String lectureGroupId, String lectureGroupName, String teacherFirstName, String teacherLastName, School School){
         final ArrayList<lectureGroup> tempList1 = new ArrayList<>();
 
         if (lectureGroupId != null){
             Query groupIdQuery = this.list.orderByChild(lectureGroupId).equalTo(lectureGroupId);
-            groupIdQuery.addChildEventListener(new ChildEventListener() {
+            groupIdQuery.addListenerForSingleValueEvent(new ValueEventListener() { //these listeners query data once so should only be single value events
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                public void onDataChange(DataSnapshot dataSnapshot) {
                     tempList1.add((lectureGroup) dataSnapshot.getValue());
                 }
 
                 @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w("Warning", "Lecture Group was not received");
                 }
+            });
+        }
 
+        if (lectureGroupName != null){
+            Query groupNameQuery = this.list.orderByChild("groupName").equalTo(lectureGroupName);
+            groupNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
                 }
 
@@ -134,13 +152,9 @@ public class LectureGroupDAO extends DAO {
             });
         }
 
-        if (lectureGroupName != null){
-            //do the same thing for all the inputs
-            //
-        }
-
         if (teacherFirstName != null){
-            //do the same thing for all the inputs
+            Query teacherFirstNameQuery = this.list.orderByChild(teacherFirstName).equalTo(teacherFirstName);
+
         }
 
         if (teacherLastName != null){
@@ -189,6 +203,7 @@ public class LectureGroupDAO extends DAO {
     /**
      * Database Reference Listeners
      */
+    @SuppressWarnings("ALL")
     private void onLectureGroupStatementsChanged(lectureGroup lectureGroup){
         this.list.child(lectureGroup.getGroupId()).child("statements").addChildEventListener(new ChildEventListener() {
             @Override

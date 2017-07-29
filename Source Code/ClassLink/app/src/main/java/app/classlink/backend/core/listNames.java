@@ -8,9 +8,10 @@ public interface listNames {
     String STUDENTS = "STUDENTS";
     String TEACHERS = "TEACHERS";
     String ADMIN = "ADMINISTRATORS";
-    String STUDYGROUP = "STUDYGROUP";
-    String LECTUREGROUP = "LECTUREGROUP";
+    String STUDYGROUPS = "STUDYGROUPS";
+    String LECTUREGROUPS = "LECTUREGROUPS";
     String GROUPEDSTATEMENT = "GROUPEDSTATEMENT";
+    String GROUPS = "GROUPS";
 
 }
 
