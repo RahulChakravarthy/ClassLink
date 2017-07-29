@@ -10,24 +10,28 @@ import app.classlink.backend.users.user.user;
 public class teacher extends user {
 
     protected int teacherScore;
-    protected int teacherId;
 
-    public teacher(String firstName, String lastName, String userName, String password, String securityQuestion, String securityAnswer, School school){
+    public teacher(String firstName, String lastName, String userName, String securityQuestion, String securityAnswer, School school){
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
-        this.password = password;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.school = school;
         this.permissionLevel = 2;
-
         this.teacherScore = 0;
     }
 
+    /**
+     * Getters and Setters for the Student Class
+     */
     @Override
     public int getUserPermission() {return this.permissionLevel;}
 
     @Override
     public void setPermissionLevel(int permissionLevel) {this.permissionLevel = permissionLevel;}
+
+    public int getTeacherScore() {return this.teacherScore;}
+
+    public void setTeacherScore(int teacherScore) {this.teacherScore = teacherScore;}
 }

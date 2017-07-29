@@ -99,4 +99,8 @@ public class lectureGroup extends baseGroup {
     public void setGroupedStatements(LinkedList<groupedStatement> newGroupedStatements) {
         this.statements = newGroupedStatements;
     }
+
+    public teacher getLectureCreator(){
+        return this.lectureCreator;
+    }
 }

@@ -12,14 +12,13 @@ import app.classlink.backend.users.user.user;
  */
 public class student extends user {
 
-    protected int studentId, studentScore;
+    protected int studentScore;
     protected HashMap<lectureGroup, ban> banList; //lecture Group you are banned from, and String date that you will be unbanned
 
-    public student(String firstName, String lastName, String userName, String password, String securityQuestion, String securityAnswer, School school) {
+    public student(String firstName, String lastName, String userName, String securityQuestion, String securityAnswer, School school) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
-        this.password = password;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.school = school;
@@ -38,10 +37,6 @@ public class student extends user {
     /**
      * Getters and Setters for the Student Class
      */
-    public int getStudentId() {return this.studentId;}
-
-    public void setStudentId(int studentId) {this.studentId = studentId;}
-
     public int getStudentScore() {return this.studentScore;}
 
     public void setStudentScore(int studentScore) {this.studentScore = studentScore;}
