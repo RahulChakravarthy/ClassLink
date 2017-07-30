@@ -2,6 +2,7 @@ package app.classlink.backend.users.teacher;
 
 import app.classlink.backend.core.listNames;
 import app.classlink.backend.misc.School;
+import app.classlink.backend.users.student.student;
 import app.classlink.backend.users.user.userDAO;
 
 /**
@@ -42,6 +43,52 @@ public class teacherDAO extends userDAO {
         String teacherId = this.list.push().getKey();
         teacher.setUserId(teacherId);
         this.list.child(teacherId).setValue(teacher);
+        return true;
+    }
+
+    /**
+     * @Method getTeacherById
+     * @param teacherId : Id string of the teacher
+     * @return student
+     */
+    public teacher getTeacherById(String teacherId){
+        return null;
+    }
+
+    /**
+     * @Method getStudentByEmail
+     * @param teacherEmail : email address of teacher
+     * @return student
+     */
+    public teacher getTeacherByEmail(String teacherEmail){
+        return null;
+    }
+
+    /**
+     * @Method deleteStudentById
+     * @param studentId : Id string of student
+     * @retrurn boolean if it was succesful
+     */
+    public boolean deleteStudentById(String studentId){
+        return true;
+    }
+
+    /**
+     * @Method deleteStudent By Emaail : delete a student by email
+     * @param email : email address of student
+     * @return
+     */
+    public boolean deleteStudentByEmail(String email){
+        return true;
+    }
+
+    /**
+     * @Method updateStudent : updates an existing student with new provided data
+     * @param student
+     * @return
+     */
+    public boolean updateStudent(student student){
+        this.list.child(student.getUserId()).setValue(student);
         return true;
     }
 }

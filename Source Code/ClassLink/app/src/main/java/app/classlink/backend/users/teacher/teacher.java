@@ -23,7 +23,7 @@ public class teacher extends user {
     }
 
     /**
-     * Getters and Setters for the Student Class
+     * Getters and Setters for the teacher Class
      */
     @Override
     public int getUserPermission() {return this.permissionLevel;}

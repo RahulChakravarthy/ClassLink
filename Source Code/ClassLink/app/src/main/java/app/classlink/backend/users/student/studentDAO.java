@@ -44,4 +44,49 @@ public class studentDAO extends userDAO {
         return true;
     }
 
+    /**
+     * @Method getStudentById
+     * @param studentId : Id string of the student
+     * @return student
+     */
+    public student getStudentById(String studentId){
+        return null;
+    }
+
+    /**
+     * @Method getStudentByEmail
+     * @param studentEmail : email address of student
+     * @return student
+     */
+    public student getStudentByEmail(String studentEmail){
+        return null;
+    }
+
+    /**
+     * @Method deleteStudentById
+     * @param studentId : Id string of student
+     * @retrurn boolean if it was succesful
+     */
+    public boolean deleteStudentById(String studentId){
+        return true;
+    }
+
+    /**
+     * @Method deleteStudent By Emaail : delete a student by email
+     * @param email : email address of student
+     * @return
+     */
+    public boolean deleteStudentByEmail(String email){
+        return true;
+    }
+
+    /**
+     * @Method updateStudent : updates an existing student with new provided data
+     * @param student
+     * @return
+     */
+    public boolean updateStudent(student student){
+        this.list.child(student.getUserId()).setValue(student);
+        return true;
+    }
 }

@@ -10,14 +10,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.recyclerAdapters.displayLectureGroupsAdapter;
 import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.parents.baseActivity;
+import app.classlink.backend.core.baseActivity;
 
 public class lectureJoin extends baseActivity implements activityParameters {
 
@@ -59,7 +55,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
         this.viewHelperClass.addTextToButton(this.createLectureGroup, "Create Lecture Group", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 30f, 90f, 0.5f,0.5f);
 
         this.searchBox = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(this.searchBox, null, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 22, 0.75f, 0.8f);
+        this.viewHelperClass.addGraphicInputBox(null, R.drawable.inputbox, this.searchBox, InputType.TYPE_CLASS_TEXT, 15, 50, 22, 0.75f, 0.8f);
 
         //For testing purposes add button to take to generic Lecture Room
         this.genericLectureRoom = new ImageView(getApplicationContext());

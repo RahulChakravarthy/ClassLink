@@ -1,13 +1,21 @@
 package app.classlink;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +23,7 @@ import java.util.HashMap;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.parents.baseActivity;
+import app.classlink.backend.core.baseActivity;
 
 /**
  * @Class field : Encapsulation of each field displayed on the sign up activity
@@ -49,6 +57,7 @@ public class signUp extends baseActivity implements activityParameters {
     /** The functionality of this UI is such that if you want to include another field, just append  to this list*/
     private ArrayList<String> keys = new ArrayList<>(Arrays.asList("First Name:", "Last Name:", "Email:", "Phone Number:", "School", "Username:", "Password:", "Confirm Password:", "Create a Security question:", "Security question Answer"));
     private HashMap<String, field> fields = new HashMap<>();
+    private FirebaseUser currentUser;
 
     private ImageView submit,line;
 
@@ -56,6 +65,9 @@ public class signUp extends baseActivity implements activityParameters {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        //User authentication
+        userAuth = FirebaseAuth.getInstance();
 
         layoutSetup();
         submitButton();
@@ -85,7 +97,7 @@ public class signUp extends baseActivity implements activityParameters {
             EditText tempEdit = fields.get(keys.get(i)).inputBox;
 
             this.viewHelperClass.addText(keys.get(i), "OpenSans-Regular", "BLACK", 1, 16f, 5,16*i + 12);
-            this.viewHelperClass.addGraphicInputBox(tempEdit, null, R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 42, 16*i + 19, 0.75f, 0.75f);
+            this.viewHelperClass.addGraphicInputBox(null, R.drawable.inputbox, tempEdit, InputType.TYPE_CLASS_TEXT, 15, 42, 16*i + 19, 0.75f, 0.75f);
         }
 
         /** Radio button field graphics */
@@ -103,12 +115,46 @@ public class signUp extends baseActivity implements activityParameters {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /** Verify if entered information is correct*/
-                boolean validInformation;
-                startActivity(new Intent(signUp.this, login.class));
+                if (sanitizeAndCheckUserInput()){
+                    addUser();
+                }
             }
         });
     }
 
+    /**
+     * @Method sanitizeAndCheckUserInput : checks all user input and throws TOAST with all errors
+     * @return boolean : true if all data checks out, false if otherwise
+     */
+    private boolean sanitizeAndCheckUserInput() {
+        return true;
+    }
 
+    /**
+     * @Method addUser : Signs user up to user list and adds them to the user database
+     */
+    private void addUser() {
+        userAuth.createUserWithEmailAndPassword("rahul.chakravarthy101@gmail.com", "TESTING").addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    addUserToDatabase();
+                    currentUser = userAuth.getCurrentUser();
+                } else {
+                    FirebaseAuthException e = (FirebaseAuthException )task.getException();
+                    Toast.makeText(viewHelperClass.getActivityContext(), "Failed Registration: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /**
+     * @Method emailVerifyUser : sends and email to the user to verify their account
+     */
+
+    /**
+     * @Method addUserToDatabase : adds a user to the User database
+     */
+    private void addUserToDatabase() {
+    }
 }

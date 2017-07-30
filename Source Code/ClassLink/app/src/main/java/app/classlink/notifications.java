@@ -18,7 +18,7 @@ import app.classlink.helperClasses.recyclerAdapters.groupAdapter;
 import app.classlink.helperClasses.activityParameters;
 
 import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.parents.baseActivity;
+import app.classlink.backend.core.baseActivity;
 
 public class notifications extends baseActivity implements activityParameters {
 
