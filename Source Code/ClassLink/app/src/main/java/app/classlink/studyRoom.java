@@ -2,20 +2,14 @@ package app.classlink;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import java.util.HashMap;
 import java.util.Random;
 
-import app.classlink.backend.statement.statementType.question;
-
 import app.classlink.helperClasses.activityParameters;
-import app.classlink.parents.baseActivity;
+import app.classlink.backend.core.baseActivity;
 
 public class studyRoom extends baseActivity implements activityParameters {
 

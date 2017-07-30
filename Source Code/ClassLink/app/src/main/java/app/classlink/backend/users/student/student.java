@@ -22,10 +22,8 @@ public class student extends user {
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.school = school;
-
         this.permissionLevel = 1;
         this.studentScore = 0;
-        //generate userId
     }
 
     @Override

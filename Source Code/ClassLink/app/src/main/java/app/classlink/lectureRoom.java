@@ -9,28 +9,24 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.RelativeLayout;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
-import app.classlink.backend.statement.statementGrouping.groupedStatement;
-import app.classlink.backend.statement.statementGrouping.groupedStatementDAO;
 import app.classlink.helperClasses.activityParameters;
-import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.parents.baseActivity;
+import app.classlink.backend.core.baseActivity;
 
 public class lectureRoom extends baseActivity
         implements NavigationView.OnNavigationItemSelectedListener, activityParameters {
 
     private lectureGroup lectureGroup;
     private LectureGroupDAO lectureGroupDAO;
+    private int capacity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +129,7 @@ public class lectureRoom extends baseActivity
 //        this.activityLayout = (RelativeLayout) findViewById(R.id.drawer_layout);
 //        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 //        this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
+
 
     }
 

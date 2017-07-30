@@ -3,6 +3,7 @@ package app.classlink;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
@@ -11,21 +12,29 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.parents.baseActivity;
+import app.classlink.backend.core.baseActivity;
 
 /**
  * @Class login: This is the login activity for Class Link
  */
-public class login extends baseActivity implements activityParameters {
+public class login extends baseActivity implements activityParameters  {
 
     private TextView forgotPassword; //forgot password button
     private ImageView login, signUp, line; //front end graphic buttons/models
-    private EditText usernameInput, passwordInput; //text input boxes
+    private EditText emailInput, passwordInput; //text input boxes
+    private FirebaseUser currentUser; //logged in user
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +57,7 @@ public class login extends baseActivity implements activityParameters {
     @Override
     protected void onStart(){
         super.onStart();
-        FirebaseUser currentUser = this.userAuth.getCurrentUser();
-        if (currentUser != null){
+        if ((currentUser = this.userAuth.getCurrentUser()) != null){
             startActivity(new Intent(login.this, mainMenu.class));
         }
     }
@@ -66,29 +74,28 @@ public class login extends baseActivity implements activityParameters {
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         //Graphical Settings (only static images and logos)
-        line = new ImageView(getApplicationContext());
+        this.line = new ImageView(getApplicationContext());
         this.viewHelperClass.addGraphics(line, R.drawable.line, 50, 18, 0.75f, 1, false);
 
-        usernameInput = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(usernameInput, "", R.drawable.inputbox, InputType.TYPE_CLASS_TEXT, 50, 30, 0.75f, 0.8f);
+        this.emailInput = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, emailInput, InputType.TYPE_CLASS_TEXT, 17, 50, 30, 0.75f, 0.8f);
 
-        passwordInput = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(passwordInput, "", R.drawable.inputbox, InputType.TYPE_TEXT_VARIATION_PASSWORD, 50, 44, 0.75f, 0.8f);
+        this.passwordInput = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, passwordInput, InputType.TYPE_TEXT_VARIATION_PASSWORD, 17, 50, 44, 0.75f, 0.8f);
 
-        login = new ImageView(getApplicationContext());
+        this.login = new ImageView(getApplicationContext());
         this.viewHelperClass.addTextToButton(login, "Login", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 34, 55, 0.3f, 0.4f);
 
-        signUp = new ImageView(getApplicationContext());
+        this.signUp = new ImageView(getApplicationContext());
         this.viewHelperClass.addTextToButton(signUp, "Sign Up", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 66, 55, 0.3f, 0.4f);
 
         //Text Settings
         this.viewHelperClass.addText("CLASS-LINK", "OpenSans-ExtraBoldItalic", "BLACK", 2, 50, 50, 13);//title
-        this.viewHelperClass.addText("Email Address:", "OpenSans-Regular", "BLACK", 2, 15, 50, 23); //user Name
-        this.viewHelperClass.addText("Password:", "OpenSans-Regular", "BLACK", 2, 15, 50, 37);// Password
+        this.viewHelperClass.addText("Email Address:", "OpenSans-Semibold", "BLACK", 2, 17, 50, 23); //user Name
+        this.viewHelperClass.addText("Password:", "OpenSans-Semibold", "BLACK", 2, 17, 50, 37);// Password
 
-        forgotPassword = new TextView(getApplicationContext());
+        this.forgotPassword = new TextView(getApplicationContext());
         this.viewHelperClass.addText(forgotPassword, "Forgot Password?",  "OpenSans-Bold", "BLACK", 15, 50, 65, true);
-
     }
 
     /**
@@ -97,7 +104,33 @@ public class login extends baseActivity implements activityParameters {
     private void loginListener() {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {startActivity(new Intent(login.this, mainMenu.class));}
+            public void onClick(View v) {
+                if(viewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(emailInput,passwordInput)))){
+                    authenticateUser();
+                } else {
+                    Toast.makeText(viewHelperClass.getActivityContext(), "Please enter email and password", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+    }
+
+    /**
+     * @Method authenticateUser : Authenticate the user
+     */
+    @SuppressWarnings("ALL")
+    private void authenticateUser() {
+        userAuth.signInWithEmailAndPassword(emailInput.getText().toString().trim(), passwordInput.getText().toString().trim()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    currentUser = userAuth.getCurrentUser();
+                    startActivity(new Intent(login.this, mainMenu.class));
+                } else {
+                    FirebaseAuthException e = (FirebaseAuthException )task.getException();
+                    Toast.makeText(viewHelperClass.getActivityContext(), "Failed Registration: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 

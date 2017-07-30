@@ -22,7 +22,7 @@ import app.classlink.backend.core.GROUP_TYPE;
 import app.classlink.backend.groups.study.studyGroup;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.parents.baseActivity;
+import app.classlink.backend.core.baseActivity;
 
 import app.classlink.helperClasses.recyclerAdapters.groupAdapter;
 

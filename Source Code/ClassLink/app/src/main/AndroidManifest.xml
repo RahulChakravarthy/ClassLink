@@ -9,28 +9,38 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:windowSoftInputMode="stateHidden|adjustResize">
-        <activity android:name=".login">
+        <activity android:name=".login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".lectureCreate" />
-        <activity android:name=".studyCreate" />
-        <activity android:name=".lectureJoin" />
-        <activity android:name=".studyJoin" />
-        <activity android:name=".mainMenu" />
-        <activity android:name=".settings" />
-        <activity android:name=".signUp" />
-        <activity android:name=".studyMenu" />
-        <activity android:name=".studyRoom" />
-        <activity android:name=".userProfile" />
-        <activity android:name=".notifications"></activity>
+        <activity android:name=".lectureCreate"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".studyCreate"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".lectureJoin"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".studyJoin"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".mainMenu"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".settings"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".signUp"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".studyMenu"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".studyRoom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".userProfile"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".notifications"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".lectureRoom"
             android:label="@string/title_activity_lecture_room"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
-
 </manifest>

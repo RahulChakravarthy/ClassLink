@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import app.classlink.backend.core.DAO;
 import app.classlink.backend.core.listNames;
+import app.classlink.backend.misc.School;
 
 /**
  * @Class userDAO : DAO for user class individuals
@@ -21,7 +22,7 @@ public class userDAO extends DAO {
      * @Method getUsers: Returns users based on input query
      * @return ArrayList of users matching the query
      */
-    public ArrayList<user> getUsers(){
+    public ArrayList<user> getUsers(String userId, String userFirstName, String userLastName, String userEmail, School school){
         return null;
     }
 }

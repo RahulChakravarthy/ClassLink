@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -265,34 +266,43 @@ public class viewHelperClass {
 
     /**
      * @Method addGraphicInputBox : programmatic way of adding a text input box on top of a graphic layout
-     * @param textInput : EditText object reference
      * @param hint : optional placeholder text
      * @param resourceId : image resource ID
-     * @param xPosition : x positon of view in %
+     * @param textInput : EditText object reference
+     * @param inputType : input mode type
+     * @param size : size of text in edit text box
+     * @param xPosition : x position of view in %
      * @param yPosition : y position of view in %
      * @param xScale : x scale
      * @param yScale : y scale
      */
-    public void addGraphicInputBox(EditText textInput, String hint, int resourceId, int inputType, float xPosition, float yPosition, float xScale, float yScale){
-        this.editGraphics(textInput,xPosition,yPosition,xScale,yScale);
+    public void addGraphicInputBox(String hint, Integer resourceId, EditText textInput, int inputType, float size, float xPosition, float yPosition, float xScale, float yScale){
+        //create background input image only if resource Id isn't null
+        if (resourceId != null){
+            ImageView background = new ImageView(this.activityContext);
+            this.addGraphics(background, resourceId, xPosition, yPosition, xScale, yScale, false);
+        }
+        //create edit text
+        this.editGraphics(textInput,xPosition,yPosition,1,1);
         textInput.setPadding(20,0,20,0);
-        textInput.setBackground(this.activityContext.getDrawable(resourceId));
-        textInput.setTextColor(Color.BLACK);
         textInput.setInputType(inputType);
+        textInput.setWidth(Math.round(xScale*this.phoneWidth));
+        textInput.setBackgroundColor(Color.TRANSPARENT);
+        textInput.setTextColor(Color.BLACK);
+        textInput.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         textInput.setHint((hint != null)? hint : "");
         textInput.setHintTextColor(Color.parseColor("#C7C7CD"));
-
 
         if (inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD){
             textInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
-
         this.activityLayout.addView(textInput);
     }
 
     /**
      * @Method clearAllEditTexts : Call this method after every activity switch to ensure fields are cleared
      * @param fields : fields that must be cleared
+     * NOTE : THIS ISNT WORKING NEEDS TO BE FIXED
      */
     public void clearAllEditTexts(ArrayList<EditText> fields){
         for (EditText field : fields){
@@ -303,12 +313,12 @@ public class viewHelperClass {
     /**
      * @Method isEditTextEmpty : checks to see if any of the inputted edit texts are empty
      * @param inputs : Edit text inputs that need to be verified
-     * @return boolean
+     * @return boolean returns true if not empty, false if otherwise
      */
     public boolean isEditTextEmpty(ArrayList<EditText> inputs){
         for (EditText input : inputs){
             String cleanedInput = input.getText().toString().trim();
-            if (cleanedInput == null || cleanedInput.isEmpty()){
+            if (cleanedInput.isEmpty()){
                 return false;
             }
         }
