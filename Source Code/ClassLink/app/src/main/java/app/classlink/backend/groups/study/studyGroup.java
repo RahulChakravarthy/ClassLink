@@ -27,6 +27,13 @@ public class studyGroup extends baseGroup {
     }
 
     /**
+     * @Consructor DATASNAPSHOT CONSTRUCTOR : DO NOT USE FOR REGULAR OBJECT CREATION
+     */
+    public studyGroup(){
+        //ONLY USED BY DATA SNAPSHOT
+    }
+
+    /**
      * @Method createLectureTags : creates tags in which the group can be accessed while performing a search query
      */
     private void createLectureTags() {

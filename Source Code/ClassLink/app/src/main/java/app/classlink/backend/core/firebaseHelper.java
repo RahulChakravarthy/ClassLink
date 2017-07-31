@@ -18,13 +18,4 @@ public class firebaseHelper implements listNames{
         this.db = FirebaseDatabase.getInstance();
         this.list = this.db.getReference(listName);
     }
-
-    /**
-     * @Method addItem: add any object/class to the current list
-     * @param o: whatever you want to add
-     */
-    public void addItem(Object o) {
-        this.list.push().setValue(o);
-    }
-
 }

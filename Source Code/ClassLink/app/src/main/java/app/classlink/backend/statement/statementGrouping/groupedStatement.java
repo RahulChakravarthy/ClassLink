@@ -16,12 +16,19 @@ public class groupedStatement {
     protected question statementQuestion;
     protected HashMap<answers, ArrayList<comments>> statementResponses; //store questions and answers in a hashmap since they are tightly related
 
-    /**
+    /**@Consructor
      * @Method groupedStatement : is created every time a user asks a question
      * @param userQuestion : question object
      */
     public groupedStatement(question userQuestion) {
         this.statementQuestion = userQuestion;
+    }
+
+    /**
+     * @Consructor DATASNAPSHOT CONSTRUCTOR : DO NOT USE FOR REGULAR OBJECT CREATION
+     */
+    public groupedStatement(){
+        //ONLY USED BY DATA SNAPSHOT
     }
 
     public void addAnswer(answers userAnswer){

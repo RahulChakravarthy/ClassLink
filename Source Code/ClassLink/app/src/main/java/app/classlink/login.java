@@ -34,7 +34,6 @@ public class login extends baseActivity implements activityParameters  {
     private TextView forgotPassword; //forgot password button
     private ImageView login, signUp, line; //front end graphic buttons/models
     private EditText emailInput, passwordInput; //text input boxes
-    private FirebaseUser currentUser; //logged in user
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class login extends baseActivity implements activityParameters  {
     @Override
     protected void onStart(){
         super.onStart();
-        if ((currentUser = this.userAuth.getCurrentUser()) != null){
+        if (this.userAuth.getCurrentUser() != null){
             startActivity(new Intent(login.this, mainMenu.class));
         }
     }
@@ -120,18 +119,19 @@ public class login extends baseActivity implements activityParameters  {
      */
     @SuppressWarnings("ALL")
     private void authenticateUser() {
-        userAuth.signInWithEmailAndPassword(emailInput.getText().toString().trim(), passwordInput.getText().toString().trim()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    currentUser = userAuth.getCurrentUser();
-                    startActivity(new Intent(login.this, mainMenu.class));
-                } else {
-                    FirebaseAuthException e = (FirebaseAuthException )task.getException();
-                    Toast.makeText(viewHelperClass.getActivityContext(), "Failed Registration: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        if (internetConnection()) {
+            userAuth.signInWithEmailAndPassword(emailInput.getText().toString().trim(), passwordInput.getText().toString().trim()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        startActivity(new Intent(login.this, mainMenu.class));
+                    } else {
+                        FirebaseAuthException e = (FirebaseAuthException) task.getException();
+                        Toast.makeText(viewHelperClass.getActivityContext(), "Failed Registration: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -147,14 +147,16 @@ public class login extends baseActivity implements activityParameters  {
     /**
      * @Method forgotPasswordHandler : handles case where user has forgotten password
      */
-    public void forgotPasswordListener(){
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(viewHelperClass.getActivityContext(), "Feature not implemented yet", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(login.this, login.class));
-            }
-        });
+    public void forgotPasswordListener() {
+        if (internetConnection()) {
+            forgotPassword.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(viewHelperClass.getActivityContext(), "Feature not implemented yet", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(login.this, login.class));
+                }
+            });
+        }
     }
 }
 
