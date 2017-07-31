@@ -22,6 +22,14 @@ public class lectureGroup extends baseGroup {
     protected HashMap<String, String> lectureGroupTags; // Used for searching for the group
     protected LinkedList<groupedStatement> statements; //Linkedlist stores all statements in order of which they were asked
 
+    /**
+     * @Constructor : default constructor
+     * @param schoolName : school name
+     * @param groupName : name of group
+     * @param groupId : groupId
+     * @param groupDescription : group Description
+     * @param lectureCreator : teacher who created the group
+     */
     public lectureGroup(School schoolName, String groupName, String groupId, String groupDescription, teacher lectureCreator){
         this.groupType = GROUP_TYPE.LECTURE;
         this.schoolName = schoolName;
@@ -33,6 +41,13 @@ public class lectureGroup extends baseGroup {
         this.statements = new LinkedList<>();
 
         this.createLectureTags();
+    }
+
+    /**
+     * @Consructor DATASNAPSHOT CONSTRUCTOR : DO NOT USE FOR REGULAR OBJECT CREATION
+     */
+    public lectureGroup(){
+        //ONLY USED BY DATA SNAPSHOT
     }
 
     /**

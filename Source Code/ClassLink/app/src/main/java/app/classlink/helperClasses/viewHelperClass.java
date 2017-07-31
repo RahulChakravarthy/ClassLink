@@ -291,7 +291,7 @@ public class viewHelperClass {
         textInput.setTextColor(Color.BLACK);
         textInput.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         textInput.setHint((hint != null)? hint : "");
-        textInput.setHintTextColor(Color.parseColor("#C7C7CD"));
+        textInput.setHintTextColor(Color.parseColor("#8EC2F4"));
 
         if (inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD){
             textInput.setTransformationMethod(PasswordTransformationMethod.getInstance());

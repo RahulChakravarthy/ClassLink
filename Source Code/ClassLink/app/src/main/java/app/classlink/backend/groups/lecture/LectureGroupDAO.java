@@ -10,6 +10,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import app.classlink.backend.core.DAO;
@@ -43,7 +44,7 @@ public class LectureGroupDAO extends DAO {
      * @return boolean : whether group was created or not
      */
     public boolean createLectureGroup(String lectureGroupName, String lectureGroupDescription, teacher lectureCreator, School schoolName){
-        if (this.getLectureGroup(null, lectureGroupName, lectureCreator.getFirstName(), lectureCreator.getLastName(), schoolName).size() == 0){
+        if (this.getLectureGroupByName(lectureGroupName, schoolName).size() == 0){
             String lectureGroupId = this.list.push().getKey();
             lectureGroup newGroup = new lectureGroup(schoolName, lectureGroupName, lectureGroupId, lectureGroupDescription, lectureCreator);
             this.list.child(lectureGroupId).setValue(newGroup);
@@ -57,7 +58,7 @@ public class LectureGroupDAO extends DAO {
      * @param lectureGroup : reference to lecture Group object
      */
     public boolean createLectureGroup(lectureGroup lectureGroup){
-        if (this.getLectureGroup(lectureGroup.getGroupId(), lectureGroup.getGroupName(),lectureGroup.getLectureCreator().getFirstName(), lectureGroup.getLectureCreator().getLastName(), lectureGroup.getLectureCreator().getSchool()).size() == 0){
+        if (this.getLectureGroupByName(lectureGroup.getGroupName(), lectureGroup.getSchoolName()).size() == 0){
             String lectureGroupId = this.list.push().getKey();
             this.list.child(lectureGroupId).setValue(lectureGroup);
             return true; //lecture group is not a duplicate
@@ -68,66 +69,71 @@ public class LectureGroupDAO extends DAO {
     /**
      * @Method getLectureGroupById : returns a lecture group by id
      * @param lectureGroupId : input lecture ID
-     * @return object lectureGroup
+     * @return lectureGroup Array List
      */
-    public lectureGroup getLectureGroupById(String lectureGroupId){
-        return this.getLectureGroup(lectureGroupId, null, null, null, null).get(0);
+    public ArrayList<lectureGroup> getLectureGroupById(final String lectureGroupId){
+        final ArrayList<lectureGroup> tempList = new ArrayList<>();
+        Query groupIdQuery = this.list;
+        groupIdQuery.addListenerForSingleValueEvent(new ValueEventListener() { //these listeners query data once so should only be single value events
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot group : dataSnapshot.getChildren()){
+                    if (group.getKey().equals(lectureGroupId)){
+                        tempList.add(group.getValue(lectureGroup.class));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Warning", "Lecture Group was not received");
+            }
+        });
+        return tempList;
     }
 
     /**
      * @Method getLectureGroupByName : returns the lecture group with that name (only one since there shouldnt be a lecture group with the exact same name)
+     * @param name : lecture group name
+     * @param school : school in which you are searching through
+     * @return lectureGroup Array List
      */
-    public lectureGroup getLectureGroupByName(String name, School school){
-        return this.getLectureGroup(null, name, null, null, school).get(0);
+    public ArrayList<lectureGroup> getLectureGroupByName(final String name, School school){
+        final ArrayList<lectureGroup> tempList = new ArrayList<>();
+        Query groupNameQuery = this.list;
+        groupNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot group : dataSnapshot.getChildren()){
+                    if (group.getValue(lectureGroup.class).getGroupName().equals(name)){
+                        tempList.add(group.getValue(lectureGroup.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Warning", "Lecture Group was not received");
+            }
+        });
+        return filterBySchool(tempList, school);
     }
 
     /**
      * @Method getLectureGroupByTeacher : returns all lecture groups hosted by a provided teacher
-     * @param userTeacher : teacher whom you wish to view all lecture groups
+     * @param teacherFirstName : teacher first name whom you wish to view all lecture groups
+     * @return Arraylist lectureGroups
      */
-    public ArrayList<lectureGroup> getLectureByTeacher(teacher userTeacher){
-        return this.getLectureGroup(null, null, userTeacher.getFirstName(), userTeacher.getLastName(), userTeacher.getSchool());
-    }
-
-    /**
-     * @Method getLectureByLectureTag : return all lecture groups with matching stored tags
-     * @param tagValue : search for this value
-     * @param tagName : search this this tag name'
-     * NOTE: EVERYTIME YOU WANT TO ADD ANOTHER METHOD OF QUERY, IT MUST BE ALSO INCLUDED IN THE SWITCH STATEMENT
-     */
-    public ArrayList<lectureGroup> getLectureByLectureTag(String tagValue, String tagName, School school){
-        switch (tagName){
-            case "groupName":
-                return this.getLectureGroup(null, tagValue, null, null, school);
-            case "teacherFirstName":
-                return this.getLectureGroup(null, null, tagValue, null, school);
-            case "teacherLastName":
-                return this.getLectureGroup(null, null, null, tagValue, school);
-            default:
-                return null;
-        }
-    }
-
-
-    /**
-     * @Method getLectureGroup : gets a lecture group by specified inputs
-     * @param lectureGroupId : String lecture group id
-     * @param lectureGroupName : String lecture group name
-     * @param teacherFirstName : String teacher first name who created the group
-     * @param teacherLastName : String teacher last name who created the group
-     * @param School : School the group is part of
-     * @return Array of Lecture groups Matching the desired query
-     */
-    @SuppressWarnings("WeakerAccess")
-    public ArrayList<lectureGroup> getLectureGroup(String lectureGroupId, String lectureGroupName, String teacherFirstName, String teacherLastName, School School){
-        final ArrayList<lectureGroup> tempList1 = new ArrayList<>();
-
-        if (lectureGroupId != null){
-            Query groupIdQuery = this.list.orderByChild(lectureGroupId).equalTo(lectureGroupId);
-            groupIdQuery.addListenerForSingleValueEvent(new ValueEventListener() { //these listeners query data once so should only be single value events
+    public ArrayList<lectureGroup> getLectureByTeacherFirstName(final String teacherFirstName, School school){
+        final ArrayList<lectureGroup> tempList = new ArrayList<>();
+            Query teacherFirstNameQuery = this.list;
+            teacherFirstNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    tempList1.add((lectureGroup) dataSnapshot.getValue());
+                    for (DataSnapshot group : dataSnapshot.getChildren()){
+                        if (group.getValue(lectureGroup.class).getLectureCreator().getFirstName().equals(teacherFirstName)){
+                            tempList.add(group.getValue(lectureGroup.class));
+                        }
+                    }
                 }
 
                 @Override
@@ -135,37 +141,55 @@ public class LectureGroupDAO extends DAO {
                     Log.w("Warning", "Lecture Group was not received");
                 }
             });
-        }
+        return filterBySchool(tempList, school);
+    }
 
-        if (lectureGroupName != null){
-            Query groupNameQuery = this.list.orderByChild("groupName").equalTo(lectureGroupName);
-            groupNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
+    /**
+     * @Method getLectureGroupByTeacher : returns all lecture groups hosted by a provided teacher
+     * @param teacherLastName : teacher last name whom you wish to view all lecture groups
+     * @return Arraylist lectureGroups
+     */
+    public ArrayList<lectureGroup> getLectureByTeacherLastName(final String teacherLastName, School school){
+        final ArrayList<lectureGroup> tempList = new ArrayList<>();
+        Query teacherLastNameQuery = this.list;
+        teacherLastNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot group : dataSnapshot.getChildren()){
+                    if (group.getValue(lectureGroup.class).getLectureCreator().getFirstName().equals(teacherLastName)){
+                        tempList.add(group.getValue(lectureGroup.class));
+                    }
                 }
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Warning", "Lecture Group was not received");
+            }
+        });
+        return filterBySchool(tempList, school);
+    }
 
+    /**
+     * @Method getAllLectureGroups : retrieves all lecture groups for a specific school
+     */
+    public ArrayList<lectureGroup> getAllLectureGroups(School school){
+        final ArrayList<lectureGroup> tempList = new ArrayList<>();
+        Query schoolQuery = this.list;
+        schoolQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot group : dataSnapshot.getChildren()){
+                    tempList.add(group.getValue(lectureGroup.class));
                 }
-            });
-        }
+            }
 
-        if (teacherFirstName != null){
-            Query teacherFirstNameQuery = this.list.orderByChild(teacherFirstName).equalTo(teacherFirstName);
-
-        }
-
-        if (teacherLastName != null){
-            //do the same thing for all the inputs
-        }
-
-        if (School != null){
-            //do the same thing for all the inputs
-        }
-
-        return tempList1;
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Warning", "Lecture Group was not received");
+            }
+        });
+        return filterBySchool(tempList, school);
     }
 
     /**
@@ -244,4 +268,15 @@ public class LectureGroupDAO extends DAO {
         return this.groupedStatementsCache;
     }
 
+    /**
+     * @Method filterBySchool : filters an array of lecture groups and deletes all that arent of the correct school
+     */
+    public ArrayList<lectureGroup> filterBySchool(ArrayList<lectureGroup> tempList, School school){
+        for (int i = 0; i < tempList.size(); i++){
+            if (tempList.get(i).getSchoolName() != school){
+                tempList.remove(i);
+            }
+        }
+        return tempList;
+    }
 }

@@ -23,10 +23,17 @@ public class teacher extends user {
     }
 
     /**
+     * @Consructor DATASNAPSHOT CONSTRUCTOR : DO NOT USE FOR REGULAR OBJECT CREATION
+     */
+    public teacher(){
+        //ONLY USED BY DATA SNAPSHOT
+    }
+
+    /**
      * Getters and Setters for the teacher Class
      */
     @Override
-    public int getUserPermission() {return this.permissionLevel;}
+    public int getPermissionLevel() {return this.permissionLevel;}
 
     @Override
     public void setPermissionLevel(int permissionLevel) {this.permissionLevel = permissionLevel;}

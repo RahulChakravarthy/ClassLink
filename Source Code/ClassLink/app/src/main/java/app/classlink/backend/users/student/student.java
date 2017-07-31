@@ -25,9 +25,15 @@ public class student extends user {
         this.permissionLevel = 1;
         this.studentScore = 0;
     }
+    /**
+     * @Consructor DATASNAPSHOT CONSTRUCTOR : DO NOT USE FOR REGULAR OBJECT CREATION
+     */
+    public student(){
+        //ONLY USED BY DATA SNAPSHOT
+    }
 
     @Override
-    public int getUserPermission() {return this.permissionLevel;}
+    public int getPermissionLevel() {return this.permissionLevel;}
 
     @Override
     public void setPermissionLevel(int permissionLevel) {this.permissionLevel = permissionLevel;}

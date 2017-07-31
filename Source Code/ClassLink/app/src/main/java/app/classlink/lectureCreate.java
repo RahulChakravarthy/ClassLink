@@ -1,7 +1,9 @@
 package app.classlink;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +13,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import app.classlink.backend.groups.lecture.LectureGroupDAO;
+import app.classlink.backend.groups.lecture.lectureGroup;
+import app.classlink.backend.misc.School;
+import app.classlink.backend.users.teacher.teacher;
+import app.classlink.backend.users.teacher.teacherDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.backend.core.baseActivity;
@@ -83,14 +90,18 @@ public class lectureCreate extends baseActivity implements activityParameters {
             @Override
             public void onClick(View view) {
                if (viewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(lectureName,lectureDescription)))){
+                   //Create temp teacher
+                   teacher scottChen = new teacher("Scott", "Chen", "S_CHEN", "AUTISM", "REATS", School.UNIVERSITY_OF_WATERLOO);
+//                   teacherDAO teacherDAO = new teacherDAO();
+//                   teacherDAO.createTeacher(scottChen);
                    //create the group and append it to the database
-//                   LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
-//                   if (!lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(), (teacher) sessionUser, School.UNIVERSITY_OF_WATERLOO)){
-//                       Toast.makeText(viewHelperClass.getActivityContext(), "Error! Group Name already exists", Toast.LENGTH_LONG).show();
-//                       return;
-//                   }
-//                   Toast.makeText(viewHelperClass.getActivityContext(), "Lecture Group Created to view/change settings visit the settings menu", Toast.LENGTH_LONG).show();
-//                   startActivity(new Intent(lectureCreate.this, lectureRoom.class));
+                   LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
+                   if (!lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(), scottChen, School.UNIVERSITY_OF_WATERLOO)){
+                       Toast.makeText(viewHelperClass.getActivityContext(), "Error! Group Name already exists", Toast.LENGTH_LONG).show();
+                       return;
+                   }
+                   Toast.makeText(viewHelperClass.getActivityContext(), "Lecture Group Created to view/change settings visit the settings menu", Toast.LENGTH_LONG).show();
+                   startActivity(new Intent(lectureCreate.this, lectureRoom.class));
 
                } else {
                    Toast.makeText(viewHelperClass.getActivityContext(), "Error, all fields must be filled", Toast.LENGTH_LONG).show();

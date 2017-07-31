@@ -22,8 +22,15 @@ public class administrator extends user {
         this.adminScore = 100; //cuz they are admins lol
     }
 
+    /**
+     * @Consructor DATASNAPSHOT CONSTRUCTOR : DO NOT USE FOR REGULAR OBJECT CREATION
+     */
+    public administrator(){
+        //ONLY USED BY DATA SNAPSHOT
+    }
+
     @Override
-    public int getUserPermission() {
+    public int getPermissionLevel() {
         return this.permissionLevel;
     }
 

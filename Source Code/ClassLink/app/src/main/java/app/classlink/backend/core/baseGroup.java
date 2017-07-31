@@ -48,6 +48,14 @@ public abstract class baseGroup {
         this.groupDescription = groupDescription;
     }
 
+    public School getSchoolName(){
+        return this.schoolName;
+    }
+
+    public void setSchoolName(School schoolName){
+        this.schoolName = schoolName;
+    }
+
     abstract public LinkedList<groupedStatement> getGroupStatements();
 
     abstract public void setGroupedStatements(LinkedList<groupedStatement> newGroupedStatements);

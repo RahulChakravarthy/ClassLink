@@ -9,7 +9,7 @@ public abstract class user {
     protected School school;
     protected int permissionLevel; // 1 = student, 2 = teacher, 3 = administrator, 4 = god?????
 
-    abstract public int getUserPermission();
+    abstract public int getPermissionLevel();
 
     abstract public void setPermissionLevel(int permissionLevel);
 
