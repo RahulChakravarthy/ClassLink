@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
@@ -96,12 +97,14 @@ public class lectureCreate extends baseActivity implements activityParameters {
 //                   teacherDAO.createTeacher(scottChen);
                    //create the group and append it to the database
                    LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
-                   if (!lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(), scottChen, School.UNIVERSITY_OF_WATERLOO)){
-                       Toast.makeText(viewHelperClass.getActivityContext(), "Error! Group Name already exists", Toast.LENGTH_LONG).show();
-                       return;
-                   }
-                   Toast.makeText(viewHelperClass.getActivityContext(), "Lecture Group Created to view/change settings visit the settings menu", Toast.LENGTH_LONG).show();
-                   startActivity(new Intent(lectureCreate.this, lectureRoom.class));
+                   lectureGroupDAO.getLectureGroupById("-KqMFSGYi7j0BfFM4xod");
+
+//                   if (!lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(), scottChen, School.UNIVERSITY_OF_WATERLOO)){
+//                       Toast.makeText(viewHelperClass.getActivityContext(), "Error! Group Name already exists", Toast.LENGTH_LONG).show();
+//                       return;
+//                   }
+//                   Toast.makeText(viewHelperClass.getActivityContext(), "Lecture Group Created to view/change settings visit the settings menu", Toast.LENGTH_LONG).show();
+//                   startActivity(new Intent(lectureCreate.this, lectureRoom.class));
 
                } else {
                    Toast.makeText(viewHelperClass.getActivityContext(), "Error, all fields must be filled", Toast.LENGTH_LONG).show();

@@ -5,13 +5,16 @@ import android.util.Log;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import app.classlink.backend.core.DAO;
 import app.classlink.backend.core.listNames;
@@ -25,7 +28,6 @@ import app.classlink.backend.users.teacher.teacher;
 public class LectureGroupDAO extends DAO {
 
     protected LinkedList<groupedStatement> groupedStatementsCache; //this caches all the changes and can be periodically called to update lecture statements
-
     /**
      * @Consructor LectureGroupDAO
      */
@@ -69,17 +71,15 @@ public class LectureGroupDAO extends DAO {
     /**
      * @Method getLectureGroupById : returns a lecture group by id
      * @param lectureGroupId : input lecture ID
-     * @return lectureGroup Array List
      */
-    public ArrayList<lectureGroup> getLectureGroupById(final String lectureGroupId){
-        final ArrayList<lectureGroup> tempList = new ArrayList<>();
-        Query groupIdQuery = this.list;
-        groupIdQuery.addListenerForSingleValueEvent(new ValueEventListener() { //these listeners query data once so should only be single value events
+    public ArrayList<lectureGroup> getLectureGroupById(final String lectureGroupId) {
+        final ArrayList<lectureGroup> tempCache = new ArrayList<>();
+        this.list.addListenerForSingleValueEvent(new ValueEventListener() { //these listeners query data once so should only be single value events
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot group : dataSnapshot.getChildren()){
-                    if (group.getKey().equals(lectureGroupId)){
-                        tempList.add(group.getValue(lectureGroup.class));
+                for (DataSnapshot singleData : dataSnapshot.getChildren()){
+                    if (singleData.getKey().equals(lectureGroupId)){
+                        tempCache.add(singleData.getValue(lectureGroup.class));
                     }
                 }
             }
@@ -88,7 +88,7 @@ public class LectureGroupDAO extends DAO {
                 Log.w("Warning", "Lecture Group was not received");
             }
         });
-        return tempList;
+        return tempCache;
     }
 
     /**
@@ -216,6 +216,18 @@ public class LectureGroupDAO extends DAO {
     }
 
     /**
+     * @Method filterBySchool : filters an array of lecture groups and deletes all that arent of the correct school
+     */
+    public ArrayList<lectureGroup> filterBySchool(ArrayList<lectureGroup> tempList, School school){
+        for (int i = 0; i < tempList.size(); i++){
+            if (tempList.get(i).getSchoolName() != school){
+                tempList.remove(i);
+            }
+        }
+        return tempList;
+    }
+
+    /**
      * @Method registerListeners : calls all listeners that are being applyed to this database reference
      * NOTE: Everytime you attach a listener to this Database reference append the method here
      * NOTE: Everytime you create an instance of this DAO and need to track data of a lecture group, invoke this method
@@ -262,21 +274,13 @@ public class LectureGroupDAO extends DAO {
     }
 
     /**
+     *
+     */
+
+    /**
      * Getters and Setters
      */
     public LinkedList<groupedStatement> getCachedStatements(){
         return this.groupedStatementsCache;
-    }
-
-    /**
-     * @Method filterBySchool : filters an array of lecture groups and deletes all that arent of the correct school
-     */
-    public ArrayList<lectureGroup> filterBySchool(ArrayList<lectureGroup> tempList, School school){
-        for (int i = 0; i < tempList.size(); i++){
-            if (tempList.get(i).getSchoolName() != school){
-                tempList.remove(i);
-            }
-        }
-        return tempList;
     }
 }
