@@ -8,10 +8,12 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -326,15 +328,30 @@ public class viewHelperClass {
     }
 
     /**
-     * @Method addDropDownMenu : adds a default dropdown menu to be used in an activity view
+     * @Method addSpinner : adds a default dropdown menu to be used in an activity view
      * @param contents : the contents of what the drop down menu should contain
-     *@param  activityResourceFile : the resource file used to create the front end of the spinner
      */
-    public void addDropDownMenu(ArrayList<String> contents, int activityResourceFile){
-        Spinner dropDownMenu = new Spinner(this.activityContext);
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this.activityContext, activityResourceFile, contents);
-        dropDownMenu.setAdapter(spinnerArrayAdapter);
-        this.activityLayout.addView(dropDownMenu);
+    public void addSpinner(final ArrayList<String> contents, float xPosition, float yPosition, float xScale, float yScale){
+        Spinner spinner = new Spinner(this.activityContext);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.activityContext, android.R.layout.simple_spinner_item, contents);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Hello", contents.get(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+        spinner.setOnItemSelectedListener(listener);
+
+        this.editGraphics(spinner, xPosition, yPosition, xScale, yScale);
+        this.activityLayout.addView(spinner);
     }
 
     /**
