@@ -1,9 +1,7 @@
 package app.classlink;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,13 +10,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
-import app.classlink.backend.groups.lecture.lectureGroup;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.teacher.teacher;
-import app.classlink.backend.users.teacher.teacherDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.backend.core.baseActivity;

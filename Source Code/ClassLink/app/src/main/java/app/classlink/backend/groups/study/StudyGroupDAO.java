@@ -16,4 +16,9 @@ public class StudyGroupDAO extends DAO {
         super(listNames.GROUPS);
         this.list = this.list.child(listNames.STUDYGROUPS);
     }
+
+    @Override
+    public void setCacheListener(String schoolName) {
+
+    }
 }

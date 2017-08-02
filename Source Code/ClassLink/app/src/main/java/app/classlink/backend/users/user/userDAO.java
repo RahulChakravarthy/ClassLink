@@ -1,28 +1,173 @@
 package app.classlink.backend.users.user;
 
+import android.provider.ContactsContract;
+import android.util.Log;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 import app.classlink.backend.core.DAO;
 import app.classlink.backend.core.listNames;
 import app.classlink.backend.misc.School;
+import app.classlink.backend.users.administrator.administrator;
+import app.classlink.backend.users.student.student;
+import app.classlink.backend.users.teacher.teacher;
 
 /**
  * @Class userDAO : DAO for user class individuals
  */
 public class userDAO extends DAO {
 
+    protected Hashtable<String, user> cache; //cache holds every user in the program, refactor
+    protected Hashtable<String, administrator> adminCache; //holds admins
+    protected Hashtable<String, student> studentCache; //holds students
+    protected Hashtable<String, teacher> teacherCache; //holds teachers
+
     /**
      * @Constructor: initializes the connection
      */
     public userDAO() {
         super(listNames.USERS);
+        cache = new Hashtable<>();
+    }
+
+    @Override
+    public void setCacheListener(String schoolName) {
+        //add admin users
+        this.list.child(listNames.ADMIN).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.put(child.getKey(), child.getValue(administrator.class));
+                    adminCache.put(child.getKey(), child.getValue(administrator.class));
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.put(child.getKey(), child.getValue(administrator.class));
+                    adminCache.put(child.getKey(), child.getValue(administrator.class));
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.remove(child.getKey());
+                    adminCache.remove(child.getKey());
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.put(child.getKey(), child.getValue(administrator.class));
+                    adminCache.put(child.getKey(), child.getValue(administrator.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("ERROR", databaseError.getDetails());
+            }
+        });
+
+        //add teacher users
+        this.list.child(listNames.TEACHERS).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.put(child.getKey(), child.getValue(teacher.class));
+                    teacherCache.put(child.getKey(), child.getValue(teacher.class));
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.put(child.getKey(), child.getValue(teacher.class));
+                    teacherCache.put(child.getKey(), child.getValue(teacher.class));
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.remove(child.getKey());
+                    teacherCache.remove(child.getKey());
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.put(child.getKey(), child.getValue(teacher.class));
+                    teacherCache.put(child.getKey(), child.getValue(teacher.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("ERROR", databaseError.getDetails());
+            }
+        });
+        //add student users
+        this.list.child(listNames.STUDENTS).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.put(child.getKey(), child.getValue(student.class));
+                    studentCache.put(child.getKey(), child.getValue(student.class));
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.put(child.getKey(), child.getValue(student.class));
+                    studentCache.put(child.getKey(), child.getValue(student.class));
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.remove(child.getKey());
+                    studentCache.remove(child.getKey());
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    cache.put(child.getKey(), child.getValue(student.class));
+                    studentCache.put(child.getKey(), child.getValue(student.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("ERROR", databaseError.getDetails());
+            }
+        });
     }
 
     /**
-     * @Method getUsers: Returns users based on input query
-     * @return ArrayList of users matching the query
+     * @Method getUserByEmail : used at the start of an activity to get the instance of user signed in
      */
-    public ArrayList<user> getUsers(String userId, String userFirstName, String userLastName, String userEmail, School school){
-        return null;
+    public ArrayList<user> getUserByEmail(String email){
+        ArrayList<user> temp = new ArrayList<>();
+        for (user child : cache.values()){
+            if (child.getEmail().equals(email)){
+                temp.add(child);
+            }
+        }
+        return temp;
     }
 }

@@ -2,7 +2,6 @@ package app.classlink.backend.users.teacher;
 
 import app.classlink.backend.core.listNames;
 import app.classlink.backend.misc.School;
-import app.classlink.backend.users.student.student;
 import app.classlink.backend.users.user.userDAO;
 
 /**
@@ -47,48 +46,32 @@ public class teacherDAO extends userDAO {
     }
 
     /**
-     * @Method getTeacherById
-     * @param teacherId : Id string of the teacher
-     * @return student
-     */
-    public teacher getTeacherById(String teacherId){
-        return null;
-    }
-
-    /**
-     * @Method getStudentByEmail
+     * @Method getTeacherByEmail
      * @param teacherEmail : email address of teacher
-     * @return student
+     * @return teacher
      */
     public teacher getTeacherByEmail(String teacherEmail){
-        return null;
+        for (teacher child : teacherCache.values()){
+            if (child.getEmail().equals(teacherEmail)){
+                return child; //only one email per user
+            }
+        }
+        return  null; //if user doesn't exist
     }
 
     /**
-     * @Method deleteStudentById
-     * @param studentId : Id string of student
-     * @retrurn boolean if it was succesful
+     * @Method deleteTeacherById
+     * @param teacherId : Id string of teacher
      */
-    public boolean deleteStudentById(String studentId){
-        return true;
+    public void deleteTeacherById(String teacherId){
+        this.list.child(teacherId).removeValue();
     }
 
     /**
-     * @Method deleteStudent By Emaail : delete a student by email
-     * @param email : email address of student
-     * @return
+     * @Method updateTeacher : updates an existing teacher with new provided data
+     * @param teacher : teacher user
      */
-    public boolean deleteStudentByEmail(String email){
-        return true;
-    }
-
-    /**
-     * @Method updateStudent : updates an existing student with new provided data
-     * @param student
-     * @return
-     */
-    public boolean updateStudent(student student){
-        this.list.child(student.getUserId()).setValue(student);
-        return true;
+    public void updateTeacher(teacher teacher){
+        this.list.child(teacher.getUserId()).setValue(teacher);
     }
 }

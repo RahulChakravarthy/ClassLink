@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import app.classlink.backend.core.firebaseHelper;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.user;
 import app.classlink.backend.users.user.userDAO;
@@ -32,7 +31,7 @@ abstract public class baseActivity extends AppCompatActivity {
     protected boolean retrieveUser(){
         if (userAuth.getCurrentUser() != null){
             userDAO userDAO = new userDAO();
-            this.sessionUser = userDAO.getUsers(null,null,null,userAuth.getCurrentUser().getEmail(), School.UNIVERSITY_OF_WATERLOO).get(0);
+            this.sessionUser = userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).get(0); //since only one user will have that email
             return true;
         }
         return false;
