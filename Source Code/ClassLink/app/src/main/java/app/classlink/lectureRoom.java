@@ -138,21 +138,13 @@ public class lectureRoom extends baseActivity
      */
     private void coreSetup() {
         //capture Intent values here and set the activity lecture group equal to the passed in group
-        this.lectureGroupDAO.registerDAOListeners(this.lectureGroup);
     }
 
     /**
      * @Method syncStatements : timer thread that periodically syncs statements with database
      */
     public void syncStatements(){
-        Timer syncLoop = new Timer();
-        TimerTask syncTask = new TimerTask() {
-            @Override
-            public void run() {
-                lectureGroup.setGroupedStatements(lectureGroupDAO.getCachedStatements());
-            }
-        };
-        syncLoop.schedule(syncTask, 1000); //modify this based on how often you want to ping the cached for changed statements
+
     }
 
     /**
@@ -166,5 +158,10 @@ public class lectureRoom extends baseActivity
 
     private void displayStatements() {
         //add all the code for displaying each statement in the side view bar
+    }
+
+    @Override
+    protected void setActivityDAOListeners() {
+
     }
 }

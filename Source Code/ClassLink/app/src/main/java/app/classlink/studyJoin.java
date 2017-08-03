@@ -25,4 +25,9 @@ public class studyJoin extends baseActivity implements activityParameters {
     public void layoutSetup() {
         this.activityLayout.setBackgroundResource(R.drawable.bg);
     }
+
+    @Override
+    protected void setActivityDAOListeners() {
+
+    }
 }

@@ -37,4 +37,9 @@ public class userProfile extends baseActivity implements activityParameters {
         blockBackground = new ImageView(getApplicationContext());
         viewHelperClass.addGraphics(blockBackground, R.drawable.button_wide_grey, 0, 700, 0.975f, 8.0f, false);
     }
+
+    @Override
+    protected void setActivityDAOListeners() {
+
+    }
 }

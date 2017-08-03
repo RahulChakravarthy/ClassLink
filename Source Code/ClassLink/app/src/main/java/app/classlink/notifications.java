@@ -104,4 +104,9 @@ public class notifications extends baseActivity implements activityParameters {
             notificationList.add(ex);
         }
     }
+
+    @Override
+    protected void setActivityDAOListeners() {
+
+    }
 }

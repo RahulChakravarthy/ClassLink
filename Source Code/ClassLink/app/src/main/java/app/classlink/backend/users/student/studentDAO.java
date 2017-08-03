@@ -26,7 +26,7 @@ public class studentDAO extends userDAO {
     public boolean createStudent(String studentFirstName, String studentLastName, String studentUsername, String securityQuestion, String securityAnswer, School school){
         //check if student already exists throw false
         String studentId = this.list.push().getKey();
-        student newStudent = new student(studentFirstName, studentLastName, studentUsername, securityQuestion, securityAnswer, school);
+        student newStudent = new student(studentFirstName, studentLastName, studentUsername, school);
         newStudent.setUserId(studentId);
         this.list.child(studentId).setValue(newStudent);
         return true;
@@ -45,48 +45,32 @@ public class studentDAO extends userDAO {
     }
 
     /**
-     * @Method getStudentById
-     * @param studentId : Id string of the student
-     * @return student
-     */
-    public student getStudentById(String studentId){
-        return null;
-    }
-
-    /**
      * @Method getStudentByEmail
      * @param studentEmail : email address of student
      * @return student
      */
     public student getStudentByEmail(String studentEmail){
-        return null;
+        for (student child : studentCache.values()){
+            if (child.getEmail().equals(studentEmail)){
+                return child; //only one email per user
+            }
+        }
+        return  null; //if user doesnt exist
     }
 
     /**
      * @Method deleteStudentById
      * @param studentId : Id string of student
-     * @retrurn boolean if it was succesful
      */
-    public boolean deleteStudentById(String studentId){
-        return true;
-    }
-
-    /**
-     * @Method deleteStudent By Emaail : delete a student by email
-     * @param email : email address of student
-     * @return
-     */
-    public boolean deleteStudentByEmail(String email){
-        return true;
+    public void deleteStudentById(String studentId){
+        this.list.child(studentId).removeValue();
     }
 
     /**
      * @Method updateStudent : updates an existing student with new provided data
-     * @param student
-     * @return
+     * @param student : student user
      */
-    public boolean updateStudent(student student){
+    public void updateStudent(student student){
         this.list.child(student.getUserId()).setValue(student);
-        return true;
     }
 }

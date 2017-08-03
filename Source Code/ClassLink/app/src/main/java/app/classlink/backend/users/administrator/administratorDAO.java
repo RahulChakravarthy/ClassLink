@@ -2,7 +2,6 @@ package app.classlink.backend.users.administrator;
 
 import app.classlink.backend.core.listNames;
 import app.classlink.backend.misc.School;
-import app.classlink.backend.users.teacher.teacher;
 import app.classlink.backend.users.user.userDAO;
 
 /**
@@ -27,7 +26,7 @@ public class administratorDAO extends userDAO {
     public boolean createAdmin(String adminFirstName, String adminLastName, String adminUserName, String securityQuestion, String securityAnswer, School school){
         //check if admin already exists, if so throw false
         String adminId = this.list.push().getKey();
-        administrator newAdmin = new administrator(adminFirstName, adminLastName, adminUserName, securityQuestion, securityAnswer, school);
+        administrator newAdmin = new administrator(adminFirstName, adminLastName, adminUserName, school);
         newAdmin.setUserId(adminId);
         this.list.child(adminId).setValue(newAdmin);
         return true;
@@ -43,5 +42,35 @@ public class administratorDAO extends userDAO {
         admin.setUserId(adminId);
         this.list.child(adminId).setValue(admin);
         return true;
+    }
+
+    /**
+     * @Method getAdminByEmail
+     * @param adminEmail : email address of admin
+     * @return student
+     */
+    public administrator getAdministratorByEmail(String adminEmail){
+        for (administrator child : adminCache.values()){
+            if (child.getEmail().equals(adminEmail)){
+                return child; //only one email per user
+            }
+        }
+        return  null; //if user doesn't exist
+    }
+
+    /**
+     * @Method deleteAdminById
+     * @param adminId : Id string of admin
+     */
+    public void deleteAdminById(String adminId){
+        this.list.child(adminId).removeValue();
+    }
+
+    /**
+     * @Method updateAdmin : updates an existing admin with new provided data
+     * @param admin : admin user
+     */
+    public void updateAdmin(administrator admin){
+        this.list.child(admin.getUserId()).setValue(admin);
     }
 }

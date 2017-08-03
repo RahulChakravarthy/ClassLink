@@ -157,4 +157,9 @@ public class signUp extends baseActivity implements activityParameters {
      */
     private void addUserToDatabase() {
     }
+
+    @Override
+    protected void setActivityDAOListeners() {
+
+    }
 }

@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import app.classlink.backend.core.firebaseHelper;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.user;
 import app.classlink.backend.users.user.userDAO;
@@ -21,7 +20,7 @@ abstract public class baseActivity extends AppCompatActivity {
 
     protected RelativeLayout activityLayout; //Activity Layout
     protected viewHelperClass viewHelperClass; //Helper class to output views to the activity
-    protected user sessionUser; //user who is logged in
+
 
     protected FirebaseAuth userAuth; //Current user session
 
@@ -30,12 +29,11 @@ abstract public class baseActivity extends AppCompatActivity {
      * @return true if session sessionUser is instantiated or false if not (redirect to login page if false)
      */
     protected boolean retrieveUser(){
-        if (userAuth.getCurrentUser() != null){
-            userDAO userDAO = new userDAO();
-            this.sessionUser = userDAO.getUsers(null,null,null,userAuth.getCurrentUser().getEmail(), School.UNIVERSITY_OF_WATERLOO).get(0);
-            return true;
+        try {
+            return userAuth.getCurrentUser() != null;
+        } catch (NullPointerException e){
+            return false;
         }
-        return false;
     }
 
     /**
@@ -53,4 +51,6 @@ abstract public class baseActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    protected abstract void setActivityDAOListeners();
 }

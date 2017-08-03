@@ -4,7 +4,7 @@ package app.classlink.backend.core;
  * @Class  DAO : base DAO class for handling data movement
  */
 
-public class DAO extends firebaseHelper {
+abstract public class DAO extends firebaseHelper {
     /**
      * @param listName : Name of list
      * @Constructor: initializes the connection
@@ -12,4 +12,6 @@ public class DAO extends firebaseHelper {
     public DAO(String listName) {
         super(listName);
     }
+
+    abstract public void setCacheListener(String schoolName);
 }

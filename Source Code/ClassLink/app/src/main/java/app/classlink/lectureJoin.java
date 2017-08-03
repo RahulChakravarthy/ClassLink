@@ -34,6 +34,14 @@ public class lectureJoin extends baseActivity implements activityParameters {
         genericLectureRoomListener();
     }
 
+//    @Override
+//    public void onStart(){
+//        super.onStart();
+//        if (!retrieveUser()){
+//            startActivity(new Intent(lectureJoin.this, login.class));
+//        }
+//    }
+
     /**
      * @Method  layoutSetup : Sets up all static UI components of the activity
      */
@@ -113,5 +121,10 @@ public class lectureJoin extends baseActivity implements activityParameters {
                 startActivity(new Intent(lectureJoin.this, lectureRoom.class));
             }
         });
+    }
+
+    @Override
+    protected void setActivityDAOListeners() {
+
     }
 }

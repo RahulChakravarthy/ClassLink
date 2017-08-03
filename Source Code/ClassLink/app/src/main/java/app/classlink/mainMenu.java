@@ -60,6 +60,14 @@ public class mainMenu extends baseActivity implements activityParameters {
 
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if (!retrieveUser()){
+            startActivity(new Intent(mainMenu.this, login.class));
+        }
+    }
+
     /**
      * @Method exampleGroups: set up some example groups to populate the RecyclerView
      */
@@ -189,6 +197,11 @@ public class mainMenu extends baseActivity implements activityParameters {
                 }
             }
         });
+
+    }
+
+    @Override
+    protected void setActivityDAOListeners() {
 
     }
 }
