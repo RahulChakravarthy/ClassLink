@@ -11,12 +11,10 @@ public class teacher extends user {
 
     protected int teacherScore;
 
-    public teacher(String firstName, String lastName, String userName, String securityQuestion, String securityAnswer, School school){
+    public teacher(String firstName, String lastName, String userName, School school){
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
-        this.securityQuestion = securityQuestion;
-        this.securityAnswer = securityAnswer;
         this.school = school;
         this.permissionLevel = 2;
         this.teacherScore = 0;

@@ -74,4 +74,9 @@ public class studyRoom extends baseActivity implements activityParameters {
 //            }
 //        });
     }
+
+    @Override
+    protected void setActivityDAOListeners() {
+
+    }
 }

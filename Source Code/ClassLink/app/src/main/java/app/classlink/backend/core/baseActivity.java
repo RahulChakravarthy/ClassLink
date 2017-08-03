@@ -20,7 +20,7 @@ abstract public class baseActivity extends AppCompatActivity {
 
     protected RelativeLayout activityLayout; //Activity Layout
     protected viewHelperClass viewHelperClass; //Helper class to output views to the activity
-    protected user sessionUser; //user who is logged in
+
 
     protected FirebaseAuth userAuth; //Current user session
 
@@ -29,12 +29,11 @@ abstract public class baseActivity extends AppCompatActivity {
      * @return true if session sessionUser is instantiated or false if not (redirect to login page if false)
      */
     protected boolean retrieveUser(){
-        if (userAuth.getCurrentUser() != null){
-            userDAO userDAO = new userDAO();
-            this.sessionUser = userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).get(0); //since only one user will have that email
-            return true;
+        try {
+            return userAuth.getCurrentUser() != null;
+        } catch (NullPointerException e){
+            return false;
         }
-        return false;
     }
 
     /**
@@ -52,4 +51,6 @@ abstract public class baseActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    protected abstract void setActivityDAOListeners();
 }

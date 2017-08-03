@@ -58,4 +58,9 @@ public class studyMenu extends baseActivity implements activityParameters {
             }
         });
     }
+
+    @Override
+    protected void setActivityDAOListeners() {
+
+    }
 }

@@ -5,12 +5,7 @@ import android.util.Log;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 
 import app.classlink.backend.core.DAO;
@@ -42,10 +37,14 @@ public class LectureGroupDAO extends DAO {
      * @return boolean : whether group was created or not
      */
     public boolean createLectureGroup(String lectureGroupName, String lectureGroupDescription, teacher lectureCreator, School schoolName){
-        String lectureGroupId = this.list.child(schoolName.toString()).push().getKey();
-        lectureGroup newGroup = new lectureGroup(schoolName, lectureGroupName, lectureGroupId, lectureGroupDescription, lectureCreator);
-        this.list.child(schoolName.toString()).child(lectureGroupId).setValue(newGroup);
-        return true; //lecture group is not a duplicate
+        if (getLectureGroupByFullName(lectureGroupName) == null){
+            String lectureGroupId = this.list.child(schoolName.toString()).push().getKey();
+            lectureGroup newGroup = new lectureGroup(schoolName, lectureGroupName, lectureGroupId, lectureGroupDescription, lectureCreator);
+            this.list.child(schoolName.toString()).child(lectureGroupId).setValue(newGroup);
+            return true;
+        } else {
+            return false; //lecture group is not a duplicate
+        }
     }
 
     /**
@@ -71,14 +70,14 @@ public class LectureGroupDAO extends DAO {
      * @param name : lecture group name
      * @return lectureGroup Array List
      */
-    public ArrayList<lectureGroup> getLectureGroupByFullName(String name){
+    public lectureGroup getLectureGroupByFullName(String name){
         ArrayList<lectureGroup> temp = new ArrayList<>();
         for (lectureGroup child : cache.values()){
             if (child.getGroupName().equals(name)){
                 temp.add(child);
             }
         }
-        return temp;
+        return temp.size() != 0? temp.get(0): null;
     }
 
     /**
@@ -126,10 +125,9 @@ public class LectureGroupDAO extends DAO {
     /**
      * @Method deleteLectureGroup : deletes  a lecture group in the database by String id key
      * @param lectureGroup : Lecture Group Reference
-     * @param schoolName : specify what school you want to delete this group from
      */
-    public void deleteLectureGroup(lectureGroup lectureGroup, String schoolName){
-        this.list.child(schoolName).child(lectureGroup.getGroupId()).removeValue();
+    public void deleteLectureGroup(lectureGroup lectureGroup){
+        this.list.child(lectureGroup.getSchoolName().toString()).child(lectureGroup.getGroupId()).removeValue();
     }
 
     /**
@@ -143,8 +141,8 @@ public class LectureGroupDAO extends DAO {
      * @Method updateLectureGroup : updates the entire lecture group
      */
     @Deprecated //This is a last resort method and should ideally not be called to avoid overhead
-    public void updateLectureGroup(lectureGroup lectureGroup, String schoolName){
-        this.list.child(schoolName).child(lectureGroup.getGroupId()).setValue(lectureGroup);
+    public void updateLectureGroup(lectureGroup lectureGroup){
+        this.list.child(lectureGroup.getSchoolName().toString()).child(lectureGroup.getGroupId()).setValue(lectureGroup);
     }
 
     /**
@@ -155,47 +153,22 @@ public class LectureGroupDAO extends DAO {
         this.list.child(schoolName).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    try {
-                        cache.put(child.getKey(), child.getValue(lectureGroup.class));
-                    } catch (NullPointerException e){
-                        Log.d("ERROR", e.getLocalizedMessage());
-                    }
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(lectureGroup.class));
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    try {
-                        cache.put(child.getKey(), child.getValue(lectureGroup.class));
-                    } catch (NullPointerException e){
-                        Log.d("ERROR", e.getLocalizedMessage());
-                    }
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(lectureGroup.class));
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    try {
-                        cache.remove(child.getKey());
-                    } catch (NullPointerException e){
-                        Log.d("ERROR", e.getLocalizedMessage());
-                    }
-                }
-
+                cache.remove(dataSnapshot.getKey());
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    try {
-                        cache.put(child.getKey(), child.getValue(lectureGroup.class));
-                    } catch (NullPointerException e){
-                        Log.d("ERROR", e.getLocalizedMessage());
-                    }
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(lectureGroup.class));
             }
 
             @Override

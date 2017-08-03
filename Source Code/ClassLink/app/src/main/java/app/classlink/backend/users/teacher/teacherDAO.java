@@ -26,7 +26,7 @@ public class teacherDAO extends userDAO {
     public boolean createTeacher(String teacherFirstName, String teacherLastName, String teacherUsername, String securityQuestion, String securityAnswer, School school){
         //check if teacher already exists throw false
         String teacherId = this.list.push().getKey();
-        teacher newTeacher = new teacher(teacherFirstName, teacherLastName, teacherUsername, securityQuestion, securityAnswer, school);
+        teacher newTeacher = new teacher(teacherFirstName, teacherLastName, teacherUsername, school);
         newTeacher.setUserId(teacherId);
         this.list.child(teacherId).setValue(newTeacher);
         return true;

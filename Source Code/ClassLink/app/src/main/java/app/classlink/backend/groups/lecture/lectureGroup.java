@@ -75,7 +75,7 @@ public class lectureGroup extends baseGroup {
     public void addGroupedStatement(String questionText, int userId){
         statements.addLast(new groupedStatement(new question(questionText,userId)));
         LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
-        lectureGroupDAO.updateLectureGroup(this, School.UNIVERSITY_OF_WATERLOO);
+        lectureGroupDAO.updateLectureGroup(this);
     }
 
     /**
@@ -87,7 +87,7 @@ public class lectureGroup extends baseGroup {
     public void addAnswerToQuestion(groupedStatement statement, String answerText, int userId){
         statement.addAnswer(new answers(answerText, userId));
         LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
-        lectureGroupDAO.updateLectureGroup(this, School.UNIVERSITY_OF_WATERLOO);
+        lectureGroupDAO.updateLectureGroup(this);
     }
 
     /**
@@ -99,7 +99,7 @@ public class lectureGroup extends baseGroup {
     public void addCommentToAnswer(groupedStatement statement, answers userAnswer, String commentText, int userId){
         statement.addComment(userAnswer, new comments(commentText, userId));
         LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
-        lectureGroupDAO.updateLectureGroup(this, School.UNIVERSITY_OF_WATERLOO);
+        lectureGroupDAO.updateLectureGroup(this);
     }
 
     /**

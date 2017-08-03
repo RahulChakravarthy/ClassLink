@@ -5,7 +5,7 @@ import app.classlink.backend.misc.School;
 
 public abstract class user {
     protected String userId;
-    protected String userName, firstName, lastName, email, securityQuestion, securityAnswer;
+    protected String userName, firstName, lastName, email;
     protected School school;
     protected int permissionLevel; // 1 = student, 2 = teacher, 3 = administrator, 4 = god?????
 
@@ -36,13 +36,6 @@ public abstract class user {
 
     public void setEmail(String email){this.email = email;}
 
-    public String getSecurityQuestion() {return securityQuestion;}
-
-    public void setSecurityQuestion(String securityQuestion) {this.securityQuestion = securityQuestion;}
-
-    public String getSecurityAnswer() {return securityAnswer;}
-
-    public void setSecurityAnswer(String securityAnswer) {this.securityAnswer = securityAnswer;}
 
     public School getSchool(){
         return this.school;

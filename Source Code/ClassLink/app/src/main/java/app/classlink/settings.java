@@ -100,4 +100,9 @@ public class settings extends baseActivity implements activityParameters {
             }
         });
     }
+
+    @Override
+    protected void setActivityDAOListeners() {
+
+    }
 }

@@ -11,12 +11,10 @@ public class administrator extends user {
 
     private int adminScore;
 
-    public administrator(String adminFirstName, String adminLastName, String userName, String securityQuestion, String securityAnswer, School school){
+    public administrator(String adminFirstName, String adminLastName, String userName, School school){
         this.firstName = adminFirstName;
         this.lastName = adminLastName;
         this.userName = userName;
-        this.securityQuestion = securityQuestion;
-        this.securityAnswer = securityAnswer;
         this.school = school;
         this.permissionLevel = 3;
         this.adminScore = 100; //cuz they are admins lol

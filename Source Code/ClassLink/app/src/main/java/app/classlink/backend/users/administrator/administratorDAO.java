@@ -26,7 +26,7 @@ public class administratorDAO extends userDAO {
     public boolean createAdmin(String adminFirstName, String adminLastName, String adminUserName, String securityQuestion, String securityAnswer, School school){
         //check if admin already exists, if so throw false
         String adminId = this.list.push().getKey();
-        administrator newAdmin = new administrator(adminFirstName, adminLastName, adminUserName, securityQuestion, securityAnswer, school);
+        administrator newAdmin = new administrator(adminFirstName, adminLastName, adminUserName, school);
         newAdmin.setUserId(adminId);
         this.list.child(adminId).setValue(newAdmin);
         return true;

@@ -26,7 +26,7 @@ public class studentDAO extends userDAO {
     public boolean createStudent(String studentFirstName, String studentLastName, String studentUsername, String securityQuestion, String securityAnswer, School school){
         //check if student already exists throw false
         String studentId = this.list.push().getKey();
-        student newStudent = new student(studentFirstName, studentLastName, studentUsername, securityQuestion, securityAnswer, school);
+        student newStudent = new student(studentFirstName, studentLastName, studentUsername, school);
         newStudent.setUserId(studentId);
         this.list.child(studentId).setValue(newStudent);
         return true;

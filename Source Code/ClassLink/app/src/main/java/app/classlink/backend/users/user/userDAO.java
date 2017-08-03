@@ -34,6 +34,9 @@ public class userDAO extends DAO {
     public userDAO() {
         super(listNames.USERS);
         cache = new Hashtable<>();
+        adminCache = new Hashtable<>();
+        studentCache = new Hashtable<>();
+        teacherCache = new Hashtable<>();
     }
 
     @Override
@@ -42,34 +45,26 @@ public class userDAO extends DAO {
         this.list.child(listNames.ADMIN).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.put(child.getKey(), child.getValue(administrator.class));
-                    adminCache.put(child.getKey(), child.getValue(administrator.class));
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(administrator.class));
+                adminCache.put(dataSnapshot.getKey(), dataSnapshot.getValue(administrator.class));
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.put(child.getKey(), child.getValue(administrator.class));
-                    adminCache.put(child.getKey(), child.getValue(administrator.class));
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(administrator.class));
+                adminCache.put(dataSnapshot.getKey(), dataSnapshot.getValue(administrator.class));
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.remove(child.getKey());
-                    adminCache.remove(child.getKey());
-                }
+                cache.remove(dataSnapshot.getKey());
+                adminCache.remove(dataSnapshot.getKey());
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.put(child.getKey(), child.getValue(administrator.class));
-                    adminCache.put(child.getKey(), child.getValue(administrator.class));
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(administrator.class));
+                adminCache.put(dataSnapshot.getKey(), dataSnapshot.getValue(administrator.class));
             }
 
             @Override
@@ -82,34 +77,27 @@ public class userDAO extends DAO {
         this.list.child(listNames.TEACHERS).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.put(child.getKey(), child.getValue(teacher.class));
-                    teacherCache.put(child.getKey(), child.getValue(teacher.class));
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(teacher.class));
+                teacherCache.put(dataSnapshot.getKey(), dataSnapshot.getValue(teacher.class));
+
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.put(child.getKey(), child.getValue(teacher.class));
-                    teacherCache.put(child.getKey(), child.getValue(teacher.class));
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(teacher.class));
+                teacherCache.put(dataSnapshot.getKey(), dataSnapshot.getValue(teacher.class));
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.remove(child.getKey());
-                    teacherCache.remove(child.getKey());
-                }
+                cache.remove(dataSnapshot.getKey());
+                teacherCache.remove(dataSnapshot.getKey());
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.put(child.getKey(), child.getValue(teacher.class));
-                    teacherCache.put(child.getKey(), child.getValue(teacher.class));
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(teacher.class));
+                teacherCache.put(dataSnapshot.getKey(), dataSnapshot.getValue(teacher.class));
             }
 
             @Override
@@ -121,34 +109,26 @@ public class userDAO extends DAO {
         this.list.child(listNames.STUDENTS).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.put(child.getKey(), child.getValue(student.class));
-                    studentCache.put(child.getKey(), child.getValue(student.class));
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(student.class));
+                studentCache.put(dataSnapshot.getKey(), dataSnapshot.getValue(student.class));
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.put(child.getKey(), child.getValue(student.class));
-                    studentCache.put(child.getKey(), child.getValue(student.class));
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(student.class));
+                studentCache.put(dataSnapshot.getKey(), dataSnapshot.getValue(student.class));
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.remove(child.getKey());
-                    studentCache.remove(child.getKey());
-                }
+                cache.remove(dataSnapshot.getKey());
+                studentCache.remove(dataSnapshot.getKey());
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    cache.put(child.getKey(), child.getValue(student.class));
-                    studentCache.put(child.getKey(), child.getValue(student.class));
-                }
+                cache.put(dataSnapshot.getKey(), dataSnapshot.getValue(student.class));
+                studentCache.put(dataSnapshot.getKey(), dataSnapshot.getValue(student.class));
             }
 
             @Override
@@ -161,13 +141,13 @@ public class userDAO extends DAO {
     /**
      * @Method getUserByEmail : used at the start of an activity to get the instance of user signed in
      */
-    public ArrayList<user> getUserByEmail(String email){
+    public user getUserByEmail(String email){
         ArrayList<user> temp = new ArrayList<>();
         for (user child : cache.values()){
             if (child.getEmail().equals(email)){
                 temp.add(child);
             }
         }
-        return temp;
+        return temp.get(0);
     }
 }

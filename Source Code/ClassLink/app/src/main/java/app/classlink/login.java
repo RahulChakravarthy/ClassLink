@@ -158,5 +158,10 @@ public class login extends baseActivity implements activityParameters  {
             });
         }
     }
+
+    @Override
+    protected void setActivityDAOListeners() {
+        //No DAOs being accessed
+    }
 }
 
