@@ -25,6 +25,13 @@ public class userProfile extends baseActivity implements activityParameters {
     }
 
     /**
+     *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
+     */
+    protected void setActivityDAOListeners() {
+
+    }
+
+    /**
      * @Method  layoutSetup : Sets up all static UI components of the activity
      */
     @Override
@@ -36,10 +43,5 @@ public class userProfile extends baseActivity implements activityParameters {
 
         blockBackground = new ImageView(getApplicationContext());
         viewHelperClass.addGraphics(blockBackground, R.drawable.button_wide_grey, 0, 700, 0.975f, 8.0f, false);
-    }
-
-    @Override
-    protected void setActivityDAOListeners() {
-
     }
 }

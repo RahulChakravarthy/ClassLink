@@ -51,6 +51,4 @@ abstract public class baseActivity extends AppCompatActivity {
             return false;
         }
     }
-
-    protected abstract void setActivityDAOListeners();
 }

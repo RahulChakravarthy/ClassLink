@@ -12,6 +12,4 @@ abstract public class DAO extends firebaseHelper {
     public DAO(String listName) {
         super(listName);
     }
-
-    abstract public void setCacheListener(String schoolName);
 }

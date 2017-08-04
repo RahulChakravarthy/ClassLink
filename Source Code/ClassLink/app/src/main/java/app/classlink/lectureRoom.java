@@ -92,7 +92,7 @@ public class lectureRoom extends baseActivity
     }
 
     /**
-     * @Method onNavigationItemSelected : handles displaying and actions when statements are clikced
+     * @Method onNavigationItemSelected : handles displaying and actions when statements are clicked
      * @param item : Displays all lecture statements
      * @return whether or not an item was pressed
      */
@@ -132,6 +132,12 @@ public class lectureRoom extends baseActivity
 
 
     }
+    /**
+     *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
+     */
+    protected void setActivityDAOListeners() {
+
+    }
 
     /**
      * @Method coreSetup : sets up all all information for this activity including intents and DAOs
@@ -158,10 +164,5 @@ public class lectureRoom extends baseActivity
 
     private void displayStatements() {
         //add all the code for displaying each statement in the side view bar
-    }
-
-    @Override
-    protected void setActivityDAOListeners() {
-
     }
 }

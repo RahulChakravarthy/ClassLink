@@ -28,6 +28,13 @@ public class studyRoom extends baseActivity implements activityParameters {
     }
 
     /**
+     *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
+     */
+    protected void setActivityDAOListeners() {
+
+    }
+
+    /**
      * @Method  layoutSetup : Sets up all static UI components of the activity
      */
     @Override
@@ -73,10 +80,5 @@ public class studyRoom extends baseActivity implements activityParameters {
 //                }
 //            }
 //        });
-    }
-
-    @Override
-    protected void setActivityDAOListeners() {
-
     }
 }

@@ -69,6 +69,13 @@ public class mainMenu extends baseActivity implements activityParameters {
     }
 
     /**
+     *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
+     */
+    protected void setActivityDAOListeners() {
+
+    }
+
+    /**
      * @Method exampleGroups: set up some example groups to populate the RecyclerView
      */
     public void exampleGroups() {
@@ -197,11 +204,6 @@ public class mainMenu extends baseActivity implements activityParameters {
                 }
             }
         });
-
-    }
-
-    @Override
-    protected void setActivityDAOListeners() {
 
     }
 }
