@@ -92,12 +92,12 @@ public class signUp extends baseActivity implements activityParameters {
 
         this.userType = new RadioGroup(getApplicationContext());
 
-
+        
         //Graphical Setup
-        line = new ImageView(getApplicationContext());
+        this.line = new ImageView(getApplicationContext());
         this.viewHelperClass.addGraphics(line, R.drawable.line, 40, 8, 0.75f, 1, false);
 
-        submit = new ImageView(getApplicationContext());
+        this.submit = new ImageView(getApplicationContext());
         this.viewHelperClass.addTextToButton(submit, "Create an account", 18, "OpenSans-Regular", "BLACK" ,R.drawable.curvedbutton, 50, 90, 0.5f, 0.5f);
 
     }
@@ -147,7 +147,7 @@ public class signUp extends baseActivity implements activityParameters {
      * @Method addUser : Signs user up to user list and adds them to the user database
      */
     private void addUser() {
-        userAuth.createUserWithEmailAndPassword("rahul.chakravarthy101@gmail.com", "TESTING").addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        userAuth.createUserWithEmailAndPassword(this.email.getText().toString().trim(), this.password.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
@@ -174,5 +174,6 @@ public class signUp extends baseActivity implements activityParameters {
      */
     private void addUserToDatabase() {
         //add user based on what type they are (teacher or student)
+
     }
 }
