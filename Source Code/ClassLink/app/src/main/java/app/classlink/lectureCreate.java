@@ -55,10 +55,9 @@ public class lectureCreate extends baseActivity implements activityParameters {
     /**
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
-    @Override
     protected void setActivityDAOListeners() {
         this.userDAO = new userDAO();
-        this.userDAO.setCacheListener(School.UNIVERSITY_OF_WATERLOO.toString());
+        this.userDAO.setCacheListener();
 
         this.lectureGroupDAO = new LectureGroupDAO();
         this.lectureGroupDAO.setCacheListener(School.UNIVERSITY_OF_WATERLOO.toString());

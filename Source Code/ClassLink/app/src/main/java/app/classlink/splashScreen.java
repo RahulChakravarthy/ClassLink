@@ -15,8 +15,4 @@ public class splashScreen extends baseActivity {
         setContentView(R.layout.activity_splash_screen);
     }
 
-    @Override
-    protected void setActivityDAOListeners() {
-        //No DAOs being accessed
-    }
 }

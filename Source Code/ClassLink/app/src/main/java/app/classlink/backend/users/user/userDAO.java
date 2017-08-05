@@ -39,8 +39,7 @@ public class userDAO extends DAO {
         teacherCache = new Hashtable<>();
     }
 
-    @Override
-    public void setCacheListener(String schoolName) {
+    public void setCacheListener() {
         //add admin users
         this.list.child(listNames.ADMIN).addChildEventListener(new ChildEventListener() {
             @Override

@@ -40,9 +40,15 @@ public class notifications extends baseActivity implements activityParameters {
     }
 
     /**
+     *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
+     */
+    protected void setActivityDAOListeners() {
+
+    }
+
+    /**
      * @Method layoutSetup : setting up all static components of the UI
      */
-
     @Override
     public void layoutSetup() {
 
@@ -103,10 +109,5 @@ public class notifications extends baseActivity implements activityParameters {
             ex = new studyGroup(GROUP_TYPE.STUDY_GROUP, Integer.toString(i), "example notification " + i, "notification text " + i);
             notificationList.add(ex);
         }
-    }
-
-    @Override
-    protected void setActivityDAOListeners() {
-
     }
 }

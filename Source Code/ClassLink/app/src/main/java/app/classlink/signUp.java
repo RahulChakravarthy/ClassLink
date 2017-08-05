@@ -1,12 +1,15 @@
 package app.classlink;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -21,45 +24,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.backend.core.baseActivity;
-
-/**
- * @Class field : Encapsulation of each field displayed on the sign up activity
- */
-class field {
-
-    public String name;
-    public EditText inputBox;
-    public ImageView imageBox;
-
-    public boolean error;
-    public String errorMessage;
-
-    public field(String name, Context context){
-        this.name = name;
-        this.inputBox = new EditText(context);
-        this.imageBox = new ImageView(context);
-        this.error = false;
-    }
-
-    public void setErrorMessage(String message){
-        this.errorMessage = message;
-    }
-}
 
 /**
  * @Class signUp : Sign up class handler
  */
 public class signUp extends baseActivity implements activityParameters {
 
-    /** The functionality of this UI is such that if you want to include another field, just append  to this list*/
-    private ArrayList<String> keys = new ArrayList<>(Arrays.asList("First Name:", "Last Name:", "Email:", "Phone Number:", "School", "Username:", "Password:", "Confirm Password:", "Create a Security question:", "Security question Answer"));
-    private HashMap<String, field> fields = new HashMap<>();
+    //Graphics and back end settings
     private FirebaseUser currentUser;
-
     private ImageView submit,line;
+
+    //User form information
+    private EditText firstName, lastName, password, confirmPassword, email;
+    private RadioGroup userType;
+
+    //DAOS
+    private userDAO userDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +55,17 @@ public class signUp extends baseActivity implements activityParameters {
 
         layoutSetup();
         submitButton();
+        setActivityDAOListeners();
     }
+
+    /**
+     *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
+     */
+    protected void setActivityDAOListeners() {
+        this.userDAO = new userDAO();
+        this.userDAO.setCacheListener();
+    }
+
     /**
      * @Method  layoutSetup : Sets up all static UI components of the activity
      */
@@ -83,29 +77,29 @@ public class signUp extends baseActivity implements activityParameters {
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         //Text Setup
-        this.viewHelperClass.addText("Class-Link Sign Up: ", "OpenSans-Bold", "BLACK", 2, 18f, 25, 5);
+        this.viewHelperClass.addText("Sign Up: ", "OpenSans-Bold", "BLACK", 2, 23, 50, 5);
 
+        //Form set up
+        this.firstName = new EditText(getApplicationContext());
+
+        this.lastName = new EditText(getApplicationContext());
+
+        this.password = new EditText(getApplicationContext());
+
+        this.confirmPassword = new EditText(getApplicationContext());
+
+        this.email = new EditText(getApplicationContext());
+
+        this.userType = new RadioGroup(getApplicationContext());
+
+        
         //Graphical Setup
-        line = new ImageView(getApplicationContext());
+        this.line = new ImageView(getApplicationContext());
         this.viewHelperClass.addGraphics(line, R.drawable.line, 40, 8, 0.75f, 1, false);
 
-        /**Text Field graphics*/
-        for (int i = 0; i < keys.size(); i++){
-            //Add each field to a hashmap
-            fields.put(keys.get(i), new field(keys.get(i), this.viewHelperClass.getActivityContext()));
+        this.submit = new ImageView(getApplicationContext());
+        this.viewHelperClass.addTextToButton(submit, "Create an account", 18, "OpenSans-Regular", "BLACK" ,R.drawable.curvedbutton, 50, 90, 0.5f, 0.5f);
 
-            EditText tempEdit = fields.get(keys.get(i)).inputBox;
-
-            this.viewHelperClass.addText(keys.get(i), "OpenSans-Regular", "BLACK", 1, 16f, 5,16*i + 12);
-            this.viewHelperClass.addGraphicInputBox(null, R.drawable.inputbox, tempEdit, InputType.TYPE_CLASS_TEXT, 15, 42, 16*i + 19, 0.75f, 0.75f);
-        }
-
-        /** Radio button field graphics */
-        this.viewHelperClass.addText("What type of account is this?", "OpenSans-Regular", "BLACK", 1, 16f, 5, keys.size()*16 + 12);
-
-        /**Check box field graphics */
-        submit = new ImageView(getApplicationContext());
-        this.viewHelperClass.addTextToButton(submit, "Submit", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50,keys.size()*16 + 30f, 0.4f, 0.5f);
     }
 
     /**
@@ -115,8 +109,20 @@ public class signUp extends baseActivity implements activityParameters {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sanitizeAndCheckUserInput()){
-                    addUser();
+                switch (sanitizeAndCheckUserInput()){
+                    case 0: //missing input information
+                        Toast.makeText(viewHelperClass.getActivityContext(), "Error: all fields must be filled", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1: //passwords do not match
+                        Toast.makeText(viewHelperClass.getActivityContext(), "Error: passwords do not match", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2: //email already exists
+                        Toast.makeText(viewHelperClass.getActivityContext(), "Error: email already exists in our databases", Toast.LENGTH_SHORT).show();
+                        break;
+                    default : //all input info is correct
+                        addUser();
+                        startActivity(new Intent(signUp.this, login.class));
+                        break;
                 }
             }
         });
@@ -126,19 +132,27 @@ public class signUp extends baseActivity implements activityParameters {
      * @Method sanitizeAndCheckUserInput : checks all user input and throws TOAST with all errors
      * @return boolean : true if all data checks out, false if otherwise
      */
-    private boolean sanitizeAndCheckUserInput() {
-        return true;
+    private int sanitizeAndCheckUserInput() {
+        if (!this.viewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(firstName, lastName, email, password, confirmPassword)))){
+            return 0; //missing input information
+        } else if (!password.getText().toString().equals(confirmPassword.getText().toString())){
+            return 1; //passwords do not match
+        } else if (userDAO.getUserByEmail(email.getText().toString()) == null){
+            return 2; //user email already exists
+        }
+        return 69;
     }
 
     /**
      * @Method addUser : Signs user up to user list and adds them to the user database
      */
     private void addUser() {
-        userAuth.createUserWithEmailAndPassword("rahul.chakravarthy101@gmail.com", "TESTING").addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        userAuth.createUserWithEmailAndPassword(this.email.getText().toString().trim(), this.password.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     addUserToDatabase();
+                    emailVerifyUser();
                     currentUser = userAuth.getCurrentUser();
                 } else {
                     FirebaseAuthException e = (FirebaseAuthException )task.getException();
@@ -151,15 +165,15 @@ public class signUp extends baseActivity implements activityParameters {
     /**
      * @Method emailVerifyUser : sends and email to the user to verify their account
      */
+    private void emailVerifyUser(){
+
+    }
 
     /**
      * @Method addUserToDatabase : adds a user to the User database
      */
     private void addUserToDatabase() {
-    }
-
-    @Override
-    protected void setActivityDAOListeners() {
+        //add user based on what type they are (teacher or student)
 
     }
 }
