@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import app.classlink.backend.misc.School;
+import app.classlink.backend.users.administrator.administrator;
 import app.classlink.backend.users.student.student;
 import app.classlink.backend.users.teacher.teacher;
 import app.classlink.backend.users.user.userDAO;
@@ -50,9 +51,6 @@ public class signUp extends baseActivity implements activityParameters {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
-        //User authentication
-        userAuth = FirebaseAuth.getInstance();
 
         layoutSetup();
         setActivityDAOListeners();
@@ -102,7 +100,7 @@ public class signUp extends baseActivity implements activityParameters {
         this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, email, InputType.TYPE_CLASS_TEXT, 15, 50, 47, 0.7f, 0.85f);
 
         this.userType = new Spinner(getApplicationContext());
-        this.viewHelperClass.addSpinner(userType, new ArrayList<>(Arrays.asList("STUDENT", "TEACHER")), schoolMenuListener(), android.R.layout.simple_spinner_dropdown_item, 50, 60, 1, 1);
+        this.viewHelperClass.addSpinner(userType, new ArrayList<>(Arrays.asList("STUDENT", "TEACHER", "ADMINISTRATOR")), schoolMenuListener(), android.R.layout.simple_spinner_dropdown_item, 50, 60, 1, 1);
 
         this.schoolMenu = new Spinner(getApplicationContext());
         ArrayList<String> schools = new ArrayList<>();
@@ -212,10 +210,14 @@ public class signUp extends baseActivity implements activityParameters {
             student newStudent = new student(firstName.getText().toString().trim(), lastName.getText().toString().trim(),
                     email.getText().toString().trim(), School.valueOf(schoolMenu.getSelectedItem().toString().replaceAll("\\s", "_")));
             userDAO.createUser(newStudent);
-        } else {
+        } else if (userType.getSelectedItem().toString().equals("TEACHER")) {
             teacher newTeacher = new teacher(firstName.getText().toString().trim(), lastName.getText().toString().trim(),
                     email.getText().toString().trim(), School.valueOf(schoolMenu.getSelectedItem().toString().replaceAll("\\s", "_")));
             userDAO.createUser(newTeacher);
+        } else {
+            administrator newAdmin = new administrator(firstName.getText().toString().trim(), lastName.getText().toString().trim(),
+                    email.getText().toString().trim(), School.valueOf(schoolMenu.getSelectedItem().toString().replaceAll("\\s", "_")));
+            userDAO.createUser((newAdmin));
         }
     }
 }

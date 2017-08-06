@@ -5,11 +5,19 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserInfo;
+
+import app.classlink.backend.misc.School;
+import app.classlink.backend.users.administrator.administrator;
+import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.recyclerAdapters.displayLectureGroupsAdapter;
 import app.classlink.helperClasses.viewHelperClass;
@@ -23,30 +31,35 @@ public class lectureJoin extends baseActivity implements activityParameters {
     private displayLectureGroupsAdapter groupListAdapter;
     private LinearLayoutManager groupLayout;
 
+    //DAOs
+    private userDAO userDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivty_lecture_join);
 
         layoutSetup();
+        setActivityDAOListeners();
         groupListSetup();
         createLectureGroupListener();
         genericLectureRoomListener();
     }
 
-//    @Override
-//    public void onStart(){
-//        super.onStart();
-//        if (!retrieveUser()){
-//            startActivity(new Intent(lectureJoin.this, login.class));
-//        }
-//    }
+    @Override
+    public void onStart(){
+        super.onStart();
+        if (!retrieveUser()){
+            startActivity(new Intent(lectureJoin.this, login.class));
+        }
+    }
 
     /**
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
     protected void setActivityDAOListeners() {
-
+        this.userDAO = new userDAO();
+        this.userDAO.setCacheListener();
     }
 
     /**
@@ -108,15 +121,11 @@ public class lectureJoin extends baseActivity implements activityParameters {
         createLectureGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //create a check to see if current user is a teacher
-                /*
-                if (user.permissions == 2){
-                    start new activity
+                if (userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).getPermissionLevel() == 2){
+                    startActivity(new Intent(lectureJoin.this, lectureCreate.class));
                 } else {
-                    toast message that they are not allowed to do this
+                    Toast.makeText(viewHelperClass.getActivityContext(), "Error: only teachers may create lecture groups", Toast.LENGTH_LONG).show();
                 }
-                 */
-                startActivity(new Intent(lectureJoin.this, lectureCreate.class));
             }
         });
     }

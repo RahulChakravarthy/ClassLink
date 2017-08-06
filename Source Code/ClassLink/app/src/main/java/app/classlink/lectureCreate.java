@@ -15,6 +15,7 @@ import java.util.Arrays;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.misc.School;
+import app.classlink.backend.users.administrator.administrator;
 import app.classlink.backend.users.teacher.teacher;
 import app.classlink.backend.users.teacher.teacherDAO;
 import app.classlink.backend.users.user.userDAO;
@@ -44,13 +45,13 @@ public class lectureCreate extends baseActivity implements activityParameters {
     /**
      * @Method onStart : verify user authentication
      */
-//    @Override
-//    public void onStart(){
-//        super.onStart();
-//        if (!retrieveUser()){
-//            startActivity(new Intent(lectureCreate.this, login.class));
-//        }
-//    }
+    @Override
+    public void onStart(){
+        super.onStart();
+        if (!retrieveUser()){
+            startActivity(new Intent(lectureCreate.this, login.class));
+        }
+    }
 
     /**
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
@@ -91,10 +92,8 @@ public class lectureCreate extends baseActivity implements activityParameters {
         this.lectureDescription = new EditText(getApplicationContext());
         this.viewHelperClass.addGraphicInputBox("e.g: Taught by Akosh Nagy", R.drawable.inputbox, lectureDescription, InputType.TYPE_CLASS_TEXT, 15, 50, 39, 0.8f, 0.8f);
 
-        this.viewHelperClass.addText("Choose your institution", "OpenSans-Semibold", "BLACK", 2, 15, 50, 47);
-
         this.submitForm = new ImageView(getApplicationContext());
-        this.viewHelperClass.addTextToButton(submitForm, "Create Group!", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50, 65, 0.5f, 0.5f);
+        this.viewHelperClass.addTextToButton(submitForm, "Create Group!", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50, 55, 0.5f, 0.5f);
     }
 
     /**
@@ -105,10 +104,8 @@ public class lectureCreate extends baseActivity implements activityParameters {
             @Override
             public void onClick(View view) {
                if (viewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(lectureName,lectureDescription)))){
-                   //Get current teacher user
-                   //teacher teacherUser = (teacher) userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()); NOTE WORKING
-                   teacher temp = new teacher("Bufan", "Wang", "BFWang", School.UNIVERSITY_OF_WATERLOO);
-                   if (lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(), temp, temp.getSchool())){
+                   if (lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(),
+                           (teacher) userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()), userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).getSchool())){
                        Toast.makeText(viewHelperClass.getActivityContext(), "Lecture Group Created to view/change settings visit the settings menu", Toast.LENGTH_LONG).show();
                        startActivity(new Intent(lectureCreate.this, lectureRoom.class));
                    } else {

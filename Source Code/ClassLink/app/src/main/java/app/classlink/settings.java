@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import app.classlink.backend.misc.School;
+import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.backend.core.baseActivity;
@@ -25,27 +27,38 @@ import app.classlink.backend.core.baseActivity;
 public class settings extends baseActivity implements activityParameters {
 
     EditText changeUsername, changePassword, confirmPassword, changeEmail;
-    ImageView submitForm, logout;
+    ImageView submitForm, logout, deleteAccount;
     Spinner schoolMenu;
+
+    //DAOs
+    userDAO userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        //User authentication
-        userAuth = FirebaseAuth.getInstance();
-
         layoutSetup();
+        setActivityDAOListeners();
         logUserOut();
         updateUserDetails();
+        deleteUser();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        if (!retrieveUser()){
+            startActivity(new Intent(settings.this, login.class));
+        }
     }
 
     /**
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
     protected void setActivityDAOListeners() {
-
+        this.userDao = new userDAO();
+        this.userDao.setCacheListener();
     }
 
     /**
@@ -96,6 +109,9 @@ public class settings extends baseActivity implements activityParameters {
 
         this.logout = new ImageView(getApplicationContext());
         this.viewHelperClass.addTextToButton(logout, "Logout", 15, "OpenSans-Semibold", "BLACK", R.drawable.curvedbutton, 25, 90, 0.4f, 0.5f);
+
+        this.deleteAccount = new ImageView(getApplicationContext());
+        this.viewHelperClass.addTextToButton(deleteAccount, "Delete Account", 15, "OpenSans-Semibold", "BLACK", R.drawable.curvedbutton, 75, 90, 0.4f, 0.5f);
     }
 
     /**
@@ -136,6 +152,19 @@ public class settings extends baseActivity implements activityParameters {
                 userAuth.signOut(); //call this when you get user Auth working
                 Toast.makeText(viewHelperClass.getActivityContext(), "Logging Out...", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(settings.this, login.class));
+            }
+        });
+    }
+
+    /**
+     * @Method deleteUser : deletes the current user from the system
+     */
+    private void deleteUser() {
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                userDao.deleteUserByEmail(userDao.getUserByEmail(userAuth.getCurrentUser().getEmail()), userAuth);
+//                startActivity(new Intent(settings.this, login.class));
             }
         });
     }

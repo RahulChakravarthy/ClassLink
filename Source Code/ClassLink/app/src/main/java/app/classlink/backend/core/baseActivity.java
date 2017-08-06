@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.user;
@@ -22,15 +23,16 @@ abstract public class baseActivity extends AppCompatActivity {
     protected viewHelperClass viewHelperClass; //Helper class to output views to the activity
 
 
-    protected FirebaseAuth userAuth; //Current user session
+    protected FirebaseAuth userAuth; //user authentication
 
     /**
-     * @Method retrieveUser : passes in the userAuth information gathered from firebase and queries the user database for said user
+     * @Method retrieveUser : passes in the userAuth information gathered from fire base and queries the user database for said user
      * @return true if session sessionUser is instantiated or false if not (redirect to login page if false)
      */
     protected boolean retrieveUser(){
+        this.userAuth = FirebaseAuth.getInstance();
         try {
-            return userAuth.getCurrentUser() != null;
+            return this.userAuth.getCurrentUser() != null;
         } catch (NullPointerException e){
             return false;
         }
