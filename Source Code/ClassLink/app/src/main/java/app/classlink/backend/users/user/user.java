@@ -5,7 +5,9 @@ import app.classlink.backend.misc.School;
 
 public abstract class user {
     protected String userId;
-    protected String userName, firstName, lastName, email;
+    protected String firstName;
+    protected String lastName;
+    protected String email;
     protected School school;
     protected int permissionLevel; // 1 = student, 2 = teacher, 3 = administrator, 4 = god?????
 
@@ -19,10 +21,6 @@ public abstract class user {
     public String getUserId() {return userId;}
 
     public void setUserId(String userId) {this.userId = userId;}
-
-    public String getUserName() {return userName;}
-
-    public void setUserName(String userName) {this.userName = userName;}
 
     public String getFirstName(){return this.firstName;}
 

@@ -1,16 +1,17 @@
 package app.classlink;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,12 +19,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
+import app.classlink.backend.misc.School;
+import app.classlink.backend.users.student.student;
+import app.classlink.backend.users.teacher.teacher;
 import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
@@ -35,12 +37,11 @@ import app.classlink.backend.core.baseActivity;
 public class signUp extends baseActivity implements activityParameters {
 
     //Graphics and back end settings
-    private FirebaseUser currentUser;
     private ImageView submit,line;
 
     //User form information
     private EditText firstName, lastName, password, confirmPassword, email;
-    private RadioGroup userType;
+    private Spinner schoolMenu, userType;
 
     //DAOS
     private userDAO userDAO;
@@ -54,8 +55,8 @@ public class signUp extends baseActivity implements activityParameters {
         userAuth = FirebaseAuth.getInstance();
 
         layoutSetup();
-        submitButton();
         setActivityDAOListeners();
+        submitButton();
     }
 
     /**
@@ -77,29 +78,63 @@ public class signUp extends baseActivity implements activityParameters {
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         //Text Setup
-        this.viewHelperClass.addText("Sign Up: ", "OpenSans-Bold", "BLACK", 2, 23, 50, 5);
+        this.viewHelperClass.addText("Sign Up:", "OpenSans-Bold", "BLACK", 2, 23, 50, 5);
 
         //Form set up
+        this.viewHelperClass.addText("First Name:", "OpenSans-Regular", "BLACK", 2, 17, 25, 12);
         this.firstName = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, firstName, InputType.TYPE_CLASS_TEXT, 15, 25, 18, 0.4f, 0.85f);
 
+        this.viewHelperClass.addText("Last Name:", "OpenSans-Regular", "BLACK", 2, 17, 75, 12);
         this.lastName = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, lastName, InputType.TYPE_CLASS_TEXT, 15, 75, 18, 0.4f, 0.85f);
 
+        this.viewHelperClass.addText("Password:", "OpenSans-Regular", "BLACK", 2, 17, 25, 27);
         this.password = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, password, InputType.TYPE_TEXT_VARIATION_PASSWORD, 15, 25, 33, 0.4f, 0.85f);
 
+        this.viewHelperClass.addText("Confirm Password:", "OpenSans-Regular", "BLACK", 2, 17, 75, 27);
         this.confirmPassword = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, confirmPassword, InputType.TYPE_TEXT_VARIATION_PASSWORD, 15, 75, 33, 0.4f, 0.85f);
 
+        this.viewHelperClass.addText("Email Address:", "OpenSans-Regular", "BLACK", 2, 17, 50, 41);
         this.email = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, email, InputType.TYPE_CLASS_TEXT, 15, 50, 47, 0.7f, 0.85f);
 
-        this.userType = new RadioGroup(getApplicationContext());
+        this.userType = new Spinner(getApplicationContext());
+        this.viewHelperClass.addSpinner(userType, new ArrayList<>(Arrays.asList("STUDENT", "TEACHER")), schoolMenuListener(), android.R.layout.simple_spinner_dropdown_item, 50, 60, 1, 1);
 
-        
+        this.schoolMenu = new Spinner(getApplicationContext());
+        ArrayList<String> schools = new ArrayList<>();
+        for (School school : School.values()) {
+            schools.add(school.name().replaceAll("[_]", " "));
+        }
+        this.viewHelperClass.addSpinner(schoolMenu, schools, schoolMenuListener(), android.R.layout.simple_spinner_dropdown_item, 50, 70, 1, 1);
+
         //Graphical Setup
         this.line = new ImageView(getApplicationContext());
-        this.viewHelperClass.addGraphics(line, R.drawable.line, 40, 8, 0.75f, 1, false);
+        this.viewHelperClass.addGraphics(line, R.drawable.line, 50, 8, 0.75f, 1, false);
 
         this.submit = new ImageView(getApplicationContext());
-        this.viewHelperClass.addTextToButton(submit, "Create an account", 18, "OpenSans-Regular", "BLACK" ,R.drawable.curvedbutton, 50, 90, 0.5f, 0.5f);
+        this.viewHelperClass.addTextToButton(submit, "Create an account!", 15, "OpenSans-Regular", "BLACK" ,R.drawable.curvedbutton, 50, 85, 0.5f, 0.5f);
 
+    }
+
+    /**
+     * @Method schoolMenuListener : creates a down menu to choose between schools
+     */
+    private AdapterView.OnItemSelectedListener schoolMenuListener(){
+        return new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ((TextView) adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                ((TextView) adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+            }
+        };
     }
 
     /**
@@ -121,7 +156,6 @@ public class signUp extends baseActivity implements activityParameters {
                         break;
                     default : //all input info is correct
                         addUser();
-                        startActivity(new Intent(signUp.this, login.class));
                         break;
                 }
             }
@@ -137,7 +171,7 @@ public class signUp extends baseActivity implements activityParameters {
             return 0; //missing input information
         } else if (!password.getText().toString().equals(confirmPassword.getText().toString())){
             return 1; //passwords do not match
-        } else if (userDAO.getUserByEmail(email.getText().toString()) == null){
+        } else if (userDAO.getUserByEmail(email.getText().toString()) != null){
             return 2; //user email already exists
         }
         return 69;
@@ -153,7 +187,8 @@ public class signUp extends baseActivity implements activityParameters {
                 if (task.isSuccessful()){
                     addUserToDatabase();
                     emailVerifyUser();
-                    currentUser = userAuth.getCurrentUser();
+                    Toast.makeText(viewHelperClass.getActivityContext(), "User added!", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(signUp.this, login.class));
                 } else {
                     FirebaseAuthException e = (FirebaseAuthException )task.getException();
                     Toast.makeText(viewHelperClass.getActivityContext(), "Failed Registration: "+e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -166,7 +201,6 @@ public class signUp extends baseActivity implements activityParameters {
      * @Method emailVerifyUser : sends and email to the user to verify their account
      */
     private void emailVerifyUser(){
-
     }
 
     /**
@@ -174,6 +208,14 @@ public class signUp extends baseActivity implements activityParameters {
      */
     private void addUserToDatabase() {
         //add user based on what type they are (teacher or student)
-
+        if (userType.getSelectedItem().toString().equals("STUDENT")){
+            student newStudent = new student(firstName.getText().toString().trim(), lastName.getText().toString().trim(),
+                    email.getText().toString().trim(), School.valueOf(schoolMenu.getSelectedItem().toString().replaceAll("\\s", "_")));
+            userDAO.createUser(newStudent);
+        } else {
+            teacher newTeacher = new teacher(firstName.getText().toString().trim(), lastName.getText().toString().trim(),
+                    email.getText().toString().trim(), School.valueOf(schoolMenu.getSelectedItem().toString().replaceAll("\\s", "_")));
+            userDAO.createUser(newTeacher);
+        }
     }
 }

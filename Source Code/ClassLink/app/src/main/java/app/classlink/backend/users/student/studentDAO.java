@@ -1,5 +1,7 @@
 package app.classlink.backend.users.student;
 
+import android.util.Log;
+
 import app.classlink.backend.core.listNames;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.userDAO;
@@ -38,6 +40,7 @@ public class studentDAO extends userDAO {
      * @return boolean : true if student was created
      */
     public boolean createStudent(student student){
+        Log.d("YEESSS", "YESSSSSS");
         String teacherId = this.list.push().getKey();
         student.setUserId(teacherId);
         this.list.child(teacherId).setValue(student);

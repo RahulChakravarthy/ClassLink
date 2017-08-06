@@ -15,10 +15,10 @@ public class student extends user {
     protected int studentScore;
     protected HashMap<lectureGroup, ban> banList; //lecture Group you are banned from, and String date that you will be unbanned
 
-    public student(String firstName, String lastName, String userName, School school) {
+    public student(String firstName, String lastName, String email, School school) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userName = userName;
+        this.email = email;
         this.school = school;
         this.permissionLevel = 1;
         this.studentScore = 0;

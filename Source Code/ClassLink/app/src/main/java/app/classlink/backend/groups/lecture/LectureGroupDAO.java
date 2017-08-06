@@ -22,7 +22,7 @@ public class LectureGroupDAO extends DAO {
     /**
      * @Consructor LectureGroupDAO
      */
-    public LectureGroupDAO(){
+    public LectureGroupDAO() {
         super(listNames.GROUPS);
         this.list = this.list.child(listNames.LECTUREGROUPS);
         this.cache = new Hashtable<>();
@@ -146,7 +146,7 @@ public class LectureGroupDAO extends DAO {
     }
 
     /**
-     * @Method setCacheListener : sets the cache listener which will automatically update the cache with values which can be queired with the above method
+     * @Method setCacheListener : sets the cache listener which will automatically update the cache with values which can be queried with the above method
      * @param schoolName : school name that the cache should listen to
      */
     public void setCacheListener(String schoolName){

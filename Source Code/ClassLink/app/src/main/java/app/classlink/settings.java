@@ -1,16 +1,23 @@
 package app.classlink;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
+import app.classlink.backend.misc.School;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.backend.core.baseActivity;
@@ -19,6 +26,7 @@ public class settings extends baseActivity implements activityParameters {
 
     EditText changeUsername, changePassword, confirmPassword, changeEmail;
     ImageView submitForm, logout;
+    Spinner schoolMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +71,22 @@ public class settings extends baseActivity implements activityParameters {
         this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, changePassword, InputType.TYPE_TEXT_VARIATION_PASSWORD, 15, 66.7f, 34.5f, 0.64f, 0.75f);
 
         this.viewHelperClass.addText("Confirm\nPassword:", "OpenSans-Regular", "BLACK", 1, 15, 2, 39);
-        this.changePassword = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, changePassword, InputType.TYPE_TEXT_VARIATION_PASSWORD, 15, 66.7f, 42.5f, 0.64f, 0.75f);
+        this.confirmPassword = new EditText(getApplicationContext());
+        this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, confirmPassword, InputType.TYPE_TEXT_VARIATION_PASSWORD, 15, 66.7f, 42.5f, 0.64f, 0.75f);
 
         this.viewHelperClass.addText("New Email:", "OpenSans-Regular", "BLACK", 1, 15, 2, 49);
         this.changeEmail = new EditText(getApplicationContext());
         this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, changeEmail, InputType.TYPE_CLASS_TEXT, 15, 66.7f, 50.5f, 0.64f, 0.75f);
 
         this.viewHelperClass.addText("New Institution:", "OpenSans-Regular", "BLACK", 1, 15, 2, 57);
+
+        this.schoolMenu = new Spinner(getApplicationContext());
+        ArrayList<String> schools = new ArrayList<>();
+        for (School school : School.values()) {
+            schools.add(school.name().replaceAll("[_]", " "));
+        }
+        this.viewHelperClass.addSpinner(schoolMenu, schools, schoolMenuListener(), android.R.layout.simple_spinner_dropdown_item, 73, 58.5f, 1, 1);
+
 
         // Graphical Graphics
         this.viewHelperClass.addGraphics(new ImageView(getApplicationContext()), R.drawable.line, 50, 9, 0.5f, 1, false);
@@ -80,6 +96,22 @@ public class settings extends baseActivity implements activityParameters {
 
         this.logout = new ImageView(getApplicationContext());
         this.viewHelperClass.addTextToButton(logout, "Logout", 15, "OpenSans-Semibold", "BLACK", R.drawable.curvedbutton, 25, 90, 0.4f, 0.5f);
+    }
+
+    /**
+     * @Method schoolMenuListener : creates a down menu to choose between schools
+     */
+    private AdapterView.OnItemSelectedListener schoolMenuListener(){
+        return new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ((TextView) adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        };
     }
 
     /**

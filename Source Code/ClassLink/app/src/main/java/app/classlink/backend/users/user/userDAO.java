@@ -1,22 +1,20 @@
 package app.classlink.backend.users.user;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
-
 import app.classlink.backend.core.DAO;
 import app.classlink.backend.core.listNames;
-import app.classlink.backend.misc.School;
 import app.classlink.backend.users.administrator.administrator;
+import app.classlink.backend.users.administrator.administratorDAO;
 import app.classlink.backend.users.student.student;
+import app.classlink.backend.users.student.studentDAO;
 import app.classlink.backend.users.teacher.teacher;
+import app.classlink.backend.users.teacher.teacherDAO;
 
 /**
  * @Class userDAO : DAO for user class individuals
@@ -39,6 +37,32 @@ public class userDAO extends DAO {
         teacherCache = new Hashtable<>();
     }
 
+    /**
+     * @Method createUser : creates a user and appends it to its appropriate position in the database
+     */
+    public void createUser(user newUser){
+        switch (newUser.getPermissionLevel()){
+            case 1: //student
+                studentDAO studentDAO = new studentDAO();
+                studentDAO.createStudent((student) newUser);
+                break;
+            case 2: //teacher
+                teacherDAO teacherDAO = new teacherDAO();
+                teacherDAO.createTeacher((teacher) newUser);
+                break;
+            case 3: //admin
+                administratorDAO administratorDAO = new administratorDAO();
+                administratorDAO.createAdmin((administrator) newUser);
+                break;
+            default:
+                Log.d("ERROR", "USER CATEGORY DOES NOT EXIST");
+                break;
+        }
+    }
+
+    /**
+     * @Method setCacheListener : sets the user cache listener to listen to user data in the database
+     */
     public void setCacheListener() {
         //add admin users
         this.list.child(listNames.ADMIN).addChildEventListener(new ChildEventListener() {
@@ -147,6 +171,6 @@ public class userDAO extends DAO {
                 temp.add(child);
             }
         }
-        return temp.get(0);
+        return temp.size() == 0? null : temp.get(0);
     }
 }

@@ -1,6 +1,5 @@
 package app.classlink.helperClasses;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -20,9 +19,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import app.classlink.R;
 
 
 /**
@@ -331,23 +330,10 @@ public class viewHelperClass {
      * @Method addSpinner : adds a default dropdown menu to be used in an activity view
      * @param contents : the contents of what the drop down menu should contain
      */
-    public void addSpinner(final ArrayList<String> contents, float xPosition, float yPosition, float xScale, float yScale){
-        Spinner spinner = new Spinner(this.activityContext);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.activityContext, android.R.layout.simple_spinner_item, contents);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    public void addSpinner(Spinner spinner, ArrayList<String> contents, AdapterView.OnItemSelectedListener listener, int resource, float xPosition, float yPosition, float xScale, float yScale){
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.activityContext, android.R.layout.simple_spinner_item, contents);
+        adapter.setDropDownViewResource(resource);
         spinner.setAdapter(adapter);
-
-        AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("Hello", contents.get(position).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        };
         spinner.setOnItemSelectedListener(listener);
 
         this.editGraphics(spinner, xPosition, yPosition, xScale, yScale);
