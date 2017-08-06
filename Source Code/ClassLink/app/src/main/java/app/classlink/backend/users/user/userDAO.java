@@ -1,7 +1,14 @@
 package app.classlink.backend.users.user;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,16 +48,16 @@ public class userDAO extends DAO {
      * @Method createUser : creates a user and appends it to its appropriate position in the database
      */
     public void createUser(user newUser){
-        switch (newUser.getPermissionLevel()){
-            case 1: //student
+        switch (newUser.getClass().getSimpleName()){
+            case "administrator" :
                 studentDAO studentDAO = new studentDAO();
                 studentDAO.createStudent((student) newUser);
                 break;
-            case 2: //teacher
+            case "teacher" :
                 teacherDAO teacherDAO = new teacherDAO();
                 teacherDAO.createTeacher((teacher) newUser);
                 break;
-            case 3: //admin
+            case "student" :
                 administratorDAO administratorDAO = new administratorDAO();
                 administratorDAO.createAdmin((administrator) newUser);
                 break;
@@ -58,6 +65,55 @@ public class userDAO extends DAO {
                 Log.d("ERROR", "USER CATEGORY DOES NOT EXIST");
                 break;
         }
+    }
+
+    /**
+     * @Method deleteUserByEmail : removes a user from the database
+     */
+    public void deleteUserByEmail(user currentUser, FirebaseAuth userAuth){
+        //delete user in our database
+        switch (currentUser.getClass().getSimpleName()){
+            case "administrator" :
+                administratorDAO administratorDAO = new administratorDAO();
+                administratorDAO.deleteAdminById(currentUser.getUserId());
+                break;
+            case "teacher" :
+                teacherDAO teacherDAO = new teacherDAO();
+                teacherDAO.deleteTeacherById(currentUser.getUserId());
+                break;
+            case "student" :
+                studentDAO studentDAO = new studentDAO();
+                studentDAO.deleteStudentById(currentUser.getUserId());
+                break;
+            default:
+                Log.d("Error", "Invalid User");
+                break;
+        }
+        //re-authenticate user and delete their account FIX THIS LATER
+
+        userAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    Log.d("USER: ", "DELETED");
+                } else {
+                    Log.d("USER: ", "NOT DELETED");
+                }
+            }
+        });
+    }
+
+    /**
+     * @Method getUserByEmail : used at the start of an activity to get the instance of user signed in
+     */
+    public user getUserByEmail(String email){
+        ArrayList<user> temp = new ArrayList<>();
+        for (user child : cache.values()){
+            if (child.getEmail().equals(email)){
+                temp.add(child);
+            }
+        }
+        return temp.size() == 0? null : temp.get(0);
     }
 
     /**
@@ -159,18 +215,5 @@ public class userDAO extends DAO {
                 Log.d("ERROR", databaseError.getDetails());
             }
         });
-    }
-
-    /**
-     * @Method getUserByEmail : used at the start of an activity to get the instance of user signed in
-     */
-    public user getUserByEmail(String email){
-        ArrayList<user> temp = new ArrayList<>();
-        for (user child : cache.values()){
-            if (child.getEmail().equals(email)){
-                temp.add(child);
-            }
-        }
-        return temp.size() == 0? null : temp.get(0);
     }
 }

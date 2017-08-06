@@ -47,11 +47,8 @@ public class mainMenu extends baseActivity implements activityParameters {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        //User authentication
-        userAuth = FirebaseAuth.getInstance();
-
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_main_menu);
-        viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
+        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
 
         layoutSetup();
         buttonSetup();

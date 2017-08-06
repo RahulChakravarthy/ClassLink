@@ -1,5 +1,6 @@
 package app.classlink;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
@@ -16,6 +17,14 @@ public class studyCreate extends baseActivity implements activityParameters {
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_study_create);
 
         layoutSetup();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        if (!retrieveUser()){
+            startActivity(new Intent(studyCreate.this, login.class));
+        }
     }
 
     /**

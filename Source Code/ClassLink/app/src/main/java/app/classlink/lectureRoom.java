@@ -1,5 +1,6 @@
 package app.classlink;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -57,6 +58,14 @@ public class lectureRoom extends baseActivity
         layoutSetup();
 //        coreSetup();
 //        syncStatements();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        if (!retrieveUser()){
+            startActivity(new Intent(lectureRoom.this, login.class));
+        }
     }
 
     @Override
