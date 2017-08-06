@@ -11,10 +11,10 @@ public class administrator extends user {
 
     private int adminScore;
 
-    public administrator(String adminFirstName, String adminLastName, String userName, School school){
+    public administrator(String adminFirstName, String adminLastName, String email, School school){
         this.firstName = adminFirstName;
         this.lastName = adminLastName;
-        this.userName = userName;
+        this.email = email;
         this.school = school;
         this.permissionLevel = 3;
         this.adminScore = 100; //cuz they are admins lol
