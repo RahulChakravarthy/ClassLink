@@ -49,7 +49,7 @@ public class userDAO extends DAO {
      */
     public void createUser(user newUser){
         switch (newUser.getClass().getSimpleName()){
-            case "administrator" :
+            case "student" :
                 studentDAO studentDAO = new studentDAO();
                 studentDAO.createStudent((student) newUser);
                 break;
@@ -57,7 +57,7 @@ public class userDAO extends DAO {
                 teacherDAO teacherDAO = new teacherDAO();
                 teacherDAO.createTeacher((teacher) newUser);
                 break;
-            case "student" :
+            case "administrator" :
                 administratorDAO administratorDAO = new administratorDAO();
                 administratorDAO.createAdmin((administrator) newUser);
                 break;

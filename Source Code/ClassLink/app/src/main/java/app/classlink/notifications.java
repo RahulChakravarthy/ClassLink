@@ -106,8 +106,8 @@ public class notifications extends baseActivity implements activityParameters {
         studyGroup ex;
 
         for (int i = 0; i < 10; i++) {
-            ex = new studyGroup(GROUP_TYPE.STUDY_GROUP, Integer.toString(i), "example notification " + i, "notification text " + i);
-            notificationList.add(ex);
+//            ex = new studyGroup(GROUP_TYPE.STUDY_GROUP, Integer.toString(i), "example notification " + i, "notification text " + i);
+//            notificationList.add(ex);
         }
     }
 }
