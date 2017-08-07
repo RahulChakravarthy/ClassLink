@@ -1,5 +1,6 @@
 package app.classlink.backend.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -8,7 +9,7 @@ import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.user;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
 
-public abstract class baseGroup {
+public abstract class baseGroup implements Serializable {
 
     public GROUP_TYPE groupType;
     protected String groupId;

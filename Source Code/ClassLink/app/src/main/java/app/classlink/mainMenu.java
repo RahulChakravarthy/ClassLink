@@ -23,6 +23,7 @@ import java.util.Objects;
 import app.classlink.backend.core.GROUP_TYPE;
 import app.classlink.backend.groups.study.studyGroup;
 import app.classlink.backend.users.student.student;
+import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.backend.core.baseActivity;
@@ -43,6 +44,10 @@ public class mainMenu extends baseActivity implements activityParameters {
     private List<app.classlink.backend.groups.study.studyGroup> groupList = new ArrayList<>();
     private groupAdapter gAdapter;
 
+    //DAOs
+    private userDAO userDAO;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,7 @@ public class mainMenu extends baseActivity implements activityParameters {
 
         layoutSetup();
         buttonSetup();
+        setActivityDAOListeners();
 
         exampleGroups();
 
@@ -70,6 +76,9 @@ public class mainMenu extends baseActivity implements activityParameters {
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
     protected void setActivityDAOListeners() {
+        this.userDAO = new userDAO();
+        this.userDAO.setCacheListener();
+
 
     }
 
@@ -140,7 +149,9 @@ public class mainMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainMenu.this, lectureJoin.class));
+                Intent intent = new Intent(mainMenu.this, lectureJoin.class);
+                intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail())); //add the current user object in to access data in the next activity rapidly
+                startActivity(intent);
             }
         });
 

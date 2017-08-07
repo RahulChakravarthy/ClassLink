@@ -52,7 +52,7 @@ public class signUp extends baseActivity implements activityParameters {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        userAuth = FirebaseAuth.getInstance();
+        userAuth = FirebaseAuth.getInstance(); //initialise user authentication for sign up
 
         layoutSetup();
         setActivityDAOListeners();

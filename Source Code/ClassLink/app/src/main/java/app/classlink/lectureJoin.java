@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserInfo;
 
+import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.administrator.administrator;
+import app.classlink.backend.users.user.user;
 import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.recyclerAdapters.displayLectureGroupsAdapter;
@@ -33,6 +35,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
 
     //DAOs
     private userDAO userDAO;
+    private LectureGroupDAO lectureGroupDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,10 @@ public class lectureJoin extends baseActivity implements activityParameters {
     protected void setActivityDAOListeners() {
         this.userDAO = new userDAO();
         this.userDAO.setCacheListener();
+
+        this.lectureGroupDAO = new LectureGroupDAO();
+        user currentUser = ((user) getIntent().getSerializableExtra("user")); //get the user passed in by the previous activity quickly
+        this.lectureGroupDAO.setCacheListener(currentUser.getSchool().toString());
     }
 
     /**
@@ -134,7 +141,9 @@ public class lectureJoin extends baseActivity implements activityParameters {
         genericLectureRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(lectureJoin.this, lectureRoom.class));
+                Intent intent = new Intent(lectureJoin.this, lectureRoom.class);
+                intent.putExtra("lectureGroup", lectureGroupDAO.getLectureGroupByFullName("ECE 155"));
+                startActivity(intent);
             }
         });
     }

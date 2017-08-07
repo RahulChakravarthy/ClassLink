@@ -1,9 +1,11 @@
 package app.classlink.backend.users.user;
 
 
+import java.io.Serializable;
+
 import app.classlink.backend.misc.School;
 
-public abstract class user {
+public abstract class user implements Serializable {
     protected String userId;
     protected String firstName;
     protected String lastName;
