@@ -27,7 +27,6 @@ public class lectureRoom extends baseActivity
 
     private lectureGroup lectureGroup;
     private LectureGroupDAO lectureGroupDAO;
-    private int capacity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +127,13 @@ public class lectureRoom extends baseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * @Method setActionBar : formats and styles action bar
+     */
+    private void setActionBar(){
+
     }
 
     /**

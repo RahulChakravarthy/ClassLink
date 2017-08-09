@@ -56,11 +56,11 @@ public class groupedStatement {
     /**
      * @Method getStatementQuestion : returns the question of the entire grouped statement
      */
-    public question getStatementQuestion(){
+    public question getGroupedStatementQuestion(){
         return this.statementQuestion;
     }
 
-    public HashMap<answers, ArrayList<comments>> getStatementResponses(){
+    public HashMap<answers, ArrayList<comments>> getGroupedStatementResponses(){
         return this.statementResponses;
     }
 }
