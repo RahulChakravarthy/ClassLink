@@ -19,6 +19,7 @@ import java.util.TimerTask;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
+import app.classlink.backend.users.user.user;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.backend.core.baseActivity;
 
@@ -27,6 +28,7 @@ public class lectureRoom extends baseActivity
 
     private lectureGroup lectureGroup;
     private LectureGroupDAO lectureGroupDAO;
+    private user currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,8 @@ public class lectureRoom extends baseActivity
 
         //Call activity methods here
         layoutSetup();
-//        coreSetup();
+        coreSetup();
+        setActivityDAOListeners();
 //        syncStatements();
     }
 
@@ -100,8 +103,8 @@ public class lectureRoom extends baseActivity
     }
 
     /**
-     * @Method onNavigationItemSelected : handles displaying and actions when statements are clicked
-     * @param item : Displays all lecture statements
+     * @Method onNavigationItemSelected : handles displaying and actions when groupedStatement are clicked
+     * @param item : Displays all lecture groupedStatement
      * @return whether or not an item was pressed
      */
     @SuppressWarnings("StatementWithEmptyBody")
@@ -133,6 +136,7 @@ public class lectureRoom extends baseActivity
      * @Method setActionBar : formats and styles action bar
      */
     private void setActionBar(){
+        getActionBar().setTitle(this.lectureGroup.getGroupName());
 
     }
 
@@ -151,7 +155,11 @@ public class lectureRoom extends baseActivity
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
     protected void setActivityDAOListeners() {
+        //set lecutre group cache listener
+        this.lectureGroupDAO = new LectureGroupDAO();
+        this.lectureGroupDAO.setCacheListener(this.currentUser.getSchool().toString());
 
+        //set statement listener on said lecture group
     }
 
     /**
@@ -159,20 +167,22 @@ public class lectureRoom extends baseActivity
      */
     private void coreSetup() {
         //capture Intent values here and set the activity lecture group equal to the passed in group
+        this.lectureGroup = (lectureGroup) getIntent().getExtras().get("lectureGroup");
+        this.currentUser = (user) getIntent().getExtras().get("user");
     }
 
     /**
-     * @Method syncStatements : timer thread that periodically syncs statements with database
+     * @Method syncStatements : timer thread that periodically syncs groupedStatement with database
      */
     public void syncStatements(){
 
     }
 
     /**
-     * @Method loadLectureStatements : Loads statements from the specific lecture group into buffer to be displayed on the screen
+     * @Method loadLectureStatements : Loads groupedStatement from the specific lecture group into buffer to be displayed on the screen
      */
     private void loadLectureStatements() {
-//        for (groupedStatement statement : this.lectureGroup.getGroupStatements()){
+//        for (groupedStatement statement : this.lectureGroup.getGroupedStatement()){
 //            displayStatements();
 //        }
     }

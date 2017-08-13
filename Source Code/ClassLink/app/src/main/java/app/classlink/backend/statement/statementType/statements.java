@@ -1,21 +1,25 @@
 package app.classlink.backend.statement.statementType;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
- * @Class statements: wrapper class for the question, classes
+ * @Class groupedStatement: wrapper class for the question, classes
  */
 abstract public class statements {
-    protected int userId;
-    protected int statementId;
+    protected String userId;
+    protected String statementId;
     protected int score;
     protected String writtenTime;
 
     abstract public String getStatementType();
 
-    public int getStatementId(){
+    public String getStatementId(){
         return this.statementId;
     }
 
-    public int getUserId(){
+    public String getUserId(){
         return this.userId;
     }
 
@@ -24,4 +28,9 @@ abstract public class statements {
     }
 
     public int getScore() { return this.score; }
+
+    public void setWrittenTime(){
+        DateFormat df = new SimpleDateFormat("yyMMddHHmmssZ");
+        this.writtenTime = df.format(Calendar.getInstance().getTime());
+    }
 }

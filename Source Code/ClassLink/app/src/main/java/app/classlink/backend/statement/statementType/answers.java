@@ -7,7 +7,7 @@ public class answers extends statements {
     protected String answerText;
     protected final String statementType = "ANSWER";
 
-    public answers(String answerText, int userId){
+    public answers(String answerText, String userId){
         this.answerText = answerText;
         this.userId = userId;
         this.score = 0;

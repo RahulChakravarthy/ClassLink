@@ -107,7 +107,6 @@ public class lectureCreate extends baseActivity implements activityParameters {
                    if (lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(),
                            (teacher) userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()), userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).getSchool())){
                        Toast.makeText(viewHelperClass.getActivityContext(), "Lecture Group Created to view/change settings visit the settings menu", Toast.LENGTH_LONG).show();
-                       startActivity(new Intent(lectureCreate.this, lectureRoom.class));
                    } else {
                        Toast.makeText(viewHelperClass.getActivityContext(), "Error! Group Name already exists", Toast.LENGTH_LONG).show();
                    }

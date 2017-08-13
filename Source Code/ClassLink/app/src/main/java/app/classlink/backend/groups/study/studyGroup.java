@@ -19,10 +19,10 @@ public class studyGroup extends baseGroup {
 
     protected student groupCreator;
     protected HashMap<String, String> studyGroupTags; // Used for searching for the group
-    protected LinkedList<groupedStatement> statements; //Linkedlist stores all statements in order of which they were asked
+    protected LinkedList<groupedStatement> statements; //Linkedlist stores all groupedStatement in order of which they were asked
 
     public studyGroup(String groupId, String groupName, String groupDescription, student groupCreator) {
-        this.groupType = GROUP_TYPE.STUDY_GROUP;
+        this.groupType = GROUP_TYPE.STUDYGROUPS;
         this.groupName = groupName;
         this.groupId = groupId;
         this.groupDescription = groupDescription;
@@ -53,20 +53,18 @@ public class studyGroup extends baseGroup {
         return this.studyGroupTags.get(tagValue);
     }
 
-    public void addGroupedStatement(String questionText, int userId){
+    public void addGroupedStatement(String questionText, String userId){
         statements.addLast(new groupedStatement(new question(questionText,userId)));
         StudyGroupDAO studyGroupDAO = new StudyGroupDAO();
         studyGroupDAO.updateStudyGroup(this);
     }
 
     public void addAnswerToQuestion(groupedStatement statement, String answerText, int userId){
-        statement.addAnswer(new answers(answerText, userId));
         StudyGroupDAO studyGroupDAO = new StudyGroupDAO();
         studyGroupDAO.updateStudyGroup(this);
     }
 
     public void addCommentToAnswer(groupedStatement statement, answers userAnswer, String commentText, int userId){
-        statement.addComment(userAnswer, new comments(commentText, userId));
         StudyGroupDAO studyGroupDAO = new StudyGroupDAO();
         studyGroupDAO.updateStudyGroup(this);
     }
@@ -74,12 +72,12 @@ public class studyGroup extends baseGroup {
 
 
     @Override
-    public LinkedList<groupedStatement> getGroupStatements() {
+    public LinkedList<groupedStatement> getGroupedStatement() {
         return this.statements;
     }
 
     @Override
-    public void setGroupedStatements(LinkedList<groupedStatement> newGroupedStatements) {
+    public void setGroupedStatement(LinkedList<groupedStatement> newGroupedStatements) {
         this.statements = newGroupedStatements;
     }
 

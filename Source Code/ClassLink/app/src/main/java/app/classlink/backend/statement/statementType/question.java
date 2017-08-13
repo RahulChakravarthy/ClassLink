@@ -12,17 +12,18 @@ public class question extends statements {
 
     }
 
-    public question(String questionText, int userId){
+    public question(String questionText, String userId){
         this.questionText = questionText;
         this.userId = userId;
         this.score = 0;
+        this.setWrittenTime();
     }
 
     public question(question q) {
         this.questionText = q.getQuestionText();
         this.userId = q.getUserId();
         this.score = q.getScore();
-
+        this.setWrittenTime();
     }
 
     @Override

@@ -57,7 +57,7 @@ public abstract class baseGroup implements Serializable {
         this.schoolName = schoolName;
     }
 
-    abstract public LinkedList<groupedStatement> getGroupStatements();
+    abstract public LinkedList<groupedStatement> getGroupedStatement();
 
-    abstract public void setGroupedStatements(LinkedList<groupedStatement> newGroupedStatements);
+    abstract public void setGroupedStatement(LinkedList<groupedStatement> newGroupedStatements);
 }

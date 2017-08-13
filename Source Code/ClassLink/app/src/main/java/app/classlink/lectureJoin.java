@@ -142,6 +142,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(lectureJoin.this, lectureRoom.class);
+                intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()));
                 intent.putExtra("lectureGroup", lectureGroupDAO.getLectureGroupByFullName("ECE 155"));
                 startActivity(intent);
             }

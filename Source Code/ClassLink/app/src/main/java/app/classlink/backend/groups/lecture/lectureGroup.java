@@ -9,7 +9,6 @@ import app.classlink.backend.core.baseGroup;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
 import app.classlink.backend.statement.statementType.answers;
-import app.classlink.backend.statement.statementType.comments;
 import app.classlink.backend.statement.statementType.question;
 import app.classlink.backend.users.teacher.teacher;
 
@@ -20,7 +19,7 @@ public class lectureGroup extends baseGroup {
 
     protected teacher lectureCreator; //The object of the teacher who created the group
     protected HashMap<String, String> lectureGroupTags; // Used for searching for the group
-    protected LinkedList<groupedStatement> statements; //Linkedlist stores all statements in order of which they were asked
+    protected LinkedList<groupedStatement> groupedStatement; //Linkedlist stores all groupedStatement in order of which they were asked
 
     /**
      * @Constructor : default constructor
@@ -31,15 +30,16 @@ public class lectureGroup extends baseGroup {
      * @param lectureCreator : teacher who created the group
      */
     public lectureGroup(School schoolName, String groupName, String groupId, String groupDescription, teacher lectureCreator){
-        this.groupType = GROUP_TYPE.LECTURE;
+        this.groupType = GROUP_TYPE.LECTUREGROUPS;
         this.schoolName = schoolName;
         this.groupName = groupName;
         this.groupId = groupId;
         this.groupDescription = groupDescription;
         this.lectureCreator = lectureCreator;
         this.lectureGroupTags = new HashMap<>();
-        this.statements = new LinkedList<>();
+        this.groupedStatement = new LinkedList<>();
 
+       // this.setStatements();
         this.createLectureTags();
     }
 
@@ -48,6 +48,13 @@ public class lectureGroup extends baseGroup {
      */
     public lectureGroup(){
         //ONLY USED BY DATA SNAPSHOT
+    }
+
+    /**
+     * @Method setStatements : set default value to groupedStatement so that they are registered in the database and can be queired
+     */
+    private void setStatements() {
+        this.groupedStatement.add(new groupedStatement(new question("NULL", "0")));
     }
 
     /**
@@ -72,8 +79,8 @@ public class lectureGroup extends baseGroup {
      * @param questionText : text for question
      * @param userId : user id of user who asked question
      */
-    public void addGroupedStatement(String questionText, int userId){
-        statements.addLast(new groupedStatement(new question(questionText,userId)));
+    public void addGroupedStatement(String questionText, String userId){
+        groupedStatement.addLast(new groupedStatement(new question(questionText,userId)));
         LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
         lectureGroupDAO.updateLectureGroup(this);
     }
@@ -85,7 +92,6 @@ public class lectureGroup extends baseGroup {
      * @param userId : user who issued answer
      */
     public void addAnswerToQuestion(groupedStatement statement, String answerText, int userId){
-        statement.addAnswer(new answers(answerText, userId));
         LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
         lectureGroupDAO.updateLectureGroup(this);
     }
@@ -97,7 +103,6 @@ public class lectureGroup extends baseGroup {
      * @param userId : user who issued the comment
      */
     public void addCommentToAnswer(groupedStatement statement, answers userAnswer, String commentText, int userId){
-        statement.addComment(userAnswer, new comments(commentText, userId));
         LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
         lectureGroupDAO.updateLectureGroup(this);
     }
@@ -106,13 +111,13 @@ public class lectureGroup extends baseGroup {
      * Getters and Setters
      */
     @Override
-    public LinkedList<groupedStatement> getGroupStatements() {
-        return this.statements;
+    public LinkedList<groupedStatement> getGroupedStatement() {
+        return this.groupedStatement;
     }
 
     @Override
-    public void setGroupedStatements(LinkedList<groupedStatement> newGroupedStatements) {
-        this.statements = newGroupedStatements;
+    public void setGroupedStatement(LinkedList<groupedStatement> newGroupedStatements) {
+        this.groupedStatement = newGroupedStatements;
     }
 
     public teacher getLectureCreator(){

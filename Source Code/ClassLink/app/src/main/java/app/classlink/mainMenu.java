@@ -86,16 +86,16 @@ public class mainMenu extends baseActivity implements activityParameters {
      * @Method exampleGroups: set up some example groups to populate the RecyclerView
      */
     public void exampleGroups() {
-//        studyGroup group = new studyGroup(GROUP_TYPE.STUDY_GROUP.name(), "1", "group1", );
+//        studyGroup group = new studyGroup(GROUP_TYPE.STUDYGROUPS.name(), "1", "group1", );
 //        groupList.add(group);
 //
-//        group = new studyGroup(GROUP_TYPE.STUDY_GROUP.name(), "2", "group2", "test group 2");
+//        group = new studyGroup(GROUP_TYPE.STUDYGROUPS.name(), "2", "group2", "test group 2");
 //        groupList.add(group);
 //
-//        group = new studyGroup(GROUP_TYPE.STUDY_GROUP.name(), "3", "group3", "test group 3");
+//        group = new studyGroup(GROUP_TYPE.STUDYGROUPS.name(), "3", "group3", "test group 3");
 //        groupList.add(group);
 //
-//        group = new studyGroup(GROUP_TYPE.STUDY_GROUP.name(), "99", "Add a new favourite", "Click here");
+//        group = new studyGroup(GROUP_TYPE.STUDYGROUPS.name(), "99", "Add a new favourite", "Click here");
 //        groupList.add(group);
     }
 
@@ -207,7 +207,7 @@ public class mainMenu extends baseActivity implements activityParameters {
                 Log.d("Testing onClick", "description: " + studyGroup.getGroupDescription());
 
                 if(Objects.equals(studyGroup.getGroupId(), "99")) {
-//                    studyGroup newFavourite = new studyGroup(GROUP_TYPE.STUDY_GROUP, "5", "new favourite", "added a new favourite");
+//                    studyGroup newFavourite = new studyGroup(GROUP_TYPE.STUDYGROUPS, "5", "new favourite", "added a new favourite");
 //                    groupList.add(newFavourite);
 //                    gAdapter.notifyDataSetChanged();
                 }
