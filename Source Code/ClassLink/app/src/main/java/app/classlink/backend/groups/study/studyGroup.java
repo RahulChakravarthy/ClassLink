@@ -2,6 +2,7 @@ package app.classlink.backend.groups.study;
 
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import app.classlink.backend.core.GROUP_TYPE;
@@ -19,7 +20,7 @@ public class studyGroup extends baseGroup {
 
     protected student groupCreator;
     protected HashMap<String, String> studyGroupTags; // Used for searching for the group
-    protected LinkedList<groupedStatement> statements; //Linkedlist stores all groupedStatement in order of which they were asked
+    protected HashMap<String, groupedStatement> statements; //Linkedlist stores all groupedStatement in order of which they were asked
 
     public studyGroup(String groupId, String groupName, String groupDescription, student groupCreator) {
         this.groupType = GROUP_TYPE.STUDYGROUPS;
@@ -28,7 +29,7 @@ public class studyGroup extends baseGroup {
         this.groupDescription = groupDescription;
         this.groupCreator = groupCreator;
         this.studyGroupTags = new HashMap<>();
-        this.statements = new LinkedList<>();
+        this.statements = new HashMap<>();
 
         this.createGroupTags();
 
@@ -54,7 +55,7 @@ public class studyGroup extends baseGroup {
     }
 
     public void addGroupedStatement(String questionText, String userId){
-        statements.addLast(new groupedStatement(new question(questionText,userId)));
+        statements.put(questionText, new groupedStatement(new question(questionText,userId)));
         StudyGroupDAO studyGroupDAO = new StudyGroupDAO();
         studyGroupDAO.updateStudyGroup(this);
     }
@@ -72,12 +73,12 @@ public class studyGroup extends baseGroup {
 
 
     @Override
-    public LinkedList<groupedStatement> getGroupedStatement() {
+    public HashMap<String, groupedStatement> getGroupedStatement() {
         return this.statements;
     }
 
     @Override
-    public void setGroupedStatement(LinkedList<groupedStatement> newGroupedStatements) {
+    public void setGroupedStatement(HashMap<String, groupedStatement> newGroupedStatements) {
         this.statements = newGroupedStatements;
     }
 

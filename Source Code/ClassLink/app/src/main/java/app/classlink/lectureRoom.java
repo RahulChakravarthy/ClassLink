@@ -56,9 +56,13 @@ public class lectureRoom extends baseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Call activity methods here
+        //core order
         layoutSetup();
         coreSetup();
         setActivityDAOListeners();
+
+        //non-core
+        setActionBar();
 //        syncStatements();
     }
 
@@ -136,7 +140,7 @@ public class lectureRoom extends baseActivity
      * @Method setActionBar : formats and styles action bar
      */
     private void setActionBar(){
-        getActionBar().setTitle(this.lectureGroup.getGroupName());
+        setTitle(this.lectureGroup.getGroupName() + ":  " + this.lectureGroup.getGroupDescription());
 
     }
 
@@ -151,16 +155,6 @@ public class lectureRoom extends baseActivity
 
 
     }
-    /**
-     *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
-     */
-    protected void setActivityDAOListeners() {
-        //set lecutre group cache listener
-        this.lectureGroupDAO = new LectureGroupDAO();
-        this.lectureGroupDAO.setCacheListener(this.currentUser.getSchool().toString());
-
-        //set statement listener on said lecture group
-    }
 
     /**
      * @Method coreSetup : sets up all all information for this activity including intents and DAOs
@@ -171,6 +165,17 @@ public class lectureRoom extends baseActivity
         this.currentUser = (user) getIntent().getExtras().get("user");
     }
 
+
+    /**
+     *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
+     */
+    protected void setActivityDAOListeners() {
+        //set lecutre group cache listener
+        this.lectureGroupDAO = new LectureGroupDAO();
+        this.lectureGroupDAO.setCacheListener(this.currentUser.getSchool().toString());
+
+        //set statement listener on said lecture group
+    }
     /**
      * @Method syncStatements : timer thread that periodically syncs groupedStatement with database
      */

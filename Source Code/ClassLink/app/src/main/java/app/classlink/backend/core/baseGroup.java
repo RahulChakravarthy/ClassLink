@@ -3,6 +3,7 @@ package app.classlink.backend.core;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import app.classlink.backend.misc.School;
@@ -57,7 +58,7 @@ public abstract class baseGroup implements Serializable {
         this.schoolName = schoolName;
     }
 
-    abstract public LinkedList<groupedStatement> getGroupedStatement();
+    abstract public HashMap<String, groupedStatement> getGroupedStatement();
 
-    abstract public void setGroupedStatement(LinkedList<groupedStatement> newGroupedStatements);
+    abstract public void setGroupedStatement(HashMap<String, groupedStatement> newGroupedStatements);
 }

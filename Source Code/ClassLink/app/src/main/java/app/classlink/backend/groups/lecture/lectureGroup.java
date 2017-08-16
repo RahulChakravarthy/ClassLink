@@ -2,6 +2,7 @@ package app.classlink.backend.groups.lecture;
 
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import app.classlink.backend.core.GROUP_TYPE;
@@ -19,7 +20,7 @@ public class lectureGroup extends baseGroup {
 
     protected teacher lectureCreator; //The object of the teacher who created the group
     protected HashMap<String, String> lectureGroupTags; // Used for searching for the group
-    protected LinkedList<groupedStatement> groupedStatement; //Linkedlist stores all groupedStatement in order of which they were asked
+    protected HashMap<String, groupedStatement> groupedStatement; //HashMap stores time in which question was asked as key and grouped statement as value
 
     /**
      * @Constructor : default constructor
@@ -37,9 +38,9 @@ public class lectureGroup extends baseGroup {
         this.groupDescription = groupDescription;
         this.lectureCreator = lectureCreator;
         this.lectureGroupTags = new HashMap<>();
-        this.groupedStatement = new LinkedList<>();
+        this.groupedStatement = new HashMap<>();
 
-       // this.setStatements();
+        this.setStatements();
         this.createLectureTags();
     }
 
@@ -54,7 +55,9 @@ public class lectureGroup extends baseGroup {
      * @Method setStatements : set default value to groupedStatement so that they are registered in the database and can be queired
      */
     private void setStatements() {
-        this.groupedStatement.add(new groupedStatement(new question("NULL", "0")));
+        question nullQuestion = new question("NULL", "NULL");
+        groupedStatement statement = new groupedStatement(nullQuestion);
+        this.groupedStatement.put(nullQuestion.getWrittenTime(), statement);
     }
 
     /**
@@ -80,7 +83,7 @@ public class lectureGroup extends baseGroup {
      * @param userId : user id of user who asked question
      */
     public void addGroupedStatement(String questionText, String userId){
-        groupedStatement.addLast(new groupedStatement(new question(questionText,userId)));
+        groupedStatement.put(questionText, new groupedStatement(new question(questionText,userId)));
         LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
         lectureGroupDAO.updateLectureGroup(this);
     }
@@ -111,12 +114,12 @@ public class lectureGroup extends baseGroup {
      * Getters and Setters
      */
     @Override
-    public LinkedList<groupedStatement> getGroupedStatement() {
+    public HashMap<String, groupedStatement> getGroupedStatement() {
         return this.groupedStatement;
     }
 
     @Override
-    public void setGroupedStatement(LinkedList<groupedStatement> newGroupedStatements) {
+    public void setGroupedStatement(HashMap<String, groupedStatement> newGroupedStatements) {
         this.groupedStatement = newGroupedStatements;
     }
 

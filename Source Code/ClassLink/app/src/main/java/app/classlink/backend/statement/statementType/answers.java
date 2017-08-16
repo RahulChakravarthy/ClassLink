@@ -11,6 +11,7 @@ public class answers extends statements {
         this.answerText = answerText;
         this.userId = userId;
         this.score = 0;
+        this.setWrittenTime();
     }
 
     @Override

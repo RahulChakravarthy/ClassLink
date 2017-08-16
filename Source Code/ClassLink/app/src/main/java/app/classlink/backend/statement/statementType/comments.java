@@ -12,6 +12,7 @@ public class comments extends statements {
         this.commentText = commentText;
         this.userId = userId;
         this.score = 0;
+        this.setWrittenTime();
     }
 
     @Override

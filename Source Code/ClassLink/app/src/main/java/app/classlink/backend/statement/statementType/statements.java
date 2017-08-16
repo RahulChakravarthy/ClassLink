@@ -1,5 +1,6 @@
 package app.classlink.backend.statement.statementType;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,7 +8,7 @@ import java.util.Calendar;
 /**
  * @Class groupedStatement: wrapper class for the question, classes
  */
-abstract public class statements {
+abstract public class statements  implements Serializable {
     protected String userId;
     protected String statementId;
     protected int score;

@@ -1,6 +1,8 @@
 package app.classlink.backend.statement.statementGrouping;
 
 
+import java.io.Serializable;
+
 import app.classlink.backend.statement.statementType.answers;
 import app.classlink.backend.statement.statementType.comments;
 import app.classlink.backend.statement.statementType.question;
@@ -12,7 +14,7 @@ import app.classlink.backend.statement.statementType.question;
 /**
  * @Class groupedStatement : stores a wrapped up statement (includes 1 question, all it's answers and all it's comments)
  */
-public class groupedStatement {
+public class groupedStatement implements Serializable {
 
     protected question statementQuestion;
 
