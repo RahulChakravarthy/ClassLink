@@ -1,9 +1,11 @@
 package app.classlink;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -14,17 +16,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
 import app.classlink.backend.users.user.user;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.backend.core.baseActivity;
+import app.classlink.helperClasses.subViewHelperClass;
 
 public class lectureRoom extends baseActivity
         implements NavigationView.OnNavigationItemSelectedListener, activityParameters {
+
+    private ConstraintLayout backgroundLayout;
+    private DrawerLayout navbarLayout;
+
+    private subViewHelperClass subViewHelperClass;
 
     private lectureGroup lectureGroup;
     private LectureGroupDAO lectureGroupDAO;
@@ -37,15 +42,6 @@ public class lectureRoom extends baseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -57,12 +53,14 @@ public class lectureRoom extends baseActivity
 
         //Call activity methods here
         //core order
-        layoutSetup();
         coreSetup();
         setActivityDAOListeners();
+        layoutSetup();
+        navbarLayoutSetup();
 
         //non-core
         setActionBar();
+        setFloatingActionBar();
 //        syncStatements();
     }
 
@@ -141,7 +139,24 @@ public class lectureRoom extends baseActivity
      */
     private void setActionBar(){
         setTitle(this.lectureGroup.getGroupName() + ":  " + this.lectureGroup.getGroupDescription());
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2A97DD")));
 
+    }
+
+    /**
+     * @Method setFloatingActionBar : styles the floating action bar at the bottom of the activity
+     */
+    private void setFloatingActionBar() {
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //get whether or not user has this group favourited, if so set it to the heart icon
+        //fab.setImageResource();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Switch the image resource from between favoured and non favoured group
+                //fab.setImageResource();
+            }
+        });
     }
 
     /**
@@ -149,11 +164,21 @@ public class lectureRoom extends baseActivity
      */
     @Override
     public void layoutSetup() {
-//        this.activityLayout = (RelativeLayout) findViewById(R.id.drawer_layout);
-//        this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
-//        this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
+        this.subViewHelperClass = new subViewHelperClass(getApplicationContext(), this.getWindowManager().getDefaultDisplay());
+        this.backgroundLayout = (ConstraintLayout) findViewById(R.id.main_lecture_room_layout);
 
 
+        this.backgroundLayout.setBackgroundColor(Color.parseColor("#3D87B5"));
+        this.backgroundLayout.addView(this.subViewHelperClass.addText("Teacher Support Material\n        Comming Soon", "OpenSans-Bold", "BLACK", 2, 20, 50, 40));
+    }
+
+    /**
+     * @Method
+     */
+    private void navbarLayoutSetup() {
+        this.navbarLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        this.navbarLayout.setBackgroundColor(Color.BLACK);
     }
 
     /**
@@ -170,7 +195,7 @@ public class lectureRoom extends baseActivity
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
     protected void setActivityDAOListeners() {
-        //set lecutre group cache listener
+        //set lecture group cache listener
         this.lectureGroupDAO = new LectureGroupDAO();
         this.lectureGroupDAO.setCacheListener(this.currentUser.getSchool().toString());
 

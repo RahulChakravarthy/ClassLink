@@ -7,7 +7,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -21,13 +20,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-import app.classlink.R;
 
+/**
+ * @Note: In the future, refactor this to accept other types of layouts so that it can be used for different activities
+ */
 
 /**
  * @Class viewHelperClass : This class has implemented methods to aid with output views to various activities
  */
-
 public class viewHelperClass {
 
     private RelativeLayout activityLayout; //Captured activity layout
