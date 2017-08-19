@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,6 +17,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
@@ -22,18 +28,22 @@ import app.classlink.backend.users.user.user;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.helperClasses.subViewHelperClass;
+import app.classlink.helperClasses.viewHelperClass;
 
 public class lectureRoom extends baseActivity
         implements NavigationView.OnNavigationItemSelectedListener, activityParameters {
 
-    private ConstraintLayout backgroundLayout;
-    private DrawerLayout navbarLayout;
+    private ConstraintLayout backgroundLayout; //background activity layout
+    private DrawerLayout navbarLayout; //navigation drawer handler
+    private LinearLayout leftsideDrawerLayout; //left side drawer layout
 
-    private subViewHelperClass subViewHelperClass;
+    private subViewHelperClass subViewHelperClass; //viewhelperclass for various layouts
 
     private lectureGroup lectureGroup;
-    private LectureGroupDAO lectureGroupDAO;
     private user currentUser;
+    private EditText inputStatement;
+
+    private LectureGroupDAO lectureGroupDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +67,14 @@ public class lectureRoom extends baseActivity
         setActivityDAOListeners();
         layoutSetup();
         navbarLayoutSetup();
+        sideDrawerLayoutSetup();
 
         //non-core
         setActionBar();
         setFloatingActionBar();
 //        syncStatements();
+
+
     }
 
     @Override
@@ -85,7 +98,7 @@ public class lectureRoom extends baseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.lecture_room, menu);
+        //getMenuInflater().inflate(R.menu.lecture_room, menu);
         return true;
     }
 
@@ -97,9 +110,9 @@ public class lectureRoom extends baseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -113,21 +126,9 @@ public class lectureRoom extends baseActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        //display options to report question or to report user
+        //if it is a teacher, they can report and even ban the user who posed it
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            Log.d("Testing button", "YES");
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -144,7 +145,7 @@ public class lectureRoom extends baseActivity
     }
 
     /**
-     * @Method setFloatingActionBar : styles the floating action bar at the bottom of the activity
+     * @Method setFloatingActionBar : styles the floating action bar at the bottom of the activity (little circle)
      */
     private void setFloatingActionBar() {
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -162,34 +163,45 @@ public class lectureRoom extends baseActivity
     /**
      * Activity Methods
      */
+
+    /**
+     *@Method layoutSetup : sets up background layout
+     */
     @Override
     public void layoutSetup() {
         this.subViewHelperClass = new subViewHelperClass(getApplicationContext(), this.getWindowManager().getDefaultDisplay());
         this.backgroundLayout = (ConstraintLayout) findViewById(R.id.main_lecture_room_layout);
 
-
         this.backgroundLayout.setBackgroundColor(Color.parseColor("#3D87B5"));
-        this.backgroundLayout.addView(this.subViewHelperClass.addText("Teacher Support Material\n        Comming Soon", "OpenSans-Bold", "BLACK", 2, 20, 50, 40));
+        this.backgroundLayout.addView(this.subViewHelperClass.addText("Teacher Support Material\n           Coming Soon", "OpenSans-Bold", "BLACK", 2, 20, 50, 40));
     }
 
     /**
-     * @Method
+     * @Method navbarLayoutSetup : sets up navigation bar layout
      */
     private void navbarLayoutSetup() {
         this.navbarLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        this.navbarLayout.setBackgroundColor(Color.BLACK);
     }
 
     /**
-     * @Method coreSetup : sets up all all information for this activity including intents and DAOs
+     * @Method sideDrawerLayoutSetup : sets up side drawer layout
+     */
+    private void sideDrawerLayoutSetup() {
+        this.leftsideDrawerLayout = (LinearLayout) findViewById(R.id.side_drawer_layout);
+        this.subViewHelperClass = new subViewHelperClass(getApplicationContext(), this.getWindowManager().getDefaultDisplay());
+
+        this.inputStatement = new EditText(getApplicationContext());
+
+    }
+
+    /**
+     * @Method coreSetup : sets up all information for this activity including intents and DAOs
      */
     private void coreSetup() {
         //capture Intent values here and set the activity lecture group equal to the passed in group
         this.lectureGroup = (lectureGroup) getIntent().getExtras().get("lectureGroup");
         this.currentUser = (user) getIntent().getExtras().get("user");
     }
-
 
     /**
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
@@ -201,6 +213,7 @@ public class lectureRoom extends baseActivity
 
         //set statement listener on said lecture group
     }
+
     /**
      * @Method syncStatements : timer thread that periodically syncs groupedStatement with database
      */
