@@ -5,8 +5,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -18,15 +19,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
+import app.classlink.backend.statement.statementGrouping.groupedStatement;
+import app.classlink.backend.statement.statementGrouping.groupedStatementDAO;
+import app.classlink.backend.statement.statementType.question;
 import app.classlink.backend.users.user.user;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.backend.core.baseActivity;
+import app.classlink.helperClasses.recyclerAdapters.displayStatementAdapter;
 import app.classlink.helperClasses.subViewHelperClass;
 import app.classlink.helperClasses.viewHelperClass;
 
@@ -34,16 +41,21 @@ public class lectureRoom extends baseActivity
         implements NavigationView.OnNavigationItemSelectedListener, activityParameters {
 
     private ConstraintLayout backgroundLayout; //background activity layout
-    private DrawerLayout navbarLayout; //navigation drawer handler
-    private LinearLayout leftsideDrawerLayout; //left side drawer layout
+    private DrawerLayout navbarLayout; //navigation bar handler
+
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private displayStatementAdapter statementAdapter;
 
     private subViewHelperClass subViewHelperClass; //viewhelperclass for various layouts
 
-    private lectureGroup lectureGroup;
+    private lectureGroup currentLectureGroup;
     private user currentUser;
-    private EditText inputStatement;
+
+    private EditText inputText;
 
     private LectureGroupDAO lectureGroupDAO;
+    private groupedStatementDAO groupedStatementDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +78,7 @@ public class lectureRoom extends baseActivity
         coreSetup();
         setActivityDAOListeners();
         layoutSetup();
+        listViewSetup();
         navbarLayoutSetup();
         sideDrawerLayoutSetup();
 
@@ -73,7 +86,6 @@ public class lectureRoom extends baseActivity
         setActionBar();
         setFloatingActionBar();
 //        syncStatements();
-
 
     }
 
@@ -98,7 +110,7 @@ public class lectureRoom extends baseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.lecture_room, menu);
+//        getMenuInflater().inflate(R.menu.lecture_room, menu);
         return true;
     }
 
@@ -139,9 +151,8 @@ public class lectureRoom extends baseActivity
      * @Method setActionBar : formats and styles action bar
      */
     private void setActionBar(){
-        setTitle(this.lectureGroup.getGroupName() + ":  " + this.lectureGroup.getGroupDescription());
+        setTitle(this.currentLectureGroup.getGroupName() + ":  " + this.currentLectureGroup.getGroupDescription());
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2A97DD")));
-
     }
 
     /**
@@ -149,13 +160,17 @@ public class lectureRoom extends baseActivity
      */
     private void setFloatingActionBar() {
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        //get whether or not user has this group favourited, if so set it to the heart icon
-        //fab.setImageResource();
+        //submit textbox contents
+        fab.setImageResource(R.drawable.poststatement);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Switch the image resource from between favoured and non favoured group
-                //fab.setImageResource();
+                if (subViewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(inputText)))){
+                    groupedStatementDAO.addStatement(new groupedStatement(new question(inputText.getText().toString().trim(), currentUser.getUserId())));
+                    inputText.setText("");
+                } else {
+                    Toast.makeText(getApplicationContext(), "Cannot post empty message as question", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -172,8 +187,12 @@ public class lectureRoom extends baseActivity
         this.subViewHelperClass = new subViewHelperClass(getApplicationContext(), this.getWindowManager().getDefaultDisplay());
         this.backgroundLayout = (ConstraintLayout) findViewById(R.id.main_lecture_room_layout);
 
-        this.backgroundLayout.setBackgroundColor(Color.parseColor("#3D87B5"));
-        this.backgroundLayout.addView(this.subViewHelperClass.addText("Teacher Support Material\n           Coming Soon", "OpenSans-Bold", "BLACK", 2, 20, 50, 40));
+        this.backgroundLayout.setBackgroundColor(Color.parseColor("#bdecfd"));
+        this.backgroundLayout.addView(this.subViewHelperClass.addText("Ask A Question!", "OpenSans-Bold", "BLACK", 2, 20, 50, 40));
+        this.displayStatements(); //call the display statements method to inflate the recyclerviewer with all previous statements
+
+        this.inputText = new EditText(getApplicationContext());
+        this.subViewHelperClass.addGraphicInputBox(this.backgroundLayout, "Ask an anonymous question...", R.drawable.inputbox, this.inputText, InputType.TYPE_CLASS_TEXT, 15, 40f, 81, 0.7f, 0.85f);
     }
 
     /**
@@ -187,19 +206,15 @@ public class lectureRoom extends baseActivity
      * @Method sideDrawerLayoutSetup : sets up side drawer layout
      */
     private void sideDrawerLayoutSetup() {
-        this.leftsideDrawerLayout = (LinearLayout) findViewById(R.id.side_drawer_layout);
-        this.subViewHelperClass = new subViewHelperClass(getApplicationContext(), this.getWindowManager().getDefaultDisplay());
-
-        this.inputStatement = new EditText(getApplicationContext());
-
+        //Display message that additional features and teacher content will be coming soon
     }
 
     /**
-     * @Method coreSetup : sets up all information for this activity including intents and DAOs
+     * @Method coreSetup : sets up all information for this activity including intents
      */
     private void coreSetup() {
         //capture Intent values here and set the activity lecture group equal to the passed in group
-        this.lectureGroup = (lectureGroup) getIntent().getExtras().get("lectureGroup");
+        this.currentLectureGroup = (lectureGroup) getIntent().getExtras().get("lectureGroup");
         this.currentUser = (user) getIntent().getExtras().get("user");
     }
 
@@ -212,6 +227,17 @@ public class lectureRoom extends baseActivity
         this.lectureGroupDAO.setCacheListener(this.currentUser.getSchool().toString());
 
         //set statement listener on said lecture group
+        this.groupedStatementDAO = new groupedStatementDAO();
+        this.groupedStatementDAO.setCacheListener(this.currentLectureGroup);
+    }
+
+    /**
+     * @Method listViewSetup : setup for recycler list view
+     */
+    private void listViewSetup() {
+        this.recyclerView = (RecyclerView) findViewById(R.id.statement_list_view);
+        this.linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        this.recyclerView.setLayoutManager(this.linearLayoutManager);
     }
 
     /**
@@ -225,12 +251,13 @@ public class lectureRoom extends baseActivity
      * @Method loadLectureStatements : Loads groupedStatement from the specific lecture group into buffer to be displayed on the screen
      */
     private void loadLectureStatements() {
-//        for (groupedStatement statement : this.lectureGroup.getGroupedStatement()){
+//        for (groupedStatement statement : this.currentLectureGroup.getGroupedStatement()){
 //            displayStatements();
 //        }
     }
 
     private void displayStatements() {
         //add all the code for displaying each statement in the side view bar
+        this.statementAdapter = new displayStatementAdapter(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values()));
     }
 }
