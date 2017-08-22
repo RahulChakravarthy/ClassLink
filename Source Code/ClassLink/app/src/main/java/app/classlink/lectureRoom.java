@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,7 +17,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -78,9 +79,11 @@ public class lectureRoom extends baseActivity
         coreSetup();
         setActivityDAOListeners();
         layoutSetup();
-        listViewSetup();
         navbarLayoutSetup();
         sideDrawerLayoutSetup();
+
+        //list view display
+        listViewSetup();
 
         //non-core
         setActionBar();
@@ -184,13 +187,11 @@ public class lectureRoom extends baseActivity
      */
     @Override
     public void layoutSetup() {
+        //Initialising the constrained layout for all other views in the main activity
         this.subViewHelperClass = new subViewHelperClass(getApplicationContext(), this.getWindowManager().getDefaultDisplay());
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         this.backgroundLayout = (ConstraintLayout) findViewById(R.id.main_lecture_room_layout);
-
         this.backgroundLayout.setBackgroundColor(Color.parseColor("#bdecfd"));
-        this.backgroundLayout.addView(this.subViewHelperClass.addText("Ask A Question!", "OpenSans-Bold", "BLACK", 2, 20, 50, 40));
-        this.displayStatements(); //call the display statements method to inflate the recyclerviewer with all previous statements
-
         this.inputText = new EditText(getApplicationContext());
         this.subViewHelperClass.addGraphicInputBox(this.backgroundLayout, "Ask an anonymous question...", R.drawable.inputbox, this.inputText, InputType.TYPE_CLASS_TEXT, 15, 40f, 81, 0.7f, 0.85f);
     }
@@ -236,8 +237,10 @@ public class lectureRoom extends baseActivity
      */
     private void listViewSetup() {
         this.recyclerView = (RecyclerView) findViewById(R.id.statement_list_view);
-        this.linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        this.statementAdapter = new displayStatementAdapter(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values()));
+        this.linearLayoutManager = new LinearLayoutManager(this);
         this.recyclerView.setLayoutManager(this.linearLayoutManager);
+        this.recyclerView.setAdapter(this.statementAdapter);
     }
 
     /**
@@ -254,10 +257,5 @@ public class lectureRoom extends baseActivity
 //        for (groupedStatement statement : this.currentLectureGroup.getGroupedStatement()){
 //            displayStatements();
 //        }
-    }
-
-    private void displayStatements() {
-        //add all the code for displaying each statement in the side view bar
-        this.statementAdapter = new displayStatementAdapter(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values()));
     }
 }

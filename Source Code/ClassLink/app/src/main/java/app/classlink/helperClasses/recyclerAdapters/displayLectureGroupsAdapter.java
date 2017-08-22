@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -25,15 +26,15 @@ public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLec
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         //All class related variables
-        private ImageView lectureGroupIcon;
-        private String lectureGroupName;
-        private String lectureGroupTeacher;
-        private String[] lectureGroupTags;
+        private TextView lectureGroupName;
+        private TextView lectureGroupDescription;
+        private TextView lectureGroupTeacher;
 
         public ViewHolder(View itemView) {
             super(itemView);
             //use findViewById to attach each member field to it's reference in the appropriate layout.xml
             itemView.setOnClickListener(this);
+
 
         }
 

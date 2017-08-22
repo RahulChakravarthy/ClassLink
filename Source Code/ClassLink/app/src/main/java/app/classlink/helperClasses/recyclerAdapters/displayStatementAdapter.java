@@ -27,20 +27,22 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
         private TextView statementMessage;
         private TextView score;
         private ImageView upvotebutton;
-        private ImageView line;
+        private ImageView topLine;
+        private ImageView bottomLine;
 
         public groupedStatementHolder(View itemView) {
             super(itemView);
             this.statementMessage = (TextView) itemView.findViewById(R.id.statement_message);
             this.score = (TextView) itemView.findViewById(R.id.statement_score);
             this.upvotebutton = (ImageView) itemView.findViewById(R.id.upvote_button);
-            this.line = (ImageView) itemView.findViewById(R.id.line_separator);
+            this.bottomLine = (ImageView) itemView.findViewById(R.id.line_separator_bottom);
+            this.topLine = (ImageView) itemView.findViewById(R.id.line_separator_top);
             itemView.setOnTouchListener(this);
         }
 
         public void bindGroupedStatement(groupedStatement groupedStatement){
             this.statementMessage.setText(groupedStatement.getStatementQuestion().getQuestionText());
-            this.score.setText(groupedStatement.getStatementQuestion().getScore());
+            this.score.setText((String.valueOf(groupedStatement.getStatementQuestion().getScore())));
         }
 
 
