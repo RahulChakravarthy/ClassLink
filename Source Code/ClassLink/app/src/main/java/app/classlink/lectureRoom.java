@@ -171,6 +171,7 @@ public class lectureRoom extends baseActivity
                 if (subViewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(inputText)))){
                     groupedStatementDAO.addStatement(new groupedStatement(new question(inputText.getText().toString().trim(), currentUser.getUserId())));
                     inputText.setText("");
+                    statementAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getApplicationContext(), "Cannot post empty message as question", Toast.LENGTH_LONG).show();
                 }

@@ -108,7 +108,6 @@ public class subViewHelperClass {
     public void addGraphics(ViewGroup layout,final ImageView imageView, int resourceId, float xPosition, float yPosition, float xScale, float yScale, boolean button) {
         imageView.setImageResource(resourceId);
         this.editGraphics(imageView, xPosition, yPosition, xScale, yScale);
-        imageView.setAlpha(0.75f);
 
         if(button) {
             //Setting up the animation: on action down, grey out the image

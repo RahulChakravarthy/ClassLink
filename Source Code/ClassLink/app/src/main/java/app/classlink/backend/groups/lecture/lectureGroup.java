@@ -55,7 +55,7 @@ public class lectureGroup extends baseGroup {
      * @Method setStatements : set default value to groupedStatement so that they are registered in the database and can be queired
      */
     private void setStatements() {
-        question nullQuestion = new question("NULL", "NULL");
+        question nullQuestion = new question("Welcome to the lecture room!", "NULL");
         groupedStatement statement = new groupedStatement(nullQuestion);
         this.groupedStatement.put(nullQuestion.getWrittenTime(), statement);
     }

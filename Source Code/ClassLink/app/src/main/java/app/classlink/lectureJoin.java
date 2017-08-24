@@ -15,6 +15,13 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserInfo;
 
+import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.administrator.administrator;
@@ -37,6 +44,9 @@ public class lectureJoin extends baseActivity implements activityParameters {
     private userDAO userDAO;
     private LectureGroupDAO lectureGroupDAO;
 
+    //current user
+    private user currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +54,10 @@ public class lectureJoin extends baseActivity implements activityParameters {
 
         layoutSetup();
         setActivityDAOListeners();
-        groupListSetup();
+        groupListSetup(); //initialise group list display
+        refreshGroupList(); //setup a thread that refreshes the list every so often
         createLectureGroupListener();
-        genericLectureRoomListener();
+        //genericLectureRoomListener();
     }
 
     @Override
@@ -63,9 +74,9 @@ public class lectureJoin extends baseActivity implements activityParameters {
     protected void setActivityDAOListeners() {
         this.userDAO = new userDAO();
         this.userDAO.setCacheListener();
+        this.currentUser = ((user) getIntent().getExtras().get("user")); //get the user passed in by the previous activity quickly
 
         this.lectureGroupDAO = new LectureGroupDAO();
-        user currentUser = ((user) getIntent().getSerializableExtra("user")); //get the user passed in by the previous activity quickly
         this.lectureGroupDAO.setCacheListener(currentUser.getSchool().toString());
     }
 
@@ -93,8 +104,8 @@ public class lectureJoin extends baseActivity implements activityParameters {
         this.viewHelperClass.addGraphicInputBox(null, R.drawable.inputbox, this.searchBox, InputType.TYPE_CLASS_TEXT, 15, 50, 22, 0.75f, 0.8f);
 
         //For testing purposes add button to take to generic Lecture Room
-        this.genericLectureRoom = new ImageView(getApplicationContext());
-        this.viewHelperClass.addTextToButton(this.genericLectureRoom, "Join lecture room", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50f, 50f, 0.5f, 0.5f);
+//        this.genericLectureRoom = new ImageView(getApplicationContext());
+//        this.viewHelperClass.addTextToButton(this.genericLectureRoom, "Join lecture room", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50f, 50f, 0.5f, 0.5f);
     }
 
     /**
@@ -102,16 +113,24 @@ public class lectureJoin extends baseActivity implements activityParameters {
      */
     private void groupListSetup() {
         this.groupList = (RecyclerView) findViewById(R.id.groupList);
+        Log.d("MORE", String.valueOf(lectureGroupDAO.getAllLectureGroups().size()));
+        this.groupListAdapter = new displayLectureGroupsAdapter(new LinkedList<>(lectureGroupDAO.getAllLectureGroups()), getApplicationContext(), currentUser);
         this.groupLayout = new LinearLayoutManager(this.viewHelperClass.getActivityContext());
         this.groupList.setLayoutManager(this.groupLayout);
-        //style the recycleViewer
+        this.groupList.setAdapter(this.groupListAdapter);
+        this.groupListAdapter.notifyDataSetChanged();
+    }
 
-
-        //Get all lecture groups
-//        LectureGroupDAO lectureGroupDAO = new LectureGroupDAO();
-//        this.groupListAdapter = new displayLectureGroupsAdapter(new ArrayList<>(Arrays.asList(lectureGroupDAO.getLectureGroupById("0"))));
-//        this.groupList.setAdapter(this.groupListAdapter);
-
+    private void refreshGroupList() {
+        ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+        exec.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                groupListAdapter = new displayLectureGroupsAdapter(new LinkedList<>(lectureGroupDAO.getAllLectureGroups()), getApplicationContext(), currentUser);
+                groupList.setAdapter(groupListAdapter);
+                groupListAdapter.notifyDataSetChanged();
+            }
+        }, 0, 5, TimeUnit.SECONDS);
     }
 
     /**

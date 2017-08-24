@@ -63,11 +63,11 @@ public class groupedStatementDAO extends DAO{
         this.list.child(newStatement.getStatementQuestion().getWrittenTime()).setValue(newStatement);
     }
 
-    public HashMap<String, groupedStatement> getGroupedStatementCache(){
-        return groupedStatementCache;
-    }
-
     public void deleteStatement(groupedStatement nullStatement){
         this.list.child(nullStatement.getStatementQuestion().getWrittenTime()).removeValue();
+    }
+
+    public HashMap<String, groupedStatement> getGroupedStatementCache(){
+        return groupedStatementCache;
     }
 }

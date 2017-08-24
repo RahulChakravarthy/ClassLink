@@ -1,6 +1,5 @@
 package app.classlink.helperClasses.recyclerAdapters;
 
-
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +19,13 @@ import app.classlink.backend.statement.statementGrouping.groupedStatement;
  */
 public class displayStatementAdapter extends RecyclerView.Adapter<displayStatementAdapter.groupedStatementHolder> {
 
-    LinkedList<groupedStatement> displayableStatements;
+    private LinkedList<groupedStatement> displayableStatements;
 
     public static class groupedStatementHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
 
         private TextView statementMessage;
         private TextView score;
-        private ImageView upvotebutton;
+        private ImageView upvoteButton;
         private ImageView topLine;
         private ImageView bottomLine;
 
@@ -34,9 +33,14 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
             super(itemView);
             this.statementMessage = (TextView) itemView.findViewById(R.id.statement_message);
             this.score = (TextView) itemView.findViewById(R.id.statement_score);
-            this.upvotebutton = (ImageView) itemView.findViewById(R.id.upvote_button);
+            this.upvoteButton = (ImageView) itemView.findViewById(R.id.upvote_button);
+            this.upvoteButton.setImageResource(R.drawable.upvote);
+            this.upvoteButton.setScaleX(1.5f);
+            this.upvoteButton.setScaleY(1.5f);
             this.bottomLine = (ImageView) itemView.findViewById(R.id.line_separator_bottom);
+            this.bottomLine.setImageResource(R.drawable.line);
             this.topLine = (ImageView) itemView.findViewById(R.id.line_separator_top);
+            this.topLine.setImageResource(R.drawable.line);
             itemView.setOnTouchListener(this);
         }
 
@@ -57,6 +61,10 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
                     break;
             }
             return false;
+        }
+
+        public void setUpvoteButton(){
+
         }
     }
 

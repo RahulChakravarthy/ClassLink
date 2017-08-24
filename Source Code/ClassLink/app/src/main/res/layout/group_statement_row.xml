@@ -1,53 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:weightSum="1">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/statement_list_view"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/statement_message"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipChildren="true"
-        android:scrollbars="vertical" />
+        android:layout_marginStart="10dp"
+        android:maxWidth="300dp"
+        android:adjustViewBounds="true"
+        android:textColor="#0e0e0e"/>
+
+    <TextView
+        android:id="@+id/statement_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:adjustViewBounds="true"
+        android:textColor="#0e0e0e"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/upvote_button"
+        android:layout_marginEnd="21dp" />
 
     <ImageView
         android:id="@+id/line_separator_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"/>
+
+    <ImageView
+        android:id="@+id/upvote_button"
+        android:layout_width="24dp"
+        android:layout_height="25dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/increases_score_of_statement"
+        android:scaleType="fitCenter"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:id="@+id/line_separator_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/statement_score"
         android:layout_marginBottom="66dp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/line"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
-    <ImageView
-            android:id="@+id/upvote_button"
-            android:layout_width="26dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/increases_score_of_statement"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/statement_message"
-            android:textColor="#0e0e0e"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true" />
-
-    <TextView
-            android:id="@+id/statement_score"
-            android:textColor="#0e0e0e"
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
-
-    <ImageView
-            android:id="@+id/line_separator_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="66dp"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/line"/>
-
-</LinearLayout>
+</RelativeLayout>
