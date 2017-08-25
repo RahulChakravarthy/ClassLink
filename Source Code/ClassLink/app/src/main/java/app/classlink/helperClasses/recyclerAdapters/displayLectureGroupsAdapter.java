@@ -3,6 +3,7 @@ package app.classlink.helperClasses.recyclerAdapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,7 +51,7 @@ public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLec
 
         public void bindData(lectureGroup group){
             this.lectureGroupName.setText(group.getGroupName());
-            this.lectureGroupTeacher.setText(group.getLectureCreator().getFirstName() + " " + group.getLectureCreator().getLastName());
+            this.lectureGroupTeacher.setText("Teacher: " + group.getLectureCreator().getFirstName() + " " + group.getLectureCreator().getLastName());
             this.lectureGroupDescription.setText(group.getGroupDescription());
         }
 
@@ -87,6 +88,7 @@ public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLec
     @Override
     public void onBindViewHolder(displayLectureGroupsAdapter.ViewHolder holder, int position) {
         lectureGroup item = displayLectureGroupsAdapter.data.get(position);
+        holder.itemView.setBackgroundColor(Color.parseColor("#bdecfd"));
         holder.bindData(item);
     }
 

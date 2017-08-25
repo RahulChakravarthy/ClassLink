@@ -14,17 +14,20 @@
         layout="@layout/lecture_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
+        android:visibility="visible"
         android:layout_alignParentTop="true"
-        android:visibility="visible" />
+        android:layout_alignParentStart="true" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/groupList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:layout_alignParentTop="true"
+        android:layout_height="350dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="185dp" />
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="100dp"
+        android:minHeight="300dp"
+        android:scrollbars="vertical"/>
 
 </RelativeLayout>

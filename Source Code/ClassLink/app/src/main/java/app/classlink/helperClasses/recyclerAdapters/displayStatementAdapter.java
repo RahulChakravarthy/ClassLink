@@ -24,6 +24,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
     public static class groupedStatementHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
 
         private TextView statementMessage;
+        private TextView writtenTime;
         private TextView score;
         private ImageView upvoteButton;
         private ImageView topLine;

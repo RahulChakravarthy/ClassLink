@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -52,7 +53,11 @@ public class notifications extends baseActivity implements activityParameters {
     @Override
     public void layoutSetup() {
 
-        this.activityLayout.setBackgroundResource(R.drawable.bg);
+        this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
+        this.viewHelperClass.addText("Notifications", "OpenSans-ExtraBold", "BLACK", 2, 25, 50, 5);
+        ImageView line = new ImageView(getApplicationContext());
+        this.viewHelperClass.addGraphics(line, R.drawable.line, 50, 8, 0.85f, 1, false);
+        this.viewHelperClass.addText("This feature is coming soon", "OpenSans-Semibold", "BLACK", 2, 25, 50, 15);
 
         notifications = (RecyclerView) findViewById(R.id.notificationsView);
         gAdapter = new groupAdapter(notificationList);

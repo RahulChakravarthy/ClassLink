@@ -2,11 +2,13 @@ package app.classlink;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -88,10 +90,11 @@ public class lectureJoin extends baseActivity implements activityParameters {
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_lecture_join);
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
         this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         // Text based graphics
         this.viewHelperClass.addText("Join a Group", "OpenSans-ExtraBold", "BLACK", 2, 25, 50, 5);
-        this.viewHelperClass.addText("Search for a group", "OpenSans-Regular", "BLACK", 2, 15, 50, 15);
+        this.viewHelperClass.addText("Search for a group", "OpenSans-Regular", "BLACK", 2, 15, 50, 12);
 
         // Graphic based Graphics
         this.line = new ImageView(getApplicationContext());
@@ -101,7 +104,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
         this.viewHelperClass.addTextToButton(this.createLectureGroup, "Create Lecture Group", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 30f, 90f, 0.5f,0.5f);
 
         this.searchBox = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox(null, R.drawable.inputbox, this.searchBox, InputType.TYPE_CLASS_TEXT, 15, 50, 22, 0.75f, 0.8f);
+        this.viewHelperClass.addGraphicInputBox(null, R.drawable.inputbox, this.searchBox, InputType.TYPE_CLASS_TEXT, 15, 50, 19, 0.75f, 0.8f);
 
         //For testing purposes add button to take to generic Lecture Room
 //        this.genericLectureRoom = new ImageView(getApplicationContext());
@@ -113,9 +116,12 @@ public class lectureJoin extends baseActivity implements activityParameters {
      */
     private void groupListSetup() {
         this.groupList = (RecyclerView) findViewById(R.id.groupList);
-        Log.d("MORE", String.valueOf(lectureGroupDAO.getAllLectureGroups().size()));
         this.groupListAdapter = new displayLectureGroupsAdapter(new LinkedList<>(lectureGroupDAO.getAllLectureGroups()), getApplicationContext(), currentUser);
         this.groupLayout = new LinearLayoutManager(this.viewHelperClass.getActivityContext());
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(groupList.getContext(),groupLayout.getOrientation());
+        this.groupList.addItemDecoration(dividerItemDecoration);
+
         this.groupList.setLayoutManager(this.groupLayout);
         this.groupList.setAdapter(this.groupListAdapter);
         this.groupListAdapter.notifyDataSetChanged();
@@ -130,7 +136,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
                 groupList.setAdapter(groupListAdapter);
                 groupListAdapter.notifyDataSetChanged();
             }
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 1, 5, TimeUnit.SECONDS);
     }
 
     /**
