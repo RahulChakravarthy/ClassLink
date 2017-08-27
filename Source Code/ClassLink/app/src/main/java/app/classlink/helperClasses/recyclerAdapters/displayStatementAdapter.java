@@ -9,19 +9,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import app.classlink.R;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
+import app.classlink.backend.users.user.user;
 
 /**
  * @Class displayStatementAdapter : class handler for displaying a list view of grouped statements in the lecture group
  */
 public class displayStatementAdapter extends RecyclerView.Adapter<displayStatementAdapter.groupedStatementHolder> {
 
-    private LinkedList<groupedStatement> displayableStatements;
+    private static LinkedList<groupedStatement> displayableStatements;
 
     public static class groupedStatementHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
+
+        private groupedStatement currentStatement;
+        private ArrayList<String> userUpvoteIdList;
+        private user currentUser;
 
         private TextView statementMessage;
         private TextView writtenTime;
@@ -38,6 +44,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
             this.upvoteButton.setImageResource(R.drawable.upvote);
             this.upvoteButton.setScaleX(1.5f);
             this.upvoteButton.setScaleY(1.5f);
+            this.setUpvoteButton();
             this.bottomLine = (ImageView) itemView.findViewById(R.id.line_separator_bottom);
             this.bottomLine.setImageResource(R.drawable.line);
             this.topLine = (ImageView) itemView.findViewById(R.id.line_separator_top);
@@ -46,6 +53,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
         }
 
         public void bindGroupedStatement(groupedStatement groupedStatement){
+            this.currentStatement = groupedStatement;
             this.statementMessage.setText(groupedStatement.getStatementQuestion().getQuestionText());
             this.score.setText((String.valueOf(groupedStatement.getStatementQuestion().getScore())));
         }
@@ -64,13 +72,21 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
             return false;
         }
 
-        public void setUpvoteButton(){
-
+        private void setUpvoteButton(){
+            this.upvoteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int oldScore = Integer.parseInt(score.getText().toString());
+                    int newScore = ++oldScore;
+                    score.setText(String.valueOf(newScore));
+                    currentStatement.getStatementQuestion().setScore(newScore);
+                }
+            });
         }
     }
 
     public displayStatementAdapter(LinkedList<groupedStatement> displayableStatements){
-        this.displayableStatements = displayableStatements;
+        displayStatementAdapter.displayableStatements = displayableStatements;
     }
 
     @Override
@@ -88,6 +104,26 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
 
     @Override
     public int getItemCount() {
-        return this.displayableStatements.size();
+        return displayStatementAdapter.displayableStatements.size();
+    }
+
+    /**
+     * @Method swapData : updates handler with new data, assumes the data passed in is already in the correct order
+     * @param data : linked list of incoming group statements
+     */
+    public void swapData(LinkedList<groupedStatement> data){
+        if (data == null || data.size() == 0){
+            return;
+        } else {
+            //This performs a check between both linked lists and adds new nodes to the current displayStatements cache
+//            for (groupedStatement inListStatement : displayStatementAdapter.displayableStatements){
+//                for (groupedStatement incomingStatement : data){
+//
+//                }
+//            }
+            displayStatementAdapter.displayableStatements.clear();
+            displayStatementAdapter.displayableStatements = data;
+            notifyDataSetChanged();
+        }
     }
 }

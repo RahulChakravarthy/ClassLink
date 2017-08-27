@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,8 +28,7 @@ import app.classlink.lectureRoom;
  */
 public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLectureGroupsAdapter.ViewHolder>{
 
-    private static LinkedList<lectureGroup> data = new LinkedList<>(); //LinkedList that holds all lecture group objects
-    private static Context currentActivityContext;
+    private static ArrayList<lectureGroup> data = new ArrayList<>(); //LinkedList that holds all lecture group objects
     private static user currentUser;
 
     /**
@@ -73,9 +73,8 @@ public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLec
     /**
      * @Consructor : accepts an array of data to be displayed to the recycler view through this adapter
      */
-    public displayLectureGroupsAdapter(LinkedList<lectureGroup> data, Context currentActivityContext, user currentUser){
+    public displayLectureGroupsAdapter(ArrayList<lectureGroup> data, user currentUser){
         displayLectureGroupsAdapter.data = data;
-        displayLectureGroupsAdapter.currentActivityContext = currentActivityContext;
         displayLectureGroupsAdapter.currentUser =  currentUser;
     }
 
@@ -95,5 +94,15 @@ public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLec
     @Override
     public int getItemCount() {
         return displayLectureGroupsAdapter.data.size();
+    }
+
+    public void swapData(ArrayList<lectureGroup> data){
+        if (data == null || data.size() == 0) {
+            return;
+        } else {
+            displayLectureGroupsAdapter.data.clear();
+            displayLectureGroupsAdapter.data = data;
+            notifyDataSetChanged();
+        }
     }
 }

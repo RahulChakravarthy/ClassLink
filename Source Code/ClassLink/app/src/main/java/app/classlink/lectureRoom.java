@@ -26,9 +26,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
+import app.classlink.backend.misc.DateParser;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
 import app.classlink.backend.statement.statementGrouping.groupedStatementDAO;
 import app.classlink.backend.statement.statementType.question;
@@ -89,7 +95,7 @@ public class lectureRoom extends baseActivity
         //non-core
         setActionBar();
         setFloatingActionBar();
-//        syncStatements();
+        syncStatements();
 
     }
 
@@ -172,7 +178,6 @@ public class lectureRoom extends baseActivity
                 if (subViewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(inputText)))){
                     groupedStatementDAO.addStatement(new groupedStatement(new question(inputText.getText().toString().trim(), currentUser.getUserId())));
                     inputText.setText("");
-                    statementAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getApplicationContext(), "Cannot post empty message as question", Toast.LENGTH_LONG).show();
                 }
@@ -239,8 +244,10 @@ public class lectureRoom extends baseActivity
      */
     private void listViewSetup() {
         this.recyclerView = (RecyclerView) findViewById(R.id.statement_list_view);
+//        this.statementAdapter = new displayStatementAdapter(DateParser.getOrderedStatementsByDate(this.currentLectureGroup.getGroupedStatement()));
         this.statementAdapter = new displayStatementAdapter(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values()));
         this.linearLayoutManager = new LinearLayoutManager(this);
+
         this.recyclerView.setLayoutManager(this.linearLayoutManager);
         this.recyclerView.setAdapter(this.statementAdapter);
     }
@@ -249,7 +256,25 @@ public class lectureRoom extends baseActivity
      * @Method syncStatements : timer thread that periodically syncs groupedStatement with database
      */
     public void syncStatements(){
-
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(3000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                currentLectureGroup = lectureGroupDAO.getLectureGroupByFullName(currentLectureGroup.getGroupName());
+                                statementAdapter.swapData(new LinkedList<>(currentLectureGroup.getGroupedStatement().values()));
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+        t.start();
     }
 
     /**

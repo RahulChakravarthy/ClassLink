@@ -30,6 +30,8 @@ abstract public class statements  implements Serializable {
 
     public int getScore() { return this.score; }
 
+    public void setScore(int score) {this.score = score;}
+
     public void setWrittenTime(){
         DateFormat df = new SimpleDateFormat("yyMMddHHmmssZ");
         this.writtenTime = df.format(Calendar.getInstance().getTime());

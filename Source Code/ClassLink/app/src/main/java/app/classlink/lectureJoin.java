@@ -14,19 +14,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserInfo;
-
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
-import app.classlink.backend.misc.School;
-import app.classlink.backend.users.administrator.administrator;
+import app.classlink.backend.groups.lecture.lectureGroup;
 import app.classlink.backend.users.user.user;
 import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
@@ -41,6 +36,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
     private RecyclerView groupList;
     private displayLectureGroupsAdapter groupListAdapter;
     private LinearLayoutManager groupLayout;
+    private Thread groupListThread;
 
     //DAOs
     private userDAO userDAO;
@@ -57,9 +53,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
         layoutSetup();
         setActivityDAOListeners();
         groupListSetup(); //initialise group list display
-        refreshGroupList(); //setup a thread that refreshes the list every so often
         createLectureGroupListener();
-        //genericLectureRoomListener();
     }
 
     @Override
@@ -69,6 +63,20 @@ public class lectureJoin extends baseActivity implements activityParameters {
             startActivity(new Intent(lectureJoin.this, login.class));
         }
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        refreshGroupList(); //setup a thread that refreshes the list every so often
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        this.groupListThread.interrupt(); //kill the thread if this activity becomes out of focus
+    }
+
+
 
     /**
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
@@ -105,18 +113,15 @@ public class lectureJoin extends baseActivity implements activityParameters {
 
         this.searchBox = new EditText(getApplicationContext());
         this.viewHelperClass.addGraphicInputBox(null, R.drawable.inputbox, this.searchBox, InputType.TYPE_CLASS_TEXT, 15, 50, 19, 0.75f, 0.8f);
-
-        //For testing purposes add button to take to generic Lecture Room
-//        this.genericLectureRoom = new ImageView(getApplicationContext());
-//        this.viewHelperClass.addTextToButton(this.genericLectureRoom, "Join lecture room", 15, "OpenSans-Regular", "BLACK", R.drawable.curvedbutton, 50f, 50f, 0.5f, 0.5f);
     }
 
     /**
      * @Method : groupListSetup: Sets up the recycleView list with all related groups a user can join
      */
+    @SuppressWarnings("ALL")
     private void groupListSetup() {
         this.groupList = (RecyclerView) findViewById(R.id.groupList);
-        this.groupListAdapter = new displayLectureGroupsAdapter(new LinkedList<>(lectureGroupDAO.getAllLectureGroups()), getApplicationContext(), currentUser);
+        this.groupListAdapter = new displayLectureGroupsAdapter( (ArrayList<lectureGroup>) getIntent().getExtras().get("allLectureGroups"), currentUser);
         this.groupLayout = new LinearLayoutManager(this.viewHelperClass.getActivityContext());
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(groupList.getContext(),groupLayout.getOrientation());
@@ -128,19 +133,32 @@ public class lectureJoin extends baseActivity implements activityParameters {
     }
 
     private void refreshGroupList() {
-        ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
-        exec.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                groupListAdapter = new displayLectureGroupsAdapter(new LinkedList<>(lectureGroupDAO.getAllLectureGroups()), getApplicationContext(), currentUser);
-                groupList.setAdapter(groupListAdapter);
-                groupListAdapter.notifyDataSetChanged();
-            }
-        }, 1, 5, TimeUnit.SECONDS);
+        if (this.groupListThread == null){
+            this.groupListThread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        while (!isInterrupted()) {
+                            Thread.sleep(5000);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Log.d("HELLO", "HELLO");
+                                    groupListAdapter.swapData(new ArrayList<>(lectureGroupDAO.getAllLectureGroups()));
+                                    groupList.setAdapter(groupListAdapter);
+                                }
+                            });
+                        }
+                    } catch (InterruptedException ignored) {
+                    }
+                }
+            };
+            this.groupListThread.start();
+        }
     }
 
     /**
-     * @Method : modifyList: modifies the information in the group list based on the users query
+     * @Method : modifyList: modifies the information in the group list based on the users query (ADD THIS IN THE FUTURE)
      */
     public void modifyList(){
 
@@ -158,18 +176,6 @@ public class lectureJoin extends baseActivity implements activityParameters {
                 } else {
                     Toast.makeText(viewHelperClass.getActivityContext(), "Error: only teachers may create lecture groups", Toast.LENGTH_LONG).show();
                 }
-            }
-        });
-    }
-
-    private void genericLectureRoomListener() {
-        genericLectureRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(lectureJoin.this, lectureRoom.class);
-                intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()));
-                intent.putExtra("lectureGroup", lectureGroupDAO.getLectureGroupByFullName("ECE 155"));
-                startActivity(intent);
             }
         });
     }

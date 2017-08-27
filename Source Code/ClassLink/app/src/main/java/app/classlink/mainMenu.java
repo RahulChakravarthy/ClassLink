@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.Objects;
 
 import app.classlink.backend.core.GROUP_TYPE;
+import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.study.studyGroup;
+import app.classlink.backend.misc.School;
 import app.classlink.backend.users.student.student;
 import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
@@ -46,6 +48,7 @@ public class mainMenu extends baseActivity implements activityParameters {
 
     //DAOs
     private userDAO userDAO;
+    private LectureGroupDAO lectureGroupDAO;
 
 
     @Override
@@ -79,7 +82,8 @@ public class mainMenu extends baseActivity implements activityParameters {
         this.userDAO = new userDAO();
         this.userDAO.setCacheListener();
 
-
+        this.lectureGroupDAO = new LectureGroupDAO();
+        this.lectureGroupDAO.setCacheListener(School.UNIVERSITY_OF_WATERLOO.toString());
     }
 
     /**
@@ -151,6 +155,7 @@ public class mainMenu extends baseActivity implements activityParameters {
             public void onClick(View v) {
                 Intent intent = new Intent(mainMenu.this, lectureJoin.class);
                 intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail())); //add the current user object in to access data in the next activity rapidly
+                intent.putExtra("allLectureGroups", lectureGroupDAO.getAllLectureGroups());
                 startActivity(intent);
             }
         });
