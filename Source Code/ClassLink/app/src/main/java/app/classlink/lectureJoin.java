@@ -15,12 +15,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
+import app.classlink.backend.core.WorkerThread;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
+import app.classlink.backend.groups.lecture.RefreshLectureGroupListHandler;
 import app.classlink.backend.groups.lecture.lectureGroup;
 import app.classlink.backend.users.user.user;
 import app.classlink.backend.users.user.userDAO;
@@ -36,7 +34,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
     private RecyclerView groupList;
     private displayLectureGroupsAdapter groupListAdapter;
     private LinearLayoutManager groupLayout;
-    private Thread groupListThread;
+    private WorkerThread groupListThread;
 
     //DAOs
     private userDAO userDAO;
@@ -54,6 +52,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
         setActivityDAOListeners();
         groupListSetup(); //initialise group list display
         createLectureGroupListener();
+        refreshGroupList(); //setup a thread that refreshes the list every so often
     }
 
     @Override
@@ -67,13 +66,16 @@ public class lectureJoin extends baseActivity implements activityParameters {
     @Override
     public void onResume(){
         super.onResume();
-        refreshGroupList(); //setup a thread that refreshes the list every so often
+        if (this.groupListThread == null){
+            refreshGroupList();
+        }
     }
 
     @Override
     public void onPause(){
         super.onPause();
-        this.groupListThread.interrupt(); //kill the thread if this activity becomes out of focus
+        this.groupListThread.interrupt();
+        this.groupListThread = null;
     }
 
 
@@ -116,12 +118,12 @@ public class lectureJoin extends baseActivity implements activityParameters {
     }
 
     /**
-     * @Method : groupListSetup: Sets up the recycleView list with all related groups a user can join
+     * @Method groupListSetup: Sets up the recycleView list with all related groups a user can join
      */
     @SuppressWarnings("ALL")
     private void groupListSetup() {
         this.groupList = (RecyclerView) findViewById(R.id.groupList);
-        this.groupListAdapter = new displayLectureGroupsAdapter( (ArrayList<lectureGroup>) getIntent().getExtras().get("allLectureGroups"), currentUser);
+        this.groupListAdapter = new displayLectureGroupsAdapter((ArrayList<lectureGroup>) getIntent().getExtras().get("allLectureGroups"), currentUser);
         this.groupLayout = new LinearLayoutManager(this.viewHelperClass.getActivityContext());
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(groupList.getContext(),groupLayout.getOrientation());
@@ -133,28 +135,8 @@ public class lectureJoin extends baseActivity implements activityParameters {
     }
 
     private void refreshGroupList() {
-        if (this.groupListThread == null){
-            this.groupListThread = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        while (!isInterrupted()) {
-                            Thread.sleep(5000);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Log.d("HELLO", "HELLO");
-                                    groupListAdapter.swapData(new ArrayList<>(lectureGroupDAO.getAllLectureGroups()));
-                                    groupList.setAdapter(groupListAdapter);
-                                }
-                            });
-                        }
-                    } catch (InterruptedException ignored) {
-                    }
-                }
-            };
-            this.groupListThread.start();
-        }
+        this.groupListThread = new RefreshLectureGroupListHandler(this, this.groupListAdapter, this.groupList, this.lectureGroupDAO);
+        this.groupListThread.start();
     }
 
     /**

@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,30 +19,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
-import app.classlink.backend.misc.DateParser;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
 import app.classlink.backend.statement.statementGrouping.groupedStatementDAO;
 import app.classlink.backend.statement.statementType.question;
+import app.classlink.backend.statement.threadHandler.RefreshStatementListHandler;
 import app.classlink.backend.users.user.user;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.helperClasses.recyclerAdapters.displayStatementAdapter;
 import app.classlink.helperClasses.subViewHelperClass;
-import app.classlink.helperClasses.viewHelperClass;
 
 public class lectureRoom extends baseActivity
         implements NavigationView.OnNavigationItemSelectedListener, activityParameters {
@@ -61,6 +53,7 @@ public class lectureRoom extends baseActivity
     private user currentUser;
 
     private EditText inputText;
+    private RefreshStatementListHandler refreshStatementListHandler;
 
     private LectureGroupDAO lectureGroupDAO;
     private groupedStatementDAO groupedStatementDAO;
@@ -105,6 +98,22 @@ public class lectureRoom extends baseActivity
         if (!retrieveUser()){
             startActivity(new Intent(lectureRoom.this, login.class));
         }
+        if (this.refreshStatementListHandler == null){
+            syncStatements();
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        this.refreshStatementListHandler.interrupt();
+        this.refreshStatementListHandler = null;
     }
 
     @Override
@@ -190,6 +199,15 @@ public class lectureRoom extends baseActivity
      */
 
     /**
+     * @Method coreSetup : sets up all information for this activity including intents
+     */
+    private void coreSetup() {
+        //capture Intent values here and set the activity lecture group equal to the passed in group
+        this.currentLectureGroup = (lectureGroup) getIntent().getExtras().get("lectureGroup");
+        this.currentUser = (user) getIntent().getExtras().get("user");
+    }
+
+    /**
      *@Method layoutSetup : sets up background layout
      */
     @Override
@@ -218,15 +236,6 @@ public class lectureRoom extends baseActivity
     }
 
     /**
-     * @Method coreSetup : sets up all information for this activity including intents
-     */
-    private void coreSetup() {
-        //capture Intent values here and set the activity lecture group equal to the passed in group
-        this.currentLectureGroup = (lectureGroup) getIntent().getExtras().get("lectureGroup");
-        this.currentUser = (user) getIntent().getExtras().get("user");
-    }
-
-    /**
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
     protected void setActivityDAOListeners() {
@@ -247,7 +256,6 @@ public class lectureRoom extends baseActivity
 //        this.statementAdapter = new displayStatementAdapter(DateParser.getOrderedStatementsByDate(this.currentLectureGroup.getGroupedStatement()));
         this.statementAdapter = new displayStatementAdapter(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values()));
         this.linearLayoutManager = new LinearLayoutManager(this);
-
         this.recyclerView.setLayoutManager(this.linearLayoutManager);
         this.recyclerView.setAdapter(this.statementAdapter);
     }
@@ -256,33 +264,7 @@ public class lectureRoom extends baseActivity
      * @Method syncStatements : timer thread that periodically syncs groupedStatement with database
      */
     public void syncStatements(){
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(3000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                currentLectureGroup = lectureGroupDAO.getLectureGroupByFullName(currentLectureGroup.getGroupName());
-                                statementAdapter.swapData(new LinkedList<>(currentLectureGroup.getGroupedStatement().values()));
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-        t.start();
-    }
-
-    /**
-     * @Method loadLectureStatements : Loads groupedStatement from the specific lecture group into buffer to be displayed on the screen
-     */
-    private void loadLectureStatements() {
-//        for (groupedStatement statement : this.currentLectureGroup.getGroupedStatement()){
-//            displayStatements();
-//        }
+        this.refreshStatementListHandler = new RefreshStatementListHandler(this, this.statementAdapter, this.lectureGroupDAO, this.currentLectureGroup.getGroupName());
+        this.refreshStatementListHandler.start();
     }
 }

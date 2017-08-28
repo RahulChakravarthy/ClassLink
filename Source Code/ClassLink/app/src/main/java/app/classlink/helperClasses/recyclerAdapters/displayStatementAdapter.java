@@ -1,5 +1,6 @@
 package app.classlink.helperClasses.recyclerAdapters;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 
 import app.classlink.R;
+import app.classlink.backend.misc.DateParser;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
 import app.classlink.backend.users.user.user;
 
@@ -45,6 +51,8 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
             this.upvoteButton.setScaleX(1.5f);
             this.upvoteButton.setScaleY(1.5f);
             this.setUpvoteButton();
+            this.writtenTime = (TextView) itemView.findViewById(R.id.statement_written_time);
+            this.writtenTime.setTextColor(Color.parseColor("#739CEC"));
             this.bottomLine = (ImageView) itemView.findViewById(R.id.line_separator_bottom);
             this.bottomLine.setImageResource(R.drawable.line);
             this.topLine = (ImageView) itemView.findViewById(R.id.line_separator_top);
@@ -56,6 +64,17 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
             this.currentStatement = groupedStatement;
             this.statementMessage.setText(groupedStatement.getStatementQuestion().getQuestionText());
             this.score.setText((String.valueOf(groupedStatement.getStatementQuestion().getScore())));
+
+            //parse date
+            DateFormat df = new SimpleDateFormat("yyMMddHHmmssZ");
+            Date newStatementWrittenTime;
+            try {
+                newStatementWrittenTime = df.parse(groupedStatement.getStatementQuestion().getWrittenTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return;
+            }
+            this.writtenTime.setText(newStatementWrittenTime.toString());
         }
 
 
@@ -112,15 +131,8 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
      * @param data : linked list of incoming group statements
      */
     public void swapData(LinkedList<groupedStatement> data){
-        if (data == null || data.size() == 0){
-            return;
-        } else {
-            //This performs a check between both linked lists and adds new nodes to the current displayStatements cache
-//            for (groupedStatement inListStatement : displayStatementAdapter.displayableStatements){
-//                for (groupedStatement incomingStatement : data){
-//
-//                }
-//            }
+//        LinkedList<groupedStatement> cleanData = DateParser.getOrderedStatementsByDate(data);
+        if (!(data == null || data.size() == 0 || displayStatementAdapter.displayableStatements.equals(data))){
             displayStatementAdapter.displayableStatements.clear();
             displayStatementAdapter.displayableStatements = data;
             notifyDataSetChanged();

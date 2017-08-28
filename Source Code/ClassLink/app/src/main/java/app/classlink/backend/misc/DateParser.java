@@ -1,6 +1,12 @@
 package app.classlink.backend.misc;
 
+import android.support.annotation.Nullable;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -13,69 +19,54 @@ public class DateParser {
 
     /**
      * @Method getOrderedStatementsByDate : orders statements by the date they were stored
-     * @param statements : keys are the dates, values are the statements themselves
+     * @param statements : values are the statements themselves
      * @return list of statemnts in chronological order
      */
-    public static LinkedList<groupedStatement> getOrderedStatementsByDate(HashMap<String, groupedStatement> statements){
+    public static LinkedList<groupedStatement> getOrderedStatementsByDate(LinkedList<groupedStatement> statements){
         LinkedList<groupedStatement> organizedStatements = new LinkedList<>();
-        for (String time : statements.keySet()){
+        parent : for (groupedStatement statement : statements){
             if (organizedStatements.size() == 0){
-                //if its the first element in the list
-                organizedStatements.addFirst(statements.get(time));
-            } else if (parseStatementWrittenTime(statements.get(time), organizedStatements.getLast())) {
-                //check to make sure it shouldn't be inserted at the end of the list
-                organizedStatements.addLast(statements.get(time));
+                organizedStatements.addFirst(statement);
             } else {
-                //otherwise parse the date and find out where it should go in the list
-                for (int i = 0; i < organizedStatements.size(); i++){
-                    if (parseStatementWrittenTime(organizedStatements.get(i), statements.get(time))){
-                        organizedStatements.add(i, statements.get(time));
+                DateFormat df = new SimpleDateFormat("yyMMddHHmmssZ");
+                Date newStatementWrittenTime;
+                try {
+                    newStatementWrittenTime = df.parse(statement.getStatementQuestion().getWrittenTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+                //do a check to see if new statement must be inserted at the end of the list
+                Date lastStatementWrittenTime;
+                try {
+                    lastStatementWrittenTime = df.parse(organizedStatements.getLast().getStatementQuestion().getWrittenTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+                if (newStatementWrittenTime.after(lastStatementWrittenTime)){
+                    organizedStatements.addLast(statement);
+                    continue;
+                }
+
+                //otherwise check where in the linked list this statement has to go
+                child :for (int i = 0; i < organizedStatements.size(); i++){
+                    Date oldStatementWrittenTime;
+                    try {
+                        oldStatementWrittenTime = df.parse(organizedStatements.get(i).getStatementQuestion().getWrittenTime());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                    //compare dates of both these statements
+                    if (newStatementWrittenTime.before(oldStatementWrittenTime)){
+                        organizedStatements.add(i, statement);
+                        continue parent;
                     }
                 }
             }
         }
         return organizedStatements;
-    }
-
-    /**
-     * @Method parseStatementWrittenTime : get 2 statements and determine if the incoming statement needs to go before the current statement (i - 1) position
-     * @Note: Method organizes both statements chronologically
-     */
-    private static boolean parseStatementWrittenTime(groupedStatement oldStatement, groupedStatement newStatement){
-        int oldStatementYear = Integer.parseInt(oldStatement.getStatementQuestion().getWrittenTime().substring(0,2));
-        int newStatementYear =  Integer.parseInt(newStatement.getStatementQuestion().getWrittenTime().substring(0,2));
-
-        int oldStatementMonth = Integer.parseInt(oldStatement.getStatementQuestion().getWrittenTime().substring(2,4));
-        int newStatementMonth =  Integer.parseInt(newStatement.getStatementQuestion().getWrittenTime().substring(2,4));
-
-        int oldStatementDay = Integer.parseInt(oldStatement.getStatementQuestion().getWrittenTime().substring(4,6));
-        int newStatementDay =  Integer.parseInt(newStatement.getStatementQuestion().getWrittenTime().substring(4,6));
-
-        int oldStatementHour = Integer.parseInt(oldStatement.getStatementQuestion().getWrittenTime().substring(6,8));
-        int newStatementHour =  Integer.parseInt(newStatement.getStatementQuestion().getWrittenTime().substring(6,8));
-
-        int oldStatementMinute = Integer.parseInt(oldStatement.getStatementQuestion().getWrittenTime().substring(8,10));
-        int newStatementMinute =  Integer.parseInt(newStatement.getStatementQuestion().getWrittenTime().substring(8,10));
-
-        int oldStatementSecond = Integer.parseInt(oldStatement.getStatementQuestion().getWrittenTime().substring(10,12));
-        int newStatementSecond =  Integer.parseInt(newStatement.getStatementQuestion().getWrittenTime().substring(10,12));
-
-        //Monster if statement to check whether or not
-        if (oldStatementYear == newStatementYear){
-            if (oldStatementMonth == newStatementMonth){
-                if (oldStatementDay == newStatementDay){
-                    if (oldStatementHour == newStatementHour){
-                        if (oldStatementMinute == newStatementMinute){
-                            return oldStatementSecond > newStatementSecond;
-                        }
-                        return oldStatementMinute > newStatementMinute;
-                    }
-                    return oldStatementHour > newStatementHour;
-                }
-                return oldStatementDay > newStatementDay;
-            }
-            return oldStatementMonth > newStatementMonth;
-        }
-        return oldStatementYear > newStatementYear;
     }
 }

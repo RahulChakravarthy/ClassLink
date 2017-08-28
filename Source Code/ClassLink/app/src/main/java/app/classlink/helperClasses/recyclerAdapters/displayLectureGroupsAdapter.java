@@ -97,9 +97,7 @@ public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLec
     }
 
     public void swapData(ArrayList<lectureGroup> data){
-        if (data == null || data.size() == 0) {
-            return;
-        } else {
+        if (!(data == null || data.size() == 0 || data.equals(displayLectureGroupsAdapter.data))) {
             displayLectureGroupsAdapter.data.clear();
             displayLectureGroupsAdapter.data = data;
             notifyDataSetChanged();

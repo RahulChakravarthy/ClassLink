@@ -14,7 +14,7 @@ import app.classlink.backend.core.DAO;
 import app.classlink.backend.core.baseGroup;
 import app.classlink.backend.core.listNames;
 
-public class groupedStatementDAO extends DAO{
+public class groupedStatementDAO extends DAO {
 
     protected HashMap<String, groupedStatement> groupedStatementCache;
 
