@@ -22,6 +22,8 @@ public class DateParser {
      * @param statements : values are the statements themselves
      * @return list of statemnts in chronological order
      */
+    @Nullable
+    @SuppressWarnings("ALL")
     public static LinkedList<groupedStatement> getOrderedStatementsByDate(LinkedList<groupedStatement> statements){
         LinkedList<groupedStatement> organizedStatements = new LinkedList<>();
         parent : for (groupedStatement statement : statements){

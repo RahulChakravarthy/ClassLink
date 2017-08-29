@@ -9,4 +9,5 @@
     <string name="title_activity_lecture_room">lectureRoom</string>
     <string name="increases_score_of_statement">increases score of statement</string>
     <string name="separator">Separates views</string>
+    <string name="app_splash_screen">App Splash Screen</string>
 </resources>

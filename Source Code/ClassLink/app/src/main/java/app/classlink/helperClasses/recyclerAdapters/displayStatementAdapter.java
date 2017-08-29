@@ -29,7 +29,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
 
     private static LinkedList<groupedStatement> displayableStatements;
 
-    public static class groupedStatementHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
+    public static class groupedStatementHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private groupedStatement currentStatement;
         private ArrayList<String> userUpvoteIdList;
@@ -57,7 +57,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
             this.bottomLine.setImageResource(R.drawable.line);
             this.topLine = (ImageView) itemView.findViewById(R.id.line_separator_top);
             this.topLine.setImageResource(R.drawable.line);
-            itemView.setOnTouchListener(this);
+            itemView.setOnClickListener(this);
         }
 
         public void bindGroupedStatement(groupedStatement groupedStatement){
@@ -77,18 +77,11 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
             this.writtenTime.setText(newStatementWrittenTime.toString());
         }
 
-
         @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            switch (motionEvent.getAction()){
-                case MotionEvent.ACTION_BUTTON_PRESS:
-                    Log.d("BUTTON PRESS", "RANDOM PRESS ACTION");
-                    break;
-                case MotionEvent.ACTION_BUTTON_RELEASE:
-                    Log.d("BUTTON RELEASE", "RANDOM RELEASE MESSAGE");
-                    break;
+        public void onClick(View view) {
+            if (currentUser.getPermissionLevel() >= 2) {//they are professor/admin
+                //In the future implement more options for profs
             }
-            return false;
         }
 
         private void setUpvoteButton(){
@@ -131,10 +124,10 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
      * @param data : linked list of incoming group statements
      */
     public void swapData(LinkedList<groupedStatement> data){
-//        LinkedList<groupedStatement> cleanData = DateParser.getOrderedStatementsByDate(data);
-        if (!(data == null || data.size() == 0 || displayStatementAdapter.displayableStatements.equals(data))){
+        LinkedList<groupedStatement> cleanData = DateParser.getOrderedStatementsByDate(data);
+        if (!(data == null || data.size() == 0 || displayStatementAdapter.displayableStatements.equals(cleanData))){
             displayStatementAdapter.displayableStatements.clear();
-            displayStatementAdapter.displayableStatements = data;
+            displayStatementAdapter.displayableStatements = cleanData;
             notifyDataSetChanged();
         }
     }

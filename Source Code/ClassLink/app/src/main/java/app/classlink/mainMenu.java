@@ -221,19 +221,3 @@ public class mainMenu extends baseActivity implements activityParameters {
 
     }
 }
-
-/*
-        studyGroup = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(studyGroup, R.drawable.button_study_group_grey, -265, 350, 0.475f, 0.475f, true);
-
-        lecture = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(lecture, R.drawable.button_lecture_grey, 265, 350, 0.475f, 0.475f, true);
-
-        /*settings = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(settings, R.drawable.button_wide, 0, 1090, 0.969f, 1.0f, true);
-
-        profile = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(profile, R.drawable.circle_grey, -145, -150, 0.55f, 0.55f, true);
-
-        /*notifications = new ImageView(getApplicationContext());
-        viewHelperClass.addGraphics(notifications, R.drawable.field_notification, 260, -150, 0.45f, 0.6f, false);*/

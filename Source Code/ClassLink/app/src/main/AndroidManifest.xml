@@ -12,7 +12,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:windowSoftInputMode="stateHidden|adjustResize">
         <activity
-            android:name=".login"
+            android:name=".splashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".login"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".lectureCreate"
             android:screenOrientation="portrait" />
@@ -58,7 +61,6 @@
             android:label="@string/title_activity_lecture_room"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".splashScreen"></activity>
     </application>
 
 </manifest>

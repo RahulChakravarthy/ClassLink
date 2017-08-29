@@ -27,6 +27,7 @@ import java.util.LinkedList;
 
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
+import app.classlink.backend.misc.DateParser;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
 import app.classlink.backend.statement.statementGrouping.groupedStatementDAO;
 import app.classlink.backend.statement.statementType.question;
@@ -253,8 +254,8 @@ public class lectureRoom extends baseActivity
      */
     private void listViewSetup() {
         this.recyclerView = (RecyclerView) findViewById(R.id.statement_list_view);
-//        this.statementAdapter = new displayStatementAdapter(DateParser.getOrderedStatementsByDate(this.currentLectureGroup.getGroupedStatement()));
-        this.statementAdapter = new displayStatementAdapter(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values()));
+        this.statementAdapter = new displayStatementAdapter(DateParser.getOrderedStatementsByDate(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values())));
+//        this.statementAdapter = new displayStatementAdapter(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values()));
         this.linearLayoutManager = new LinearLayoutManager(this);
         this.recyclerView.setLayoutManager(this.linearLayoutManager);
         this.recyclerView.setAdapter(this.statementAdapter);
