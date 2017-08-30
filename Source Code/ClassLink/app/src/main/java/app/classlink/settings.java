@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.userDAO;
@@ -137,6 +138,7 @@ public class settings extends baseActivity implements activityParameters {
         submitForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                viewHelperClass.clearAllEditTexts(new ArrayList<>(Arrays.asList(changeUsername, changePassword, confirmPassword, changeEmail)));
                 Toast.makeText(viewHelperClass.getActivityContext(), "Profile Details Updated", Toast.LENGTH_LONG).show();
             }
         });
@@ -165,6 +167,7 @@ public class settings extends baseActivity implements activityParameters {
             public void onClick(View view) {
 //                userDao.deleteUserByEmail(userDao.getUserByEmail(userAuth.getCurrentUser().getEmail()), userAuth);
 //                startActivity(new Intent(settings.this, login.class));
+                Toast.makeText(viewHelperClass.getActivityContext(), "Notification sent to administrator, your account will be deleted shortly...", Toast.LENGTH_LONG).show();
             }
         });
     }

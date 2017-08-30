@@ -17,6 +17,7 @@ public class question extends statements {
         this.userId = userId;
         this.score = 0;
         this.setWrittenTime();
+        this.startUserEmailsWhoUpVoted();
     }
 
     public question(question q) {
@@ -24,6 +25,7 @@ public class question extends statements {
         this.userId = q.getUserId();
         this.score = q.getScore();
         this.setWrittenTime();
+        this.startUserEmailsWhoUpVoted();
     }
 
     @Override

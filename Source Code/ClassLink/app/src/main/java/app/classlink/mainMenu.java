@@ -2,6 +2,7 @@ package app.classlink;
 
 import android.content.Intent;
 
+import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,19 +13,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
-import app.classlink.backend.core.GROUP_TYPE;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.study.studyGroup;
 import app.classlink.backend.misc.School;
-import app.classlink.backend.users.student.student;
 import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
@@ -79,11 +74,18 @@ public class mainMenu extends baseActivity implements activityParameters {
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
     protected void setActivityDAOListeners() {
+        final int DATA_QUERY_DELAY = 600;
         this.userDAO = new userDAO();
         this.userDAO.setCacheListener();
-
+        //This allows time for the user to be queried and to access their school
         this.lectureGroupDAO = new LectureGroupDAO();
-        this.lectureGroupDAO.setCacheListener(School.UNIVERSITY_OF_WATERLOO.toString());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                lectureGroupDAO.setCacheListener(School.UNIVERSITY_OF_WATERLOO.toString());
+            }
+        }, DATA_QUERY_DELAY);
+
     }
 
     /**
@@ -148,15 +150,20 @@ public class mainMenu extends baseActivity implements activityParameters {
                 startActivity(new Intent(mainMenu.this, studyRoom.class));
             }
         });
-
         lecture.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mainMenu.this, lectureJoin.class);
-                intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail())); //add the current user object in to access data in the next activity rapidly
-                intent.putExtra("allLectureGroups", lectureGroupDAO.getAllLectureGroups());
-                startActivity(intent);
+                final int NEXT_ACTIVITY_DELAY = 300;
+                //In order to give the DAO's enough time to query the information
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(mainMenu.this, lectureJoin.class);
+                        intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail())); //add the current user object in to access data in the next activity rapidly
+                        intent.putExtra("allLectureGroups", lectureGroupDAO.getAllLectureGroups());
+                        startActivity(intent);
+                    }
+                },NEXT_ACTIVITY_DELAY);
             }
         });
 

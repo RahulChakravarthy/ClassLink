@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -254,8 +255,7 @@ public class lectureRoom extends baseActivity
      */
     private void listViewSetup() {
         this.recyclerView = (RecyclerView) findViewById(R.id.statement_list_view);
-        this.statementAdapter = new displayStatementAdapter(DateParser.getOrderedStatementsByDate(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values())));
-//        this.statementAdapter = new displayStatementAdapter(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values()));
+        this.statementAdapter = new displayStatementAdapter(DateParser.getOrderedStatementsByDate(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values())), this.currentUser);
         this.linearLayoutManager = new LinearLayoutManager(this);
         this.recyclerView.setLayoutManager(this.linearLayoutManager);
         this.recyclerView.setAdapter(this.statementAdapter);

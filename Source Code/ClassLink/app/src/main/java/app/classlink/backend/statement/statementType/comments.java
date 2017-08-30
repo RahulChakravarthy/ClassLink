@@ -13,6 +13,7 @@ public class comments extends statements {
         this.userId = userId;
         this.score = 0;
         this.setWrittenTime();
+        this.startUserEmailsWhoUpVoted();
     }
 
     @Override
