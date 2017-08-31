@@ -179,7 +179,10 @@ public class mainMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainMenu.this, app.classlink.userProfile.class));
+                Intent intent = new Intent(mainMenu.this, userProfile.class);
+                intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail())); //add the current user object in to access data in the next activity rapidly
+                intent.putExtra("allLectureGroups", lectureGroupDAO.getAllLectureGroups());
+                startActivity(intent);
             }
         });
 

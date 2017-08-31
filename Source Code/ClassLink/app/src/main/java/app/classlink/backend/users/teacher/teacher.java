@@ -36,7 +36,14 @@ public class teacher extends user {
     @Override
     public void setPermissionLevel(int permissionLevel) {this.permissionLevel = permissionLevel;}
 
-    public int getTeacherScore() {return this.teacherScore;}
+    @Override
+    public int getUserScore() {
+        return this.teacherScore;
+    }
 
-    public void setTeacherScore(int teacherScore) {this.teacherScore = teacherScore;}
+    @Override
+    public void setUserScore(int score) {
+        this.teacherScore = score;
+    }
+
 }

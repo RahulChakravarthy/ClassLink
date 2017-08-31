@@ -30,7 +30,6 @@ public class RefreshLectureGroupListHandler extends WorkerThread implements Runn
     public void run() {
         try {
             while (!isInterrupted()) {
-                Thread.sleep(5000);
                 this.currentActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -38,6 +37,7 @@ public class RefreshLectureGroupListHandler extends WorkerThread implements Runn
                         groupAdapter.swapData(new ArrayList<>(lectureGroupDAO.getAllLectureGroups()));
                     }
                 });
+                Thread.sleep(5000);
             }
         } catch (InterruptedException ignored) {
             Log.d("INTERRUPTION", "THREAD HAS STOPPED");

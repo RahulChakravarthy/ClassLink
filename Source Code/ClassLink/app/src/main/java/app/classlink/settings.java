@@ -76,7 +76,7 @@ public class settings extends baseActivity implements activityParameters {
         this.viewHelperClass.addText("Change User Details:", "OpenSans-Semibold", "BLACK", 2, 21, 50, 13);
         this.viewHelperClass.addText("(only filled boxes will modify profile data)", "OpenSans-Semibold", "BLACK", 2, 17, 50, 18);
 
-        this.viewHelperClass.addText("New Username:", "OpenSans-Regular", "BLACK", 1, 15, 2, 25);
+        this.viewHelperClass.addText("New Permission:", "OpenSans-Regular", "BLACK", 1, 15, 2, 25);
         this.changeUsername = new EditText(getApplicationContext());
         this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, changeUsername, InputType.TYPE_CLASS_TEXT, 15, 66.7f, 26.5f, 0.64f, 0.75f);
 
@@ -139,7 +139,7 @@ public class settings extends baseActivity implements activityParameters {
             @Override
             public void onClick(View view) {
                 viewHelperClass.clearAllEditTexts(new ArrayList<>(Arrays.asList(changeUsername, changePassword, confirmPassword, changeEmail)));
-                Toast.makeText(viewHelperClass.getActivityContext(), "Profile Details Updated", Toast.LENGTH_LONG).show();
+                Toast.makeText(viewHelperClass.getActivityContext(), "Profile details will be updated shortly", Toast.LENGTH_LONG).show();
             }
         });
     }

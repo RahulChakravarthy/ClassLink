@@ -28,7 +28,6 @@ public class RefreshStatementListHandler extends WorkerThread {
     public void run(){
         try {
             while (!isInterrupted()) {
-                Thread.sleep(5000);
                 this.currentActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -36,6 +35,7 @@ public class RefreshStatementListHandler extends WorkerThread {
                         statementAdapter.swapData(new LinkedList<>(lectureGroupDAO.getLectureGroupByFullName(nameOfGroup).getGroupedStatement().values()));
                     }
                 });
+                Thread.sleep(3000);
             }
         } catch (InterruptedException ignored) {
             Log.d("INTERRUPTION", "THREAD HAS STOPPED");

@@ -36,12 +36,15 @@ public class student extends user {
     @Override
     public void setPermissionLevel(int permissionLevel) {this.permissionLevel = permissionLevel;}
 
-    /**
-     * Getters and Setters for the Student Class
-     */
-    public int getStudentScore() {return this.studentScore;}
+    @Override
+    public int getUserScore() {
+        return this.studentScore;
+    }
 
-    public void setStudentScore(int studentScore) {this.studentScore = studentScore;}
+    @Override
+    public void setUserScore(int score) {
+        this.studentScore = score;
+    }
 
 }
 

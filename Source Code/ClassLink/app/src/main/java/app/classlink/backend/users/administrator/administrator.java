@@ -37,7 +37,13 @@ public class administrator extends user {
         this.permissionLevel = permissionLevel;
     }
 
-    public int getAdminScore() {return this.adminScore;}
+    @Override
+    public int getUserScore() {
+        return this.adminScore;
+    }
 
-    public void setAdminScore(int adminScore) {this.adminScore = adminScore;}
+    @Override
+    public void setUserScore(int score) {
+        this.adminScore = score;
+    }
 }

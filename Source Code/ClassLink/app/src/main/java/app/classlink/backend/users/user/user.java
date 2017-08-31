@@ -17,6 +17,10 @@ public abstract class user implements Serializable {
 
     abstract public void setPermissionLevel(int permissionLevel);
 
+    abstract public int getUserScore();
+
+    abstract public void setUserScore(int score);
+
     /**
      *Getters and Setters for the user class
      */
