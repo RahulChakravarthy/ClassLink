@@ -5,15 +5,14 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
+
 import app.classlink.backend.core.DAO;
 import app.classlink.backend.core.listNames;
 import app.classlink.backend.users.administrator.administrator;

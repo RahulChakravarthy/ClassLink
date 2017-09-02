@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 
 import java.util.Random;
 
-import app.classlink.helperClasses.activityParameters;
 import app.classlink.backend.core.baseActivity;
+import app.classlink.helperClasses.activityParameters;
 
 public class studyRoom extends baseActivity implements activityParameters {
 

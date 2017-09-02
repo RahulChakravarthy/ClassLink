@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import app.classlink.backend.core.baseActivity;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.backend.core.baseActivity;
 
 public class studyMenu extends baseActivity implements activityParameters {
 

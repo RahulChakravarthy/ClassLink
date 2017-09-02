@@ -5,8 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.util.ArrayList;
-import app.classlink.helperClasses.recyclerAdapters.displayLectureGroupsAdapter;
+
 import app.classlink.backend.core.WorkerThread;
+import app.classlink.helperClasses.recyclerAdapters.displayLectureGroupsAdapter;
 
 
 /**

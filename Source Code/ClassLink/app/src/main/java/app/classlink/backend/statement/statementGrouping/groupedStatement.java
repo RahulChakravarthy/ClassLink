@@ -3,8 +3,6 @@ package app.classlink.backend.statement.statementGrouping;
 
 import java.io.Serializable;
 
-import app.classlink.backend.statement.statementType.answers;
-import app.classlink.backend.statement.statementType.comments;
 import app.classlink.backend.statement.statementType.question;
 
 /**

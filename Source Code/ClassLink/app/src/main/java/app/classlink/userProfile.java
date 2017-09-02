@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.users.user.user;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.backend.core.baseActivity;
 
 public class userProfile extends baseActivity implements activityParameters {
 

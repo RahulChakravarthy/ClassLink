@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
-import android.graphics.Typeface;;
+import android.graphics.Typeface;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.TypedValue;
@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+;
 
 /**
  * @Class subViewHelperClass : same as viewHelperClass except handles support of different layouts (Linear, Drawer, Constraint etc)

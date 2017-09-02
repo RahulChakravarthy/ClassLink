@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.administrator.administrator;
 import app.classlink.backend.users.student.student;
@@ -30,7 +31,6 @@ import app.classlink.backend.users.teacher.teacher;
 import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.backend.core.baseActivity;
 
 /**
  * @Class signUp : Sign up class handler

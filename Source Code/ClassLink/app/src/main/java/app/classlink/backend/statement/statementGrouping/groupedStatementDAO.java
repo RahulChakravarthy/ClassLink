@@ -8,7 +8,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 
 import app.classlink.backend.core.DAO;
 import app.classlink.backend.core.baseGroup;
@@ -61,6 +60,10 @@ public class groupedStatementDAO extends DAO {
 
     public void addStatement(groupedStatement newStatement){
         this.list.child(newStatement.getStatementQuestion().getWrittenTime()).setValue(newStatement);
+    }
+
+    public void updateStatement(groupedStatement updatedStatement){
+        this.list.child(updatedStatement.getStatementQuestion().getWrittenTime()).setValue(updatedStatement);
     }
 
     public void deleteStatement(groupedStatement nullStatement){

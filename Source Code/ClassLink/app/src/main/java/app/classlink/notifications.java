@@ -13,13 +13,11 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.classlink.backend.core.GROUP_TYPE;
-import app.classlink.backend.groups.study.studyGroup;
-import app.classlink.helperClasses.recyclerAdapters.groupAdapter;
-import app.classlink.helperClasses.activityParameters;
-
-import app.classlink.helperClasses.viewHelperClass;
 import app.classlink.backend.core.baseActivity;
+import app.classlink.backend.groups.study.studyGroup;
+import app.classlink.helperClasses.activityParameters;
+import app.classlink.helperClasses.recyclerAdapters.groupAdapter;
+import app.classlink.helperClasses.viewHelperClass;
 
 public class notifications extends baseActivity implements activityParameters {
 

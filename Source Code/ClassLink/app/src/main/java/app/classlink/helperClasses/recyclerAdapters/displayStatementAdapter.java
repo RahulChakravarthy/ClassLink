@@ -5,22 +5,22 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.google.firebase.auth.FirebaseUser;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
+
 import app.classlink.R;
 import app.classlink.backend.misc.DateParser;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
+import app.classlink.backend.statement.statementGrouping.groupedStatementDAO;
 import app.classlink.backend.users.user.user;
 
 /**
@@ -29,6 +29,7 @@ import app.classlink.backend.users.user.user;
 public class displayStatementAdapter extends RecyclerView.Adapter<displayStatementAdapter.groupedStatementHolder> {
 
     private static LinkedList<groupedStatement> displayableStatements;
+    private static groupedStatementDAO groupedStatementDAO;
     private user currentUser;
 
     public static class groupedStatementHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -66,7 +67,6 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
             this.currentStatement = groupedStatement;
             this.statementMessage.setText(groupedStatement.getStatementQuestion().getQuestionText());
             this.score.setText((String.valueOf(groupedStatement.getStatementQuestion().getScore())));
-            Log.d("CONSTRUCTOR", "CONSTRUCTOR");
             //parse date
             DateFormat df = new SimpleDateFormat("yyMMddHHmmssZ");
             Date newStatementWrittenTime;
@@ -101,7 +101,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
                         upvoteButton.getDrawable().setColorFilter(Color.parseColor("#4C81E8"), PorterDuff.Mode.MULTIPLY);
                         currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().add(currentUser.getUserId());
                     } else {
-                        upvoteButton.getDrawable().clearColorFilter();
+//                        upvoteButton.getDrawable().clearColorFilter();
                     }
                 }
             }, 0);
@@ -123,21 +123,26 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
                         backgroundButton.mutate();
                         upvoteButton.getDrawable().setColorFilter(Color.parseColor("#4C81E8"), PorterDuff.Mode.MULTIPLY);
                         currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().add(currentUser.getUserId());
-                    } else { //user has already upvoted this statment, revert upvote and reset colour filter (reduce score by 1)
+                        currentUser.setUserScore(newScore);
+                    } else { //user has already upvoted this statement, revert upvote and reset colour filter (reduce score by 1)
                         int oldScore = Integer.parseInt(score.getText().toString());
                         int newScore = --oldScore;
                         score.setText(String.valueOf(newScore));
                         currentStatement.getStatementQuestion().setScore(newScore);
                         currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().remove(currentUser.getUserId());
                         upvoteButton.getDrawable().clearColorFilter();
+                        currentUser.setUserScore(newScore);
                     }
+                    //update statement and user score on the remote database
+                    displayStatementAdapter.groupedStatementDAO.updateStatement(currentStatement);
                 }
             });
         }
     }
 
-    public displayStatementAdapter(LinkedList<groupedStatement> displayableStatements, user currentUser){
+    public displayStatementAdapter(LinkedList<groupedStatement> displayableStatements, groupedStatementDAO groupedStatementDAO, user currentUser){
         displayStatementAdapter.displayableStatements = displayableStatements;
+        displayStatementAdapter.groupedStatementDAO = groupedStatementDAO;
         this.currentUser = currentUser;
     }
 

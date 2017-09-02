@@ -3,12 +3,7 @@ package app.classlink;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ProgressBar;
-
-import java.sql.Time;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import app.classlink.backend.core.baseActivity;
 

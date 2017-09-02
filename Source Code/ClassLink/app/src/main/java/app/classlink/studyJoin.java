@@ -3,8 +3,8 @@ package app.classlink;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
-import app.classlink.helperClasses.activityParameters;
 import app.classlink.backend.core.baseActivity;
+import app.classlink.helperClasses.activityParameters;
 
 public class studyJoin extends baseActivity implements activityParameters {
 

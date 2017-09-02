@@ -1,31 +1,30 @@
 package app.classlink;
 
 import android.content.Intent;
-
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+
+import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.study.studyGroup;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
-import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.backend.core.baseActivity;
-
 import app.classlink.helperClasses.recyclerAdapters.groupAdapter;
+import app.classlink.helperClasses.viewHelperClass;
 
 public class mainMenu extends baseActivity implements activityParameters {
 

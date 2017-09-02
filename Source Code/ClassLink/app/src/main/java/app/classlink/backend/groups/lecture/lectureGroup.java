@@ -2,8 +2,6 @@ package app.classlink.backend.groups.lecture;
 
 
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.LinkedList;
 
 import app.classlink.backend.core.GROUP_TYPE;
 import app.classlink.backend.core.baseGroup;

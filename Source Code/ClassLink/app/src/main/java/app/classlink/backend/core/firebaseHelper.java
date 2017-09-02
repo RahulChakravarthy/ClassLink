@@ -3,8 +3,6 @@ package app.classlink.backend.core;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.concurrent.Future;
-
 /**
  * @Class firebaseHelper : adapter class that enables our app data to interact with firebase cloud servers
  */

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -12,7 +13,6 @@ import app.classlink.backend.core.DAO;
 import app.classlink.backend.core.listNames;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.student.student;
-import app.classlink.backend.users.teacher.teacher;
 
 
 public class StudyGroupDAO extends DAO {

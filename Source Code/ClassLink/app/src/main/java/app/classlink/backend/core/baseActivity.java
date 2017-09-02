@@ -9,12 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import app.classlink.backend.misc.School;
-import app.classlink.backend.users.user.user;
-import app.classlink.backend.users.user.userDAO;
-import app.classlink.helperClasses.*;
+import app.classlink.helperClasses.viewHelperClass;
 
 
 abstract public class baseActivity extends AppCompatActivity {

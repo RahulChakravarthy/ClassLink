@@ -6,26 +6,24 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-
+import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
 import app.classlink.backend.misc.DateParser;
@@ -35,7 +33,6 @@ import app.classlink.backend.statement.statementType.question;
 import app.classlink.backend.statement.threadHandler.RefreshStatementListHandler;
 import app.classlink.backend.users.user.user;
 import app.classlink.helperClasses.activityParameters;
-import app.classlink.backend.core.baseActivity;
 import app.classlink.helperClasses.recyclerAdapters.displayStatementAdapter;
 import app.classlink.helperClasses.subViewHelperClass;
 
@@ -255,7 +252,7 @@ public class lectureRoom extends baseActivity
      */
     private void listViewSetup() {
         this.recyclerView = (RecyclerView) findViewById(R.id.statement_list_view);
-        this.statementAdapter = new displayStatementAdapter(DateParser.getOrderedStatementsByDate(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values())), this.currentUser);
+        this.statementAdapter = new displayStatementAdapter(DateParser.getOrderedStatementsByDate(new LinkedList<>(this.currentLectureGroup.getGroupedStatement().values())), this.groupedStatementDAO, this.currentUser);
         this.linearLayoutManager = new LinearLayoutManager(this);
         this.recyclerView.setLayoutManager(this.linearLayoutManager);
         this.recyclerView.setAdapter(this.statementAdapter);

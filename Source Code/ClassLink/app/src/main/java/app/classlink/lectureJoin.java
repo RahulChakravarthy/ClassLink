@@ -6,7 +6,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import app.classlink.backend.core.WorkerThread;
+import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.RefreshLectureGroupListHandler;
 import app.classlink.backend.groups.lecture.lectureGroup;
@@ -25,7 +25,6 @@ import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.recyclerAdapters.displayLectureGroupsAdapter;
 import app.classlink.helperClasses.viewHelperClass;
-import app.classlink.backend.core.baseActivity;
 
 public class lectureJoin extends baseActivity implements activityParameters {
 

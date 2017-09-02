@@ -2,14 +2,11 @@ package app.classlink.backend.groups.study;
 
 
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.LinkedList;
 
 import app.classlink.backend.core.GROUP_TYPE;
 import app.classlink.backend.core.baseGroup;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
 import app.classlink.backend.statement.statementType.answers;
-import app.classlink.backend.statement.statementType.comments;
 import app.classlink.backend.statement.statementType.question;
 import app.classlink.backend.users.student.student;
 
