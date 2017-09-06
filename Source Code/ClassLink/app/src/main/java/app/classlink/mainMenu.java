@@ -69,6 +69,10 @@ public class mainMenu extends baseActivity implements activityParameters {
         }
     }
 
+    @Override
+    public void onBackPressed(){
+    }
+
     /**
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
