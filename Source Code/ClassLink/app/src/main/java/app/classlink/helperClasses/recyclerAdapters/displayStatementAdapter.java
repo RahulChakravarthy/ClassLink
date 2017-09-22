@@ -1,8 +1,6 @@
 package app.classlink.helperClasses.recyclerAdapters;
 
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -96,16 +94,14 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
                 @Override
                 public void run() {
                     if (currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().contains(currentUser.getUserId())){
-                        Drawable backgroundButton = itemView.getContext().getResources().getDrawable(R.drawable.upvote);
-                        backgroundButton.mutate();
-                        upvoteButton.getDrawable().setColorFilter(Color.parseColor("#4C81E8"), PorterDuff.Mode.MULTIPLY);
+                        upvoteButton.setImageResource(R.drawable.upvoted);
                         currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().add(currentUser.getUserId());
                     } else {
-//                        upvoteButton.getDrawable().clearColorFilter();
+                        upvoteButton.setImageResource(R.drawable.upvote);
                     }
+                    setUpvoteButton();
                 }
-            }, 0);
-            this.setUpvoteButton();
+            }, 50);
         }
 
         private void setUpvoteButton(){
@@ -119,9 +115,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
                         score.setText(String.valueOf(newScore));
                         currentStatement.getStatementQuestion().setScore(newScore);
                         //changes tint colour to signify that user has upvoted the statement
-                        Drawable backgroundButton = view.getContext().getResources().getDrawable(R.drawable.upvote);
-                        backgroundButton.mutate();
-                        upvoteButton.getDrawable().setColorFilter(Color.parseColor("#4C81E8"), PorterDuff.Mode.MULTIPLY);
+                        upvoteButton.setImageResource(R.drawable.upvoted);
                         currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().add(currentUser.getUserId());
                         currentUser.setUserScore(newScore);
                     } else { //user has already upvoted this statement, revert upvote and reset colour filter (reduce score by 1)
@@ -130,7 +124,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
                         score.setText(String.valueOf(newScore));
                         currentStatement.getStatementQuestion().setScore(newScore);
                         currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().remove(currentUser.getUserId());
-                        upvoteButton.getDrawable().clearColorFilter();
+                        upvoteButton.setImageResource(R.drawable.upvote);
                         currentUser.setUserScore(newScore);
                     }
                     //update statement and user score on the remote database
