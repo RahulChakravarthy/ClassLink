@@ -1,4 +1,4 @@
-package app.classlink;
+package app.classlink.frontend;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import java.util.Random;
 
+import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.helperClasses.activityParameters;
 

@@ -1,4 +1,4 @@
-package app.classlink;
+package app.classlink.frontend;
 
 
 import android.content.Intent;
@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;
@@ -139,7 +140,7 @@ public class login extends baseActivity implements activityParameters  {
     public void signUpListener(){
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.signUp.class));}
+            public void onClick(View v) {startActivity(new Intent(login.this, app.classlink.frontend.signUp.class));}
         });
     }
 

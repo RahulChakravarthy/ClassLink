@@ -1,4 +1,4 @@
-package app.classlink;
+package app.classlink.frontend;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.administrator.administrator;

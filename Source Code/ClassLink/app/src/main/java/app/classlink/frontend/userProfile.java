@@ -1,10 +1,11 @@
-package app.classlink;
+package app.classlink.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.users.user.user;
 import app.classlink.helperClasses.activityParameters;

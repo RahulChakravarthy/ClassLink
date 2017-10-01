@@ -1,8 +1,9 @@
-package app.classlink;
+package app.classlink.frontend;
 
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
+import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.helperClasses.activityParameters;
 

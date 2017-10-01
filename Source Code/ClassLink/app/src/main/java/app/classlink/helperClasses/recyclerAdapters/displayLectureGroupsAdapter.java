@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import app.classlink.R;
 import app.classlink.backend.groups.lecture.lectureGroup;
 import app.classlink.backend.users.user.user;
-import app.classlink.lectureRoom;
+import app.classlink.frontend.lectureRoom;
 
 /**
  * RecyclerView Adapter for displaying lecture groups to the join a lecture group activity

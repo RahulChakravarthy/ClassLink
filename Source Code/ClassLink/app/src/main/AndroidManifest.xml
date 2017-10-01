@@ -12,7 +12,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:windowSoftInputMode="stateHidden|adjustResize">
         <activity
-            android:name=".splashScreen"
+            android:name=".frontend.splashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,43 +21,43 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login"
+            android:name=".frontend.login"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".lectureCreate"
+            android:name=".frontend.lectureCreate"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".studyCreate"
+            android:name=".frontend.studyCreate"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".lectureJoin"
+            android:name=".frontend.lectureJoin"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".studyJoin"
+            android:name=".frontend.studyJoin"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".mainMenu"
+            android:name=".frontend.mainMenu"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".settings"
+            android:name=".frontend.settings"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".signUp"
+            android:name=".frontend.signUp"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".studyMenu"
+            android:name=".frontend.studyMenu"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".studyRoom"
+            android:name=".frontend.studyRoom"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".userProfile"
+            android:name=".frontend.userProfile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".notifications"
+            android:name=".frontend.notifications"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".lectureRoom"
+            android:name=".frontend.lectureRoom"
             android:label="@string/title_activity_lecture_room"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

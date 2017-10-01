@@ -1,4 +1,4 @@
-package app.classlink;
+package app.classlink.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.viewHelperClass;

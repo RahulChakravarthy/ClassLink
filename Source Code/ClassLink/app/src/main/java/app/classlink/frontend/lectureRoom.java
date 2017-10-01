@@ -1,4 +1,4 @@
-package app.classlink;
+package app.classlink.frontend;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;

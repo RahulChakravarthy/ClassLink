@@ -1,4 +1,4 @@
-package app.classlink;
+package app.classlink.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.study.studyGroup;
@@ -174,7 +175,7 @@ public class mainMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainMenu.this, app.classlink.settings.class));
+                startActivity(new Intent(mainMenu.this, app.classlink.frontend.settings.class));
             }
         });
 
@@ -192,7 +193,7 @@ public class mainMenu extends baseActivity implements activityParameters {
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainMenu.this, app.classlink.notifications.class));
+                startActivity(new Intent(mainMenu.this, app.classlink.frontend.notifications.class));
             }
         });
 

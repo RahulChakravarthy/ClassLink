@@ -1,10 +1,11 @@
-package app.classlink;
+package app.classlink.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
+import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 
 /**

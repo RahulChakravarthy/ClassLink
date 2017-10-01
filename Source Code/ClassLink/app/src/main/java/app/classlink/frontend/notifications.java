@@ -1,4 +1,4 @@
-package app.classlink;
+package app.classlink.frontend;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.groups.study.studyGroup;
 import app.classlink.helperClasses.activityParameters;
