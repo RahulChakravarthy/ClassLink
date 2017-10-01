@@ -1,4 +1,1 @@
-# ClassLink
-side project
-
-2017-05-20
+ClassLink is a class based user interaction platform that attempts to bridge the gap between students and professors in classrooms. It's anonymous messaging system coupled with seamless and instant feedback via upvote buttons not only increases class participation, but also helps students learn and profesors improve their teaching style.
