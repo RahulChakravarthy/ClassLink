@@ -11,27 +11,22 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-
-/**
- * @Note: In the future, refactor this to accept other types of layouts so that it can be used for different activities
- */
 
 /**
  * @Class viewHelperClass : This class has implemented methods to aid with output views to various activities
  */
 public class viewHelperClass {
 
-    private RelativeLayout activityLayout; //Captured activity layout
+    private ViewGroup activityLayout; //Captured activity layout
     private Context activityContext; //Captured activity context
 
     //Capture phone's resolution and base and graphics/textview positioning on this
@@ -40,11 +35,11 @@ public class viewHelperClass {
 
     /**
      * @Consructor
-     * @param activityLayout : captures Relative layout of Activity
+     * @param activityLayout : captures Activity Layout
      * @param activityContext : captures Context of activity
      * @param display : display settings of the phone
      */
-    public viewHelperClass(RelativeLayout activityLayout, Context activityContext, Display display){
+    public viewHelperClass(ViewGroup activityLayout, Context activityContext, Display display){
         this.activityLayout = activityLayout;
         this.activityContext = activityContext;
 
@@ -366,7 +361,7 @@ public class viewHelperClass {
         return this.activityContext;
     }
 
-    public RelativeLayout getActivityLayout(){
+    public ViewGroup getActivityLayout(){
         return this.activityLayout;
     }
 

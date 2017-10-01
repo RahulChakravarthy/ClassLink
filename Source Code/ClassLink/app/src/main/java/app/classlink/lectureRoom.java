@@ -14,15 +14,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+
 import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
@@ -34,7 +35,7 @@ import app.classlink.backend.statement.threadHandler.RefreshStatementListHandler
 import app.classlink.backend.users.user.user;
 import app.classlink.helperClasses.activityParameters;
 import app.classlink.helperClasses.recyclerAdapters.displayStatementAdapter;
-import app.classlink.helperClasses.subViewHelperClass;
+import app.classlink.helperClasses.viewHelperClass;
 
 public class lectureRoom extends baseActivity
         implements NavigationView.OnNavigationItemSelectedListener, activityParameters {
@@ -46,7 +47,7 @@ public class lectureRoom extends baseActivity
     private LinearLayoutManager linearLayoutManager;
     private displayStatementAdapter statementAdapter;
 
-    private subViewHelperClass subViewHelperClass; //viewhelperclass for various layouts
+    private viewHelperClass viewHelperClass; //viewhelperclass for various layouts
 
     private lectureGroup currentLectureGroup;
     private user currentUser;
@@ -125,28 +126,6 @@ public class lectureRoom extends baseActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.lecture_room, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     /**
      * @Method onNavigationItemSelected : handles displaying and actions when groupedStatement are clicked
      * @param item : Displays all lecture groupedStatement
@@ -183,7 +162,7 @@ public class lectureRoom extends baseActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (subViewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(inputText)))){
+                if (viewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(inputText)))){
                     groupedStatementDAO.addStatement(new groupedStatement(new question(inputText.getText().toString().trim(), currentUser.getUserId())));
                     inputText.setText("");
                 } else {
@@ -211,13 +190,14 @@ public class lectureRoom extends baseActivity
      */
     @Override
     public void layoutSetup() {
-        //Initialising the constrained layout for all other views in the main activity
-        this.subViewHelperClass = new subViewHelperClass(getApplicationContext(), this.getWindowManager().getDefaultDisplay());
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        //initialize background layout
         this.backgroundLayout = (ConstraintLayout) findViewById(R.id.main_lecture_room_layout);
         this.backgroundLayout.setBackgroundColor(Color.parseColor("#bdecfd"));
+        //Initialising the constrained layout for all other views in the main activity
+        this.viewHelperClass = new viewHelperClass(this.backgroundLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         this.inputText = new EditText(getApplicationContext());
-        this.subViewHelperClass.addGraphicInputBox(this.backgroundLayout, "Ask an anonymous question...", R.drawable.inputbox, this.inputText, InputType.TYPE_CLASS_TEXT, 15, 40f, 81, 0.7f, 0.85f);
+        this.viewHelperClass.addGraphicInputBox("Ask an anonymous question...", R.drawable.inputbox, this.inputText, InputType.TYPE_CLASS_TEXT, 15, 40f, 81, 0.7f, 0.85f);
     }
 
     /**
