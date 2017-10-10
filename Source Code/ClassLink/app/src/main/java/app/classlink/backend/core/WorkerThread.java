@@ -1,7 +1,7 @@
 package app.classlink.backend.core;
 
 /**
- * @Class WorkerThread : custom thread class for Class Link that handles creation and deletion of threads
+ * @Class WorkerThread : custom thread class for Class Link that is meant to be overridden by base classes
  */
 public abstract class WorkerThread extends Thread {}
 

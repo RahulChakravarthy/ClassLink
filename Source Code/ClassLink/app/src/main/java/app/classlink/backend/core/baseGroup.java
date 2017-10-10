@@ -6,6 +6,9 @@ import java.util.HashMap;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.statement.statementGrouping.groupedStatement;
 
+/**
+ * @Class baseGroup : based class skeleton for a group type in ClassLink
+ */
 public abstract class baseGroup implements Serializable {
 
     public GROUP_TYPE groupType;

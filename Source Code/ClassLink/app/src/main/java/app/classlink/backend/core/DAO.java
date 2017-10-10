@@ -3,7 +3,6 @@ package app.classlink.backend.core;
 /**
  * @Class  DAO : base DAO class for handling data movement
  */
-
 abstract public class DAO extends firebaseHelper {
     /**
      * @param listName : Name of list

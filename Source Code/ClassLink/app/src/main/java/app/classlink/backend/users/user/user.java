@@ -5,6 +5,9 @@ import java.io.Serializable;
 
 import app.classlink.backend.misc.School;
 
+/**
+ * @Class user : base skeleton class for the users in ClassLink
+ */
 public abstract class user implements Serializable {
     protected String userId;
     protected String firstName;

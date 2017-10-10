@@ -1,7 +1,7 @@
 package app.classlink.backend.statement.statementType;
 
 /**
- * @Class comments : made by users
+ * @Class comments : user comments on recoreded answers
  */
 public class comments extends statements {
 

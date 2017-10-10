@@ -17,6 +17,13 @@ public class RefreshStatementListHandler extends WorkerThread {
     private LectureGroupDAO lectureGroupDAO;
     private String nameOfGroup;
 
+    /**
+     * @Consructor: creates an instance of the RefreshStatementListHandler
+     * @param currentActivity : activity that this thread is working on
+     * @param statementAdapter : statement adapter
+     * @param lectureGroupDAO : lectureGroupDAO
+     * @param nameOfGroup : Name of lecture group that we are listening to
+     */
     public RefreshStatementListHandler(Activity currentActivity, displayStatementAdapter statementAdapter, LectureGroupDAO lectureGroupDAO, String nameOfGroup){
         this.currentActivity = currentActivity;
         this.statementAdapter = statementAdapter;
@@ -24,6 +31,9 @@ public class RefreshStatementListHandler extends WorkerThread {
         this.nameOfGroup = nameOfGroup;
     }
 
+    /**
+     * @Method run : instructions that will execute everytime thread is run
+     */
     @Override
     public void run(){
         try {

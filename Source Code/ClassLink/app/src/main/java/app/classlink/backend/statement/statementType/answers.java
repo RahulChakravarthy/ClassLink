@@ -1,7 +1,7 @@
 package app.classlink.backend.statement.statementType;
 
 /**
- * @Class
+ * @Class answers : Answers to questions
  */
 public class answers extends statements {
     protected String answerText;

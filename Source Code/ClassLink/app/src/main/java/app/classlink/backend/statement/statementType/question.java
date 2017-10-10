@@ -1,7 +1,7 @@
 package app.classlink.backend.statement.statementType;
 
 /**
- * @Class questions: A question class
+ * @Class question: Questions class
  */
 public class question extends statements {
 

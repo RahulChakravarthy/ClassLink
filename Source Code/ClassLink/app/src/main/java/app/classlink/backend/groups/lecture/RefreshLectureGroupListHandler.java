@@ -20,6 +20,13 @@ public class RefreshLectureGroupListHandler extends WorkerThread implements Runn
     private LectureGroupDAO lectureGroupDAO;
     private RecyclerView groupList;
 
+    /**
+     * @Consructor: creates an instance of the RefreshLectureGroupList thread that listens to updates in the remote servers
+     * @param currentActivity : current Activity that this thread will be activated in
+     * @param groupAdpater : lecture group adapated containing all the current lecture groups
+     * @param groupList : Recycler that will be updated with values from group list
+     * @param lectureGroupDAO : lecture group DAO which will fetch updated lists from servers to compare if any need to be added to the current list
+     */
     public RefreshLectureGroupListHandler(Activity currentActivity, displayLectureGroupsAdapter groupAdpater, RecyclerView groupList, LectureGroupDAO lectureGroupDAO) {
         this.currentActivity = currentActivity;
         this.groupAdapter = groupAdpater;
@@ -27,6 +34,9 @@ public class RefreshLectureGroupListHandler extends WorkerThread implements Runn
         this.groupList = groupList;
     }
 
+    /**
+     * @Method run : Instructions in this method will be executed everytime the thread loops
+     */
     @Override
     public void run() {
         try {
@@ -38,7 +48,7 @@ public class RefreshLectureGroupListHandler extends WorkerThread implements Runn
                         groupAdapter.swapData(new ArrayList<>(lectureGroupDAO.getAllLectureGroups()));
                     }
                 });
-                Thread.sleep(5000);
+                Thread.sleep(5000); //Thread loops every 5 seconds
             }
         } catch (InterruptedException ignored) {
             Log.d("INTERRUPTION", "THREAD HAS STOPPED");

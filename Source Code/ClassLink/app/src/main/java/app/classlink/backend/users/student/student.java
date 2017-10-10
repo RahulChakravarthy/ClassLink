@@ -15,6 +15,13 @@ public class student extends user {
     protected int studentScore;
     protected HashMap<lectureGroup, ban> banList; //lecture Group you are banned from, and String date that you will be unbanned
 
+    /**
+     * @Constructor:  creates an instance of a student
+     * @param firstName : students first name
+     * @param lastName : students last name
+     * @param email : student email account
+     * @param school : institution that student belongs to
+     */
     public student(String firstName, String lastName, String email, School school) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -66,12 +73,19 @@ class ban {
         this.banStart = cal.getTime().toString();
     }
 
+    /**
+     * @Method updateBanDates : updates the amount of time left in the students ban for a certain lecture group
+     */
     //Call this method evey so often to update length of ban hours left
     public void updateBanDates(){
         //get the start of the ban and see if enough time has elapesed, if so set the ban to off
     }
 
-    public boolean BanComplete(){
+    /**
+     * @Method banComplete : returns boolean weather or not student has completed a give ban
+     * @return boolean : false if ban still exits, true otherwise
+     */
+    public boolean banComplete(){
         return this.isBanComplete;
     }
 }

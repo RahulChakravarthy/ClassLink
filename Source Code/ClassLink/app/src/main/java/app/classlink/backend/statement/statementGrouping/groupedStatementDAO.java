@@ -13,6 +13,9 @@ import app.classlink.backend.core.DAO;
 import app.classlink.backend.core.baseGroup;
 import app.classlink.backend.core.listNames;
 
+/**
+ * @Class groupedStatementDAO : DAO for accessing groupedStatements
+ */
 public class groupedStatementDAO extends DAO {
 
     protected HashMap<String, groupedStatement> groupedStatementCache;
@@ -58,14 +61,26 @@ public class groupedStatementDAO extends DAO {
         });
     }
 
+    /**
+     * @Method addStatement : Appends a statement to the list of statements for the current group
+     * @param newStatement : new statement object
+     */
     public void addStatement(groupedStatement newStatement){
         this.list.child(newStatement.getStatementQuestion().getWrittenTime()).setValue(newStatement);
     }
 
+    /**
+     * @Method updateStatement : updates the current statement with a new statement value
+     * @param updatedStatement : updated statement
+     */
     public void updateStatement(groupedStatement updatedStatement){
         this.list.child(updatedStatement.getStatementQuestion().getWrittenTime()).setValue(updatedStatement);
     }
 
+    /**
+     * @Method deleteStatement : deletes
+     * @param nullStatement
+     */
     public void deleteStatement(groupedStatement nullStatement){
         this.list.child(nullStatement.getStatementQuestion().getWrittenTime()).removeValue();
     }

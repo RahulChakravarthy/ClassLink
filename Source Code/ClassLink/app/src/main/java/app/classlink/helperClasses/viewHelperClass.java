@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import app.classlink.R;
 
 /**
- * @Class viewHelperClass : This class has implemented methods to aid with output views to various activities
+ * @Class viewHelperClass : This class has implemented methods to aid with outputting views to various activities
  */
 public class viewHelperClass {
 

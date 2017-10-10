@@ -12,14 +12,16 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import app.classlink.helperClasses.viewHelperClass;
 
-
+/**
+ * @Class baseActivity : Base Activity that all activities in Class Link extend from
+ */
 abstract public class baseActivity extends AppCompatActivity {
 
     protected RelativeLayout activityLayout; //Activity Layout
     protected viewHelperClass viewHelperClass; //Helper class to output views to the activity
 
 
-    protected FirebaseAuth userAuth; //user authentication
+    protected FirebaseAuth userAuth; //user authentication since all activities with UI's should have access to the current used logged in
 
     /**
      * @Method retrieveUser : passes in the userAuth information gathered from fire base and queries the user database for said user

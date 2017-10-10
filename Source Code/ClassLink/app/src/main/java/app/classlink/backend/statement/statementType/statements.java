@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * @Class groupedStatement: wrapper class for the question, classes
+ * @Class groupedStatement: wrapper class for the question, answers, comments etc.
  */
 abstract public class statements implements Serializable {
     protected String userId;
