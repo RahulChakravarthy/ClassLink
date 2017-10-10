@@ -29,7 +29,7 @@ import app.classlink.helperClasses.viewHelperClass;
 
 public class lectureJoin extends baseActivity implements activityParameters {
 
-    private ImageView createLectureGroup, genericLectureRoom, line;
+    private ImageView createLectureGroup, line;
     private EditText searchBox;
     private RecyclerView groupList;
     private displayLectureGroupsAdapter groupListAdapter;
@@ -56,16 +56,11 @@ public class lectureJoin extends baseActivity implements activityParameters {
     }
 
     @Override
-    public void onStart(){
-        super.onStart();
+    public void onResume(){
+        super.onResume();
         if (!retrieveUser()){
             startActivity(new Intent(lectureJoin.this, login.class));
         }
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
         if (this.groupListThread == null){
             refreshGroupList();
         }
@@ -154,7 +149,10 @@ public class lectureJoin extends baseActivity implements activityParameters {
             @Override
             public void onClick(View view) {
                 if (userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).getPermissionLevel() == 2){
-                    startActivity(new Intent(lectureJoin.this, lectureCreate.class));
+                    //Pass teachers institution information in Intent to be used by lectureCreate
+                    Intent intent = new Intent(lectureJoin.this, lectureCreate.class);
+                    intent.putExtra("School", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).getSchool().toString());
+                    startActivity(intent);
                 } else {
                     Toast.makeText(viewHelperClass.getActivityContext(), "Error: only teachers may create lecture groups", Toast.LENGTH_LONG).show();
                 }

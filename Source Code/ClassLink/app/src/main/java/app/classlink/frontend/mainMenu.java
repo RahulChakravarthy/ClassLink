@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,10 +38,6 @@ public class mainMenu extends baseActivity implements activityParameters {
     private ImageView notifications;
     private LinkedList<ImageView> imageViews;
 
-    private RecyclerView favourites;
-    private List<app.classlink.backend.groups.study.studyGroup> groupList = new ArrayList<>();
-    private groupAdapter gAdapter;
-
     //DAOs
     private userDAO userDAO;
     private LectureGroupDAO lectureGroupDAO;
@@ -57,15 +54,16 @@ public class mainMenu extends baseActivity implements activityParameters {
         layoutSetup();
         buttonSetup();
         setActivityDAOListeners();
-
-        exampleGroups();
-
     }
 
+    /**
+     * @Method onResume : Checks authentication of current user and redirects them to login screen if authentication fails
+     */
     @Override
-    protected void onStart(){
-        super.onStart();
+    protected void onResume(){
+        super.onResume();
         if (!retrieveUser()){
+            Toast.makeText(getApplicationContext(), "Re-authentication needed", Toast.LENGTH_LONG).show();
             startActivity(new Intent(mainMenu.this, login.class));
         }
     }
@@ -78,7 +76,7 @@ public class mainMenu extends baseActivity implements activityParameters {
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
     protected void setActivityDAOListeners() {
-        final int DATA_QUERY_DELAY = 600;
+        final int DATA_QUERY_DELAY = 900;
         this.userDAO = new userDAO();
         this.userDAO.setCacheListener();
         //This allows time for the user to be queried and to access their school
@@ -86,27 +84,10 @@ public class mainMenu extends baseActivity implements activityParameters {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                lectureGroupDAO.setCacheListener(School.UNIVERSITY_OF_WATERLOO.toString());
+                lectureGroupDAO.setCacheListener(userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).getSchool().toString());
             }
         }, DATA_QUERY_DELAY);
 
-    }
-
-    /**
-     * @Method exampleGroups: set up some example groups to populate the RecyclerView
-     */
-    public void exampleGroups() {
-//        studyGroup group = new studyGroup(GROUP_TYPE.STUDYGROUPS.name(), "1", "group1", );
-//        groupList.add(group);
-//
-//        group = new studyGroup(GROUP_TYPE.STUDYGROUPS.name(), "2", "group2", "test group 2");
-//        groupList.add(group);
-//
-//        group = new studyGroup(GROUP_TYPE.STUDYGROUPS.name(), "3", "group3", "test group 3");
-//        groupList.add(group);
-//
-//        group = new studyGroup(GROUP_TYPE.STUDYGROUPS.name(), "99", "Add a new favourite", "Click here");
-//        groupList.add(group);
     }
 
     /**
@@ -134,12 +115,6 @@ public class mainMenu extends baseActivity implements activityParameters {
             viewHelperClass.imageToButton(i);
         }
 
-        favourites = (RecyclerView) findViewById(R.id.recyclerFavourites);
-        gAdapter = new groupAdapter(groupList);
-        RecyclerView.LayoutManager gLayoutManager = new LinearLayoutManager(getApplicationContext());
-        favourites.setLayoutManager(gLayoutManager);
-        favourites.setItemAnimator(new DefaultItemAnimator());
-        favourites.setAdapter(gAdapter);
     }
 
     /**
@@ -175,7 +150,7 @@ public class mainMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainMenu.this, app.classlink.frontend.settings.class));
+                startActivity(new Intent(mainMenu.this, settings.class));
             }
         });
 
@@ -193,45 +168,9 @@ public class mainMenu extends baseActivity implements activityParameters {
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mainMenu.this, app.classlink.frontend.notifications.class));
+                Toast.makeText(getApplicationContext(), "Feature not implemented yet", Toast.LENGTH_LONG).show();
+                //startActivity(new Intent(mainMenu.this, notifications.class));
             }
         });
-
-
-        favourites.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            int actions;       //onInterceptTouchEvent fires once onPress and once again onRelease so this is a quick fix to only fire onClick once for these two actions... also sometimes on scroll it will increment as well
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                actions++;
-                View child = rv.findChildViewUnder(e.getX(), e.getY());
-                if (child != null && actions >= 2) {
-                    onClick(child, rv.getChildPosition(child));
-                    actions = 0;
-                }
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-
-            public void onClick(View view, int position) {
-                studyGroup studyGroup = groupList.get(position);
-                Log.d("Testing onClick", "description: " + studyGroup.getGroupDescription());
-
-                if(Objects.equals(studyGroup.getGroupId(), "99")) {
-//                    studyGroup newFavourite = new studyGroup(GROUP_TYPE.STUDYGROUPS, "5", "new favourite", "added a new favourite");
-//                    groupList.add(newFavourite);
-//                    gAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-
     }
 }

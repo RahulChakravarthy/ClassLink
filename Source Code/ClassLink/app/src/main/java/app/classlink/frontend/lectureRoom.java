@@ -115,6 +115,8 @@ public class lectureRoom extends baseActivity
         super.onPause();
         this.refreshStatementListHandler.interrupt();
         this.refreshStatementListHandler = null;
+
+
     }
 
     @Override

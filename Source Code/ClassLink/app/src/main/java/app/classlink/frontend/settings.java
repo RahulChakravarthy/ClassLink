@@ -25,9 +25,9 @@ import app.classlink.helperClasses.viewHelperClass;
 
 public class settings extends baseActivity implements activityParameters {
 
-    EditText changeUsername, changePassword, confirmPassword, changeEmail;
+    EditText changePassword, confirmPassword, changeEmail;
     ImageView submitForm, logout, deleteAccount;
-    Spinner schoolMenu;
+    Spinner schoolMenu, changePermissions;
 
     //DAOs
     userDAO userDao;
@@ -75,8 +75,9 @@ public class settings extends baseActivity implements activityParameters {
         this.viewHelperClass.addText("(only filled boxes will modify profile data)", "OpenSans-Semibold", "BLACK", 2, 17, 50, 18);
 
         this.viewHelperClass.addText("New Permission:", "OpenSans-Regular", "BLACK", 1, 15, 2, 25);
-        this.changeUsername = new EditText(getApplicationContext());
-        this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, changeUsername, InputType.TYPE_CLASS_TEXT, 15, 66.7f, 26.5f, 0.64f, 0.75f);
+        this.changePermissions = new Spinner(getApplicationContext());
+        ArrayList<String> permissions = new ArrayList<>(Arrays.asList("STUDENT", "TEACHER", "ADMINISTRATOR"));
+        this.viewHelperClass.addSpinner(this.changePermissions, permissions, permissionsListener(), R.drawable.custom_spinner, android.R.layout.simple_spinner_dropdown_item, 73, 26, 1,1);
 
         this.viewHelperClass.addText("New Password:", "OpenSans-Regular", "BLACK", 1, 15, 2, 33);
         this.changePassword = new EditText(getApplicationContext());
@@ -91,13 +92,12 @@ public class settings extends baseActivity implements activityParameters {
         this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, changeEmail, InputType.TYPE_CLASS_TEXT, 15, 66.7f, 50.5f, 0.64f, 0.75f);
 
         this.viewHelperClass.addText("New Institution:", "OpenSans-Regular", "BLACK", 1, 15, 2, 57);
-
         this.schoolMenu = new Spinner(getApplicationContext());
         ArrayList<String> schools = new ArrayList<>();
         for (School school : School.values()) {
             schools.add(school.name().replaceAll("[_]", " "));
         }
-        this.viewHelperClass.addSpinner(schoolMenu, schools, schoolMenuListener(), android.R.layout.simple_spinner_dropdown_item, 73, 58.5f, 1, 1);
+        this.viewHelperClass.addSpinner(schoolMenu, schools, schoolMenuListener(), R.drawable.custom_spinner, android.R.layout.simple_spinner_dropdown_item, 73, 58.5f, 1, 1);
 
 
         // Graphical Graphics
@@ -111,6 +111,23 @@ public class settings extends baseActivity implements activityParameters {
 
         this.deleteAccount = new ImageView(getApplicationContext());
         this.viewHelperClass.addTextToButton(deleteAccount, "Delete Account", 15, "OpenSans-Semibold", "BLACK", R.drawable.curvedbutton, 75, 90, 0.4f, 0.5f);
+    }
+
+    /**
+     * @Method schoolMenuListener : creates a down menu to choose between user permissions
+     */
+    private AdapterView.OnItemSelectedListener permissionsListener(){
+        return new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
     }
 
     /**
@@ -136,7 +153,7 @@ public class settings extends baseActivity implements activityParameters {
         submitForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewHelperClass.clearAllEditTexts(new ArrayList<>(Arrays.asList(changeUsername, changePassword, confirmPassword, changeEmail)));
+                viewHelperClass.clearAllEditTexts(new ArrayList<>(Arrays.asList(changePassword, confirmPassword, changeEmail)));
                 Toast.makeText(viewHelperClass.getActivityContext(), "Profile details will be updated shortly", Toast.LENGTH_LONG).show();
             }
         });

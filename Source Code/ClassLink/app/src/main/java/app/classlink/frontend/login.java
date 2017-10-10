@@ -1,13 +1,17 @@
 package app.classlink.frontend;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
@@ -54,11 +59,31 @@ public class login extends baseActivity implements activityParameters  {
      * @Method onStart : verify if the user is already logged in
      */
     @Override
-    protected void onStart(){
-        super.onStart();
-        if (this.userAuth.getCurrentUser() != null){
+    protected void onResume(){
+        super.onResume();
+        if (this.userAuth.getCurrentUser() != null && internetConnection()){
             startActivity(new Intent(login.this, mainMenu.class));
         }
+    }
+
+    /**
+     * @Method onBackPressed : Prompts the user if they really want to quit the app
+     */
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Quit Class Link?")
+                .setMessage("Do you wish to quit Class Link?")
+                .setPositiveButton("Quit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                        System.exit(0);
+                    }
+                }).setNegativeButton("Cancel", null).show();
     }
 
     /**
@@ -107,7 +132,7 @@ public class login extends baseActivity implements activityParameters  {
                 if(viewHelperClass.isEditTextEmpty(new ArrayList<>(Arrays.asList(emailInput,passwordInput)))){
                     authenticateUser();
                 } else {
-                    Toast.makeText(viewHelperClass.getActivityContext(), "Please enter email and password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter email and password", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -127,7 +152,7 @@ public class login extends baseActivity implements activityParameters  {
                         startActivity(new Intent(login.this, mainMenu.class));
                     } else {
                         FirebaseAuthException e = (FirebaseAuthException) task.getException();
-                        Toast.makeText(viewHelperClass.getActivityContext(), "Failed Registration: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Failed Registration: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -152,10 +177,70 @@ public class login extends baseActivity implements activityParameters  {
             forgotPassword.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(viewHelperClass.getActivityContext(), "Feature not implemented yet", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(login.this, login.class));
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this);
+
+                    LinearLayout layout = new LinearLayout(getApplicationContext());
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    layout.setOrientation(LinearLayout.VERTICAL);
+                    layout.setLayoutParams(params);
+
+                    layout.setGravity(Gravity.CLIP_VERTICAL);
+                    layout.setPadding(5, 5, 5, 5);
+
+                    TextView title = new TextView(getApplicationContext());
+                    title.setText("Reset Password");
+                    title.setPadding(40, 40, 40, 40);
+                    title.setGravity(Gravity.CENTER);
+                    title.setTextSize(20);
+
+                    final EditText emailInput = new EditText(getApplicationContext());
+                    TextView subject = new TextView(getApplicationContext());
+                    subject.setText("Email Address of Account");
+                    subject.setPadding(40, 40, 40, 40);
+
+
+                    LinearLayout.LayoutParams subjectParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    subjectParams.bottomMargin = 5;
+                    layout.addView(subject,subjectParams);
+                    layout.addView(emailInput, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                    alertDialogBuilder.setView(layout);
+                    alertDialogBuilder.setTitle(title.getText());
+                    alertDialogBuilder.setCustomTitle(title);
+
+                    // Setting Positive "Reset Password" Button
+                    alertDialogBuilder.setPositiveButton("Reset Password", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (viewHelperClass.isEditTextEmpty(new ArrayList<>(Collections.singletonList(emailInput)))){
+                                FirebaseAuth.getInstance().sendPasswordResetEmail(emailInput.getText().toString().trim())
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(getApplicationContext(), "Password reset email sent", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    Toast.makeText(getApplicationContext(), "Invalid Email Address Provided", Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Invalid Email Address Provided", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                    // Setting Negative "Cancel" Button
+                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 }
             });
+        } else {
+            Toast.makeText(getApplicationContext(), "No internet connection please try again later", Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -44,8 +44,8 @@ public class lectureCreate extends baseActivity implements activityParameters {
      * @Method onStart : verify user authentication
      */
     @Override
-    public void onStart(){
-        super.onStart();
+    public void onResume(){
+        super.onResume();
         if (!retrieveUser()){
             startActivity(new Intent(lectureCreate.this, login.class));
         }
@@ -59,7 +59,7 @@ public class lectureCreate extends baseActivity implements activityParameters {
         this.userDAO.setCacheListener();
 
         this.lectureGroupDAO = new LectureGroupDAO();
-        this.lectureGroupDAO.setCacheListener(School.UNIVERSITY_OF_WATERLOO.toString());
+        this.lectureGroupDAO.setCacheListener((String) getIntent().getExtras().get("School"));
     }
 
     /**

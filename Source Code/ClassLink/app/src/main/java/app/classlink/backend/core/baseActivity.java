@@ -35,7 +35,7 @@ abstract public class baseActivity extends AppCompatActivity {
     }
 
     /**
-     * @Method intenetConnection : this method determines if the phone is connected to a network, call this everytime you need to access the database to ensure the user is connected
+     * @Method internetConnection : this method determines if the phone is connected to a network, call this everytime you need to access the database to ensure the user is connected
      * @return boolean : true if there is a connection, false otherwise
      */
     protected boolean internetConnection(){

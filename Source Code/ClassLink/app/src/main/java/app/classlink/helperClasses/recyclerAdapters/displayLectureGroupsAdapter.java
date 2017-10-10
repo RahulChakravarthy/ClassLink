@@ -20,7 +20,7 @@ import app.classlink.frontend.lectureRoom;
  */
 public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLectureGroupsAdapter.ViewHolder>{
 
-    private static ArrayList<lectureGroup> data = new ArrayList<>(); //LinkedList that holds all lecture group objects
+    private static ArrayList<lectureGroup> data = new ArrayList<>(); //ArrayList that holds all lecture group objects
     private static user currentUser;
 
     /**

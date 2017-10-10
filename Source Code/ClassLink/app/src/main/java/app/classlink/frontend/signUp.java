@@ -103,14 +103,14 @@ public class signUp extends baseActivity implements activityParameters {
         this.viewHelperClass.addGraphicInputBox("", R.drawable.inputbox, email, InputType.TYPE_CLASS_TEXT, 15, 50, 47, 0.7f, 0.85f);
 
         this.userType = new Spinner(getApplicationContext());
-        this.viewHelperClass.addSpinner(userType, new ArrayList<>(Arrays.asList("STUDENT", "TEACHER", "ADMINISTRATOR")), schoolMenuListener(), android.R.layout.simple_spinner_dropdown_item, 50, 60, 1, 1);
+        this.viewHelperClass.addSpinner(userType, new ArrayList<>(Arrays.asList("STUDENT", "TEACHER", "ADMINISTRATOR")), schoolMenuListener(), R.drawable.custom_spinner, android.R.layout.simple_spinner_dropdown_item, 50, 60, 1, 1);
 
         this.schoolMenu = new Spinner(getApplicationContext());
         ArrayList<String> schools = new ArrayList<>();
         for (School school : School.values()) {
             schools.add(school.name().replaceAll("[_]", " "));
         }
-        this.viewHelperClass.addSpinner(schoolMenu, schools, schoolMenuListener(), android.R.layout.simple_spinner_dropdown_item, 50, 70, 1, 1);
+        this.viewHelperClass.addSpinner(schoolMenu, schools, schoolMenuListener(), R.drawable.custom_spinner, android.R.layout.simple_spinner_dropdown_item, 50, 70, 1, 1);
 
         //Graphical Setup
         this.line = new ImageView(getApplicationContext());

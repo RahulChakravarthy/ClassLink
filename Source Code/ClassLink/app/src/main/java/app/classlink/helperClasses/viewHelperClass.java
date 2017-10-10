@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import app.classlink.R;
+
 /**
  * @Class viewHelperClass : This class has implemented methods to aid with output views to various activities
  */
@@ -324,10 +326,12 @@ public class viewHelperClass {
     /**
      * @Method addSpinner : adds a default dropdown menu to be used in an activity view
      * @param contents : the contents of what the drop down menu should contain
+     * @param backgroundResource : the background style for the spinner
      */
-    public void addSpinner(Spinner spinner, ArrayList<String> contents, AdapterView.OnItemSelectedListener listener, int resource, float xPosition, float yPosition, float xScale, float yScale){
+    public void addSpinner(Spinner spinner, ArrayList<String> contents, AdapterView.OnItemSelectedListener listener, int backgroundResource, int resource, float xPosition, float yPosition, float xScale, float yScale){
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.activityContext, android.R.layout.simple_spinner_item, contents);
         adapter.setDropDownViewResource(resource);
+        spinner.setPopupBackgroundResource(backgroundResource);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(listener);
 

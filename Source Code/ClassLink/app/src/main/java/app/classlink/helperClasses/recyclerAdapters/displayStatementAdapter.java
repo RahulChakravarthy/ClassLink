@@ -26,15 +26,17 @@ import app.classlink.backend.users.user.user;
  */
 public class displayStatementAdapter extends RecyclerView.Adapter<displayStatementAdapter.groupedStatementHolder> {
 
-    private static LinkedList<groupedStatement> displayableStatements;
+    private LinkedList<groupedStatement> displayableStatements;
     private static groupedStatementDAO groupedStatementDAO;
     private user currentUser;
 
+    /**
+     * @innerClass groupedStatementHolder : holds, binds and controls an element of the groupedStatement adapter contents
+     */
     public static class groupedStatementHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private groupedStatement currentStatement;
         private user currentUser;
-
         private TextView statementMessage;
         private TextView writtenTime;
         private TextView score;
@@ -95,7 +97,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
                 public void run() {
                     if (currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().contains(currentUser.getUserId())){
                         upvoteButton.setImageResource(R.drawable.upvoted);
-                        currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().add(currentUser.getUserId());
+//                        currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().add(currentUser.getUserId());
                     } else {
                         upvoteButton.setImageResource(R.drawable.upvote);
                     }
@@ -104,6 +106,9 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
             }, 50);
         }
 
+        /**
+         * @Method setUpVoteButton : sets condition and style of upvote button based on whether or not user has upvoted said statement
+         */
         private void setUpvoteButton(){
             this.upvoteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -135,7 +140,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
     }
 
     public displayStatementAdapter(LinkedList<groupedStatement> displayableStatements, groupedStatementDAO groupedStatementDAO, user currentUser){
-        displayStatementAdapter.displayableStatements = displayableStatements;
+        this.displayableStatements = displayableStatements;
         displayStatementAdapter.groupedStatementDAO = groupedStatementDAO;
         this.currentUser = currentUser;
     }
@@ -155,7 +160,7 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
 
     @Override
     public int getItemCount() {
-        return displayStatementAdapter.displayableStatements.size();
+        return this.displayableStatements.size();
     }
 
     /**
@@ -164,9 +169,9 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
      */
     public void swapData(LinkedList<groupedStatement> data){
         LinkedList<groupedStatement> cleanData = DateParser.getOrderedStatementsByDate(data);
-        if (!(data == null || data.size() == 0 || displayStatementAdapter.displayableStatements.equals(cleanData))){
-            displayStatementAdapter.displayableStatements.clear();
-            displayStatementAdapter.displayableStatements = cleanData;
+        if (!(data == null || data.size() == 0 || this.displayableStatements.equals(cleanData))){
+            this.displayableStatements.clear();
+            this.displayableStatements = cleanData;
             notifyDataSetChanged();
         }
     }
