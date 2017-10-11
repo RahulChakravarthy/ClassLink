@@ -3,29 +3,18 @@ package app.classlink.frontend;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
 
 import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
-import app.classlink.backend.groups.study.studyGroup;
-import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
-import app.classlink.helperClasses.recyclerAdapters.groupAdapter;
 import app.classlink.helperClasses.viewHelperClass;
 
 public class mainMenu extends baseActivity implements activityParameters {
@@ -76,7 +65,7 @@ public class mainMenu extends baseActivity implements activityParameters {
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
     protected void setActivityDAOListeners() {
-        final int DATA_QUERY_DELAY = 900;
+        final int DATA_QUERY_DELAY = 1000;
         this.userDAO = new userDAO();
         this.userDAO.setCacheListener();
         //This allows time for the user to be queried and to access their school
@@ -84,7 +73,12 @@ public class mainMenu extends baseActivity implements activityParameters {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                lectureGroupDAO.setCacheListener(userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).getSchool().toString());
+                try {
+                    lectureGroupDAO.setCacheListener(userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).getSchool().toString());
+                } catch (NullPointerException e){
+                    Toast.makeText(getApplicationContext(), "Internet connection not stable, try again later", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(mainMenu.this, login.class));
+                }
             }
         }, DATA_QUERY_DELAY);
 
@@ -122,7 +116,7 @@ public class mainMenu extends baseActivity implements activityParameters {
      */
     public void buttonSetup() {
 
-        studyGroup.setOnClickListener(new View.OnClickListener() {
+        this.studyGroup.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -132,7 +126,7 @@ public class mainMenu extends baseActivity implements activityParameters {
         lecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int NEXT_ACTIVITY_DELAY = 300;
+                final int NEXT_ACTIVITY_DELAY = 400;
                 //In order to give the DAO's enough time to query the information
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -146,7 +140,7 @@ public class mainMenu extends baseActivity implements activityParameters {
             }
         });
 
-       settings.setOnClickListener(new View.OnClickListener() {
+       this.settings.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -154,7 +148,7 @@ public class mainMenu extends baseActivity implements activityParameters {
             }
         });
 
-        profile.setOnClickListener(new View.OnClickListener() {
+        this.profile.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -165,7 +159,7 @@ public class mainMenu extends baseActivity implements activityParameters {
             }
         });
 
-        notifications.setOnClickListener(new View.OnClickListener() {
+        this.notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Feature not implemented yet", Toast.LENGTH_LONG).show();
