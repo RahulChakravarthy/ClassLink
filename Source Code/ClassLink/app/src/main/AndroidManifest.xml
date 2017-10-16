@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".frontend.login"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".frontend.lectureCreate"
             android:screenOrientation="portrait" />
@@ -61,6 +61,7 @@
             android:label="@string/title_activity_lecture_room"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".MVP.Presenter.Login"></activity>
     </application>
 
 </manifest>

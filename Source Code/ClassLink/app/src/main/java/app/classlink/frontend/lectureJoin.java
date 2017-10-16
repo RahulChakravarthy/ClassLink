@@ -24,7 +24,7 @@ import app.classlink.backend.groups.lecture.lectureGroup;
 import app.classlink.backend.users.user.user;
 import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
-import app.classlink.helperClasses.recyclerAdapters.displayLectureGroupsAdapter;
+import app.classlink.backend.adapters.displayLectureGroupsAdapter;
 import app.classlink.helperClasses.viewHelperClass;
 
 public class lectureJoin extends baseActivity implements activityParameters {
@@ -55,6 +55,9 @@ public class lectureJoin extends baseActivity implements activityParameters {
         refreshGroupList(); //setup a thread that refreshes the list every so often
     }
 
+    /**
+     * @Method  onResume : verify user credentials and set the groupList thread if it hasnt already been set
+     */
     @Override
     public void onResume(){
         super.onResume();
@@ -66,14 +69,15 @@ public class lectureJoin extends baseActivity implements activityParameters {
         }
     }
 
+    /**
+     * @Method onPause : interrupt and stop the groupList thread if the user navigates away to save system resources
+     */
     @Override
     public void onPause(){
         super.onPause();
         this.groupListThread.interrupt();
         this.groupListThread = null;
     }
-
-
 
     /**
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
@@ -82,7 +86,6 @@ public class lectureJoin extends baseActivity implements activityParameters {
         this.userDAO = new userDAO();
         this.userDAO.setCacheListener();
         this.currentUser = ((user) getIntent().getExtras().get("user")); //get the user passed in by the previous activity quickly
-
         this.lectureGroupDAO = new LectureGroupDAO();
         this.lectureGroupDAO.setCacheListener(currentUser.getSchool().toString());
     }
@@ -95,7 +98,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
         this.activityLayout = (RelativeLayout) findViewById(R.id.activity_lecture_join);
         this.viewHelperClass = new viewHelperClass(this.activityLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
         this.activityLayout.setBackgroundResource(R.drawable.backgroundcolor);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         // Text based graphics
         this.viewHelperClass.addText("Join a Group", "OpenSans-ExtraBold", "BLACK", 2, 25, 50, 5);
@@ -118,7 +121,10 @@ public class lectureJoin extends baseActivity implements activityParameters {
     @SuppressWarnings("ALL")
     private void groupListSetup() {
         this.groupList = (RecyclerView) findViewById(R.id.groupList);
-        this.groupListAdapter = new displayLectureGroupsAdapter((ArrayList<lectureGroup>) getIntent().getExtras().get("allLectureGroups"), currentUser);
+
+        //Display toast prompt in case lecture group list is not ready
+        ArrayList<lectureGroup> allLectureGroups = (ArrayList<lectureGroup>) getIntent().getExtras().get("allLectureGroups");
+        this.groupListAdapter = new displayLectureGroupsAdapter(allLectureGroups, currentUser);
         this.groupLayout = new LinearLayoutManager(this.viewHelperClass.getActivityContext());
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(groupList.getContext(),groupLayout.getOrientation());
@@ -137,9 +143,7 @@ public class lectureJoin extends baseActivity implements activityParameters {
     /**
      * @Method : modifyList: modifies the information in the group list based on the users query (ADD THIS IN THE FUTURE)
      */
-    public void modifyList(){
-
-    }
+    public void modifyList(){}
 
     /**
      * @Method createLectureGroupListener : Verifies if user is a teacher and lets them create a Lecture Group

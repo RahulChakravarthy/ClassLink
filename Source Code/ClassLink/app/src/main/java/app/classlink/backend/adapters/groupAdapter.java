@@ -1,4 +1,4 @@
-package app.classlink.helperClasses.recyclerAdapters;
+package app.classlink.backend.adapters;
 
 /**
  * Created by jaywe on 2017-06-09.

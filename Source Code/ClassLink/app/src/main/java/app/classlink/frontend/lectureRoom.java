@@ -19,12 +19,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-
 import app.classlink.R;
+import app.classlink.backend.adapters.displayStatementAdapter;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
 import app.classlink.backend.groups.lecture.lectureGroup;
@@ -35,7 +34,6 @@ import app.classlink.backend.statement.statementType.question;
 import app.classlink.backend.statement.threadHandler.RefreshStatementListHandler;
 import app.classlink.backend.users.user.user;
 import app.classlink.helperClasses.activityParameters;
-import app.classlink.helperClasses.recyclerAdapters.displayStatementAdapter;
 import app.classlink.helperClasses.viewHelperClass;
 
 public class lectureRoom extends baseActivity
@@ -93,9 +91,12 @@ public class lectureRoom extends baseActivity
 
     }
 
+    /**
+     * @Method onResume : Check user authentication and reset the syncstatements thread
+     */
     @Override
-    public void onStart(){
-        super.onStart();
+    public void onResume(){
+        super.onResume();
         if (!retrieveUser()){
             startActivity(new Intent(lectureRoom.this, login.class));
         }
@@ -104,12 +105,9 @@ public class lectureRoom extends baseActivity
         }
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-
-    }
-
+    /**
+     * @Method onPause : Stop the refreshStatementListHandler thread to save memory when a user navigates away
+     */
     @Override
     public void onPause(){
         super.onPause();
@@ -119,6 +117,9 @@ public class lectureRoom extends baseActivity
 
     }
 
+    /**
+     * Close the drawer if it is open
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -130,8 +131,8 @@ public class lectureRoom extends baseActivity
     }
 
     /**
-     * @Method onNavigationItemSelected : handles displaying and actions when groupedStatement are clicked
-     * @param item : Displays all lecture groupedStatement
+     * @Method onNavigationItemSelected : handles displaying and actions when lecture options are clicked
+     * @param item : specific lecture option
      * @return whether or not an item was pressed
      */
     @SuppressWarnings("StatementWithEmptyBody")
@@ -141,7 +142,6 @@ public class lectureRoom extends baseActivity
         //display options to report question or to report user
         //if it is a teacher, they can report and even ban the user who posed it
         int id = item.getItemId();
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -242,7 +242,7 @@ public class lectureRoom extends baseActivity
     }
 
     /**
-     * @Method syncStatements : timer thread that periodically syncs groupedStatement with database
+     * @Method syncStatements : handles thread that periodically syncs groupedStatement with database
      */
     public void syncStatements(){
         this.refreshStatementListHandler = new RefreshStatementListHandler(this, this.statementAdapter, this.lectureGroupDAO, this.currentLectureGroup.getGroupName());

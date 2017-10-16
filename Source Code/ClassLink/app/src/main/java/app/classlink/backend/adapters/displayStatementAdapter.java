@@ -1,4 +1,4 @@
-package app.classlink.helperClasses.recyclerAdapters;
+package app.classlink.backend.adapters;
 
 import android.graphics.Color;
 import android.os.Handler;
@@ -44,6 +44,11 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
         private ImageView topLine;
         private ImageView bottomLine;
 
+        /**
+         * @Consructor: Initialize class fields with equivalent xml views
+         * @param itemView : item view context
+         * @param currentUser : current user logged in
+         */
         public groupedStatementHolder(View itemView, user currentUser) {
             super(itemView);
 
@@ -63,6 +68,10 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
 
         }
 
+        /**
+         * @Method bindGroupedStatement : set all group statement related data to class fields
+         * @param groupedStatement : current grouped statement
+         */
         public void bindGroupedStatement(groupedStatement groupedStatement){
             this.currentStatement = groupedStatement;
             this.statementMessage.setText(groupedStatement.getStatementQuestion().getQuestionText());
@@ -81,11 +90,16 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
 
         @Override
         public void onClick(View view) {
-//            if (currentUser.getPermissionLevel() >= 2) {//they are professor/admin
-//                //In the future implement more options for profs
+//            if (currentUser.getPermissionLevel() >= 2) {
+//                  they are professor/admin
+//                  In the future implement more options for profs
 //            }
         }
 
+        /**
+         * @Method styleUpvoteButton : sets the style of the upvote button upon being loaded
+         * @param itemView : current item view
+         */
         private void styleUpvoteButton(final View itemView){
             this.upvoteButton = (ImageView) itemView.findViewById(R.id.upvote_button);
             this.upvoteButton.setImageResource(R.drawable.upvote);
@@ -97,7 +111,6 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
                 public void run() {
                     if (currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().contains(currentUser.getUserId())){
                         upvoteButton.setImageResource(R.drawable.upvoted);
-//                        currentStatement.getStatementQuestion().getUserEmailsWhoUpVoted().add(currentUser.getUserId());
                     } else {
                         upvoteButton.setImageResource(R.drawable.upvote);
                     }
@@ -139,12 +152,24 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
         }
     }
 
+    /**
+     * @Consructor: constructor for adapter
+     * @param displayableStatements : all statements
+     * @param groupedStatementDAO : displayStatementDAO
+     * @param currentUser : current user
+     */
     public displayStatementAdapter(LinkedList<groupedStatement> displayableStatements, groupedStatementDAO groupedStatementDAO, user currentUser){
         this.displayableStatements = displayableStatements;
         displayStatementAdapter.groupedStatementDAO = groupedStatementDAO;
         this.currentUser = currentUser;
     }
 
+    /**
+     * @Method onCreateViewHolder : creates a view holder for all elements
+     * @param parent : view group parent
+     * @param viewType : the view type
+     * @return inflated view holder
+     */
     @Override
     public displayStatementAdapter.groupedStatementHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext())
@@ -152,12 +177,21 @@ public class displayStatementAdapter extends RecyclerView.Adapter<displayStateme
         return new groupedStatementHolder(inflatedView, currentUser);
     }
 
+    /**
+     * @Method onBindViewHolder : binds statement elements to the generated view holder
+     * @param holder : displayStatementAdapter view holder
+     * @param position : position of the statement
+     */
     @Override
     public void onBindViewHolder(displayStatementAdapter.groupedStatementHolder holder, int position) {
        groupedStatement statement = displayableStatements.get(position);
         holder.bindGroupedStatement(statement);
     }
 
+    /**
+     * @Method getItemCount : gets the current numebr of elements in the view holder
+     * @return amount of statement elements
+     */
     @Override
     public int getItemCount() {
         return this.displayableStatements.size();

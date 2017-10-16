@@ -5,7 +5,7 @@ import android.util.Log;
 import java.util.LinkedList;
 import app.classlink.backend.core.WorkerThread;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
-import app.classlink.helperClasses.recyclerAdapters.displayStatementAdapter;
+import app.classlink.backend.adapters.displayStatementAdapter;
 
 /**
  * @Class RefreshStatementListHandler : handles run operation of statement refreshing

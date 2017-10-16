@@ -1,4 +1,4 @@
-package app.classlink.backend.core;
+package app.classlink.backend.misc;
 
 /**
  * @Interface listNames : stores the constant list names that DAO's can access

@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 import app.classlink.backend.core.DAO;
 import app.classlink.backend.core.baseGroup;
-import app.classlink.backend.core.listNames;
+import app.classlink.backend.misc.listNames;
 
 /**
  * @Class groupedStatementDAO : DAO for accessing groupedStatements

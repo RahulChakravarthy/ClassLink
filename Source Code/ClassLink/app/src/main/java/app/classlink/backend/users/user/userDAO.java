@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import app.classlink.backend.core.DAO;
-import app.classlink.backend.core.listNames;
+import app.classlink.backend.misc.listNames;
 import app.classlink.backend.users.administrator.administrator;
 import app.classlink.backend.users.administrator.administratorDAO;
 import app.classlink.backend.users.student.student;

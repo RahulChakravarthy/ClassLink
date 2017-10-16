@@ -2,13 +2,15 @@ package app.classlink.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
@@ -31,6 +33,11 @@ public class mainMenu extends baseActivity implements activityParameters {
     private userDAO userDAO;
     private LectureGroupDAO lectureGroupDAO;
 
+    //MISC
+    private Timer groupQueryTimer;
+    private final int PINGSPEED = 500;
+    private int attempts = 10;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,36 +59,41 @@ public class mainMenu extends baseActivity implements activityParameters {
     protected void onResume(){
         super.onResume();
         if (!retrieveUser()){
-            Toast.makeText(getApplicationContext(), "Re-authentication needed", Toast.LENGTH_LONG).show();
             startActivity(new Intent(mainMenu.this, login.class));
         }
     }
 
     @Override
     public void onBackPressed(){
+        //Do nothing
     }
 
     /**
      *@Method setActivityDAOListeners : Set all listeners you wish to use in this activity so that they start caching data
      */
     protected void setActivityDAOListeners() {
-        final int DATA_QUERY_DELAY = 1000;
         this.userDAO = new userDAO();
         this.userDAO.setCacheListener();
-        //This allows time for the user to be queried and to access their school
         this.lectureGroupDAO = new LectureGroupDAO();
-        new Handler().postDelayed(new Runnable() {
+
+        //Create a timer that continuously pings server for lecture group data, if it takes too long, then throw internet speed error and warn user
+        this.groupQueryTimer = new Timer();
+        this.groupQueryTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                try {
+                try{
                     lectureGroupDAO.setCacheListener(userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).getSchool().toString());
+                    groupQueryTimer.cancel();
                 } catch (NullPointerException e){
-                    Toast.makeText(getApplicationContext(), "Internet connection not stable, try again later", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(mainMenu.this, login.class));
+                    attempts--;
+                }
+                if (attempts < 0){
+                    Looper.prepare();
+                    Toast.makeText(getApplicationContext(), "Your internet speed is slow, user groups and data might not load properly", Toast.LENGTH_SHORT).show();
+                    groupQueryTimer.cancel();
                 }
             }
-        }, DATA_QUERY_DELAY);
-
+        }, 0,PINGSPEED);
     }
 
     /**
@@ -91,22 +103,22 @@ public class mainMenu extends baseActivity implements activityParameters {
     public void layoutSetup() {
        this.activityLayout.setBackgroundResource(R.drawable.bg);
 
-        imageViews = new LinkedList<>();
+        this.imageViews = new LinkedList<>();
 
-        studyGroup = (ImageView) findViewById(R.id.buttonStudyGroup);
-        lecture = (ImageView) findViewById(R.id.buttonLecture);
-        settings = (ImageView) findViewById(R.id.buttonSettings);
-        profile = (ImageView) findViewById(R.id.buttonProfile);
-        notifications = (ImageView) findViewById(R.id.buttonMail);
+        this.studyGroup = (ImageView) findViewById(R.id.buttonStudyGroup);
+        this.lecture = (ImageView) findViewById(R.id.buttonLecture);
+        this.settings = (ImageView) findViewById(R.id.buttonSettings);
+        this.profile = (ImageView) findViewById(R.id.buttonProfile);
+        this.notifications = (ImageView) findViewById(R.id.buttonMail);
 
-        imageViews.add(studyGroup);
-        imageViews.add(lecture);
-        imageViews.add(settings);
-        imageViews.add(profile);
-        imageViews.add(notifications);
+        this.imageViews.add(studyGroup);
+        this.imageViews.add(lecture);
+        this.imageViews.add(settings);
+        this.imageViews.add(profile);
+        this.imageViews.add(notifications);
 
         for (ImageView i : imageViews) {
-            viewHelperClass.imageToButton(i);
+            this.viewHelperClass.imageToButton(i);
         }
 
     }
@@ -126,21 +138,18 @@ public class mainMenu extends baseActivity implements activityParameters {
         lecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int NEXT_ACTIVITY_DELAY = 400;
-                //In order to give the DAO's enough time to query the information
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(mainMenu.this, lectureJoin.class);
-                        intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail())); //add the current user object in to access data in the next activity rapidly
-                        intent.putExtra("allLectureGroups", lectureGroupDAO.getAllLectureGroups());
-                        startActivity(intent);
-                    }
-                },NEXT_ACTIVITY_DELAY);
+                if (userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()) != null) {
+                    Intent intent = new Intent(mainMenu.this, lectureJoin.class);
+                    intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail())); //add the current user object in to access data in the next activity rapidly
+                    intent.putExtra("allLectureGroups", lectureGroupDAO.getAllLectureGroups());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please wait for user data to load", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-       this.settings.setOnClickListener(new View.OnClickListener() {
+        this.settings.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -152,10 +161,15 @@ public class mainMenu extends baseActivity implements activityParameters {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mainMenu.this, userProfile.class);
-                intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail())); //add the current user object in to access data in the next activity rapidly
-                intent.putExtra("allLectureGroups", lectureGroupDAO.getAllLectureGroups());
-                startActivity(intent);
+                if ((userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()) != null)){
+                    Intent intent = new Intent(mainMenu.this, userProfile.class);
+                    intent.putExtra("user", userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail())); //add the current user object in to access data in the next activity rapidly
+                    intent.putExtra("allLectureGroups", lectureGroupDAO.getAllLectureGroups());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please wait for user data to load", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

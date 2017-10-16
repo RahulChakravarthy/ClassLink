@@ -15,7 +15,6 @@ import java.util.Arrays;
 import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 import app.classlink.backend.groups.lecture.LectureGroupDAO;
-import app.classlink.backend.misc.School;
 import app.classlink.backend.users.teacher.teacher;
 import app.classlink.backend.users.user.userDAO;
 import app.classlink.helperClasses.activityParameters;
@@ -105,6 +104,7 @@ public class lectureCreate extends baseActivity implements activityParameters {
                    if (lectureGroupDAO.createLectureGroup(lectureName.getText().toString().trim(), lectureDescription.getText().toString().trim(),
                            (teacher) userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()), userDAO.getUserByEmail(userAuth.getCurrentUser().getEmail()).getSchool())){
                        Toast.makeText(viewHelperClass.getActivityContext(), "Lecture Group Created to view/change settings visit the settings menu", Toast.LENGTH_LONG).show();
+                       viewHelperClass.clearAllEditTexts(new ArrayList<>(Arrays.asList(lectureName, lectureDescription)));
                    } else {
                        Toast.makeText(viewHelperClass.getActivityContext(), "Error! Group Name already exists", Toast.LENGTH_LONG).show();
                    }

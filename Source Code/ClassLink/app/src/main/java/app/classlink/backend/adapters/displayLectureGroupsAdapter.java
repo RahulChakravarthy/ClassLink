@@ -1,4 +1,4 @@
-package app.classlink.helperClasses.recyclerAdapters;
+package app.classlink.backend.adapters;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,6 +33,10 @@ public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLec
         private TextView lectureGroupDescription;
         private TextView lectureGroupTeacher;
 
+        /**
+         * @Consructor: views defined the xml to views defined in the class
+         * @param itemView : contains all the views in the layout
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             this.lectureGroupName = (TextView) itemView.findViewById(R.id.lecture_group_name);
@@ -41,12 +45,20 @@ public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLec
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * @Method bindData : assigns specific values to views
+         * @param group : current lecture Group
+         */
         public void bindData(lectureGroup group){
             this.lectureGroupName.setText(group.getGroupName());
             this.lectureGroupTeacher.setText("Teacher: " + group.getLectureCreator().getFirstName() + " " + group.getLectureCreator().getLastName());
             this.lectureGroupDescription.setText(group.getGroupDescription());
         }
 
+        /**
+         * @Method onClick : Launch the lectureGroup activity with the specific lecture group information
+         * @param view : current view that's being clicked on
+         */
         @Override
         public void onClick(View view) {
             //Modify this to change activities when clicked
@@ -70,12 +82,23 @@ public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLec
         displayLectureGroupsAdapter.currentUser =  currentUser;
     }
 
+    /**
+     * @Method onCreateViewHolder : sets up the UI for the view holder given the lecture list relative layout template
+     * @param parent : view parent used to get the context
+     * @param viewType : view type
+     * @return ViewHolder : the ViewHolder with the newly inflated view
+     */
     @Override
     public displayLectureGroupsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.lecture_list, parent, false);
         return new ViewHolder(inflatedView);
     }
 
+    /**
+     * @Method onBindViewHolder : binds an element to the view holder that was created
+     * @param holder : view holder that you are adding elements to
+     * @param position : the position of the data in the list
+     */
     @Override
     public void onBindViewHolder(displayLectureGroupsAdapter.ViewHolder holder, int position) {
         lectureGroup item = displayLectureGroupsAdapter.data.get(position);
@@ -83,11 +106,19 @@ public class displayLectureGroupsAdapter extends RecyclerView.Adapter<displayLec
         holder.bindData(item);
     }
 
+    /**
+     * @Method getItemCount : get the total number of elements in this view holder
+     * @return int count
+     */
     @Override
     public int getItemCount() {
         return displayLectureGroupsAdapter.data.size();
     }
 
+    /**
+     * @Method swapData : handles refreshing of new LectureGroups
+     * @param data
+     */
     public void swapData(ArrayList<lectureGroup> data){
         if (!(data == null || data.size() == 0 || data.equals(displayLectureGroupsAdapter.data))) {
             displayLectureGroupsAdapter.data.clear();

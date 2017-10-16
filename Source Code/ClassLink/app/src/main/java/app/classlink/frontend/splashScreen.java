@@ -9,7 +9,7 @@ import app.classlink.R;
 import app.classlink.backend.core.baseActivity;
 
 /**
- * @Class spashScreen : displays the class link logo while main activity loads
+ * @Class splashScreen : displays the class link logo while main activity loads
  */
 public class splashScreen extends baseActivity {
 

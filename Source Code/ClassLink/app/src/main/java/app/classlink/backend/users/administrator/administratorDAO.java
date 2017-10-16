@@ -1,6 +1,6 @@
 package app.classlink.backend.users.administrator;
 
-import app.classlink.backend.core.listNames;
+import app.classlink.backend.misc.listNames;
 import app.classlink.backend.misc.School;
 import app.classlink.backend.users.user.userDAO;
 
