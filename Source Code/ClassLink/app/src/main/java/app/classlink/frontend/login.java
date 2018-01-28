@@ -3,6 +3,7 @@ package app.classlink.frontend;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -173,75 +174,77 @@ public class login extends baseActivity implements activityParameters  {
      * @Method forgotPasswordHandler : handles case where user has forgotten password
      */
     public void forgotPasswordListener() {
-        if (internetConnection()) {
             forgotPassword.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this);
+                    if (internetConnection()) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(login.this);
 
-                    LinearLayout layout = new LinearLayout(getApplicationContext());
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    layout.setOrientation(LinearLayout.VERTICAL);
-                    layout.setLayoutParams(params);
+                        LinearLayout layout = new LinearLayout(getApplicationContext());
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        layout.setOrientation(LinearLayout.VERTICAL);
+                        layout.setLayoutParams(params);
 
-                    layout.setGravity(Gravity.CLIP_VERTICAL);
-                    layout.setPadding(5, 5, 5, 5);
+                        layout.setGravity(Gravity.CLIP_VERTICAL);
+                        layout.setPadding(5, 5, 5, 5);
 
-                    TextView title = new TextView(getApplicationContext());
-                    title.setText("Reset Password");
-                    title.setPadding(40, 40, 40, 40);
-                    title.setGravity(Gravity.CENTER);
-                    title.setTextSize(20);
+                        TextView title = new TextView(getApplicationContext());
+                        title.setText("Reset Password");
+                        title.setTextColor(Color.parseColor("#00F7F3"));
+                        title.setPadding(40, 40, 40, 40);
+                        title.setGravity(Gravity.CENTER);
+                        title.setTextSize(20);
 
-                    final EditText emailInput = new EditText(getApplicationContext());
-                    TextView subject = new TextView(getApplicationContext());
-                    subject.setText("Email Address of Account");
-                    subject.setPadding(40, 40, 40, 40);
+                        final EditText emailInput = new EditText(getApplicationContext());
+                        TextView subject = new TextView(getApplicationContext());
+                        subject.setText("Email Address of Account");
+                        subject.setTextColor(Color.parseColor("#00F7F3"));
+                        subject.setPadding(40, 40, 40, 40);
 
 
-                    LinearLayout.LayoutParams subjectParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    subjectParams.bottomMargin = 5;
-                    layout.addView(subject,subjectParams);
-                    layout.addView(emailInput, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                        LinearLayout.LayoutParams subjectParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        subjectParams.bottomMargin = 5;
+                        layout.addView(subject, subjectParams);
+                        layout.addView(emailInput, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                    alertDialogBuilder.setView(layout);
-                    alertDialogBuilder.setTitle(title.getText());
-                    alertDialogBuilder.setCustomTitle(title);
+                        alertDialogBuilder.setView(layout);
+                        alertDialogBuilder.setTitle(title.getText());
+                        alertDialogBuilder.setCustomTitle(title);
 
-                    // Setting Positive "Reset Password" Button
-                    alertDialogBuilder.setPositiveButton("Reset Password", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (viewHelperClass.isEditTextEmpty(new ArrayList<>(Collections.singletonList(emailInput)))){
-                                FirebaseAuth.getInstance().sendPasswordResetEmail(emailInput.getText().toString().trim())
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(getApplicationContext(), "Password reset email sent", Toast.LENGTH_LONG).show();
-                                                } else {
-                                                    Toast.makeText(getApplicationContext(), "Invalid Email Address Provided", Toast.LENGTH_LONG).show();
+                        // Setting Positive "Reset Password" Button
+                        alertDialogBuilder.setPositiveButton("Reset Password", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (viewHelperClass.isEditTextEmpty(new ArrayList<>(Collections.singletonList(emailInput)))) {
+                                    FirebaseAuth.getInstance().sendPasswordResetEmail(emailInput.getText().toString().trim())
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(getApplicationContext(), "Password reset email sent", Toast.LENGTH_LONG).show();
+                                                    } else {
+                                                        Toast.makeText(getApplicationContext(), "Invalid Email Address Provided", Toast.LENGTH_LONG).show();
+                                                    }
                                                 }
-                                            }
-                                        });
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Invalid Email Address Provided", Toast.LENGTH_LONG).show();
+                                            });
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Invalid Email Address Provided", Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
-                    });
-                    // Setting Negative "Cancel" Button
-                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.cancel();
-                        }
-                    });
+                        });
+                        // Setting Negative "Cancel" Button
+                        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.cancel();
+                            }
+                        });
 
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No internet connection please try again later", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
-        } else {
-            Toast.makeText(getApplicationContext(), "No internet connection please try again later", Toast.LENGTH_LONG).show();
-        }
     }
 }
 

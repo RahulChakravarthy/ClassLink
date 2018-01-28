@@ -145,19 +145,21 @@ public class signUp extends baseActivity implements activityParameters {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (sanitizeAndCheckUserInput()){
-                    case 0: //missing input information
-                        Toast.makeText(viewHelperClass.getActivityContext(), "Error: all fields must be filled", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1: //passwords do not match
-                        Toast.makeText(viewHelperClass.getActivityContext(), "Error: passwords do not match", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2: //email already exists
-                        Toast.makeText(viewHelperClass.getActivityContext(), "Error: email already exists in our databases", Toast.LENGTH_SHORT).show();
-                        break;
-                    default : //all input info is correct
-                        addUser();
-                        break;
+                if (internetConnection()) {
+                    switch (sanitizeAndCheckUserInput()) {
+                        case 0: //missing input information
+                            Toast.makeText(viewHelperClass.getActivityContext(), "Error: all fields must be filled", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 1: //passwords do not match
+                            Toast.makeText(viewHelperClass.getActivityContext(), "Error: passwords do not match", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 2: //email already exists
+                            Toast.makeText(viewHelperClass.getActivityContext(), "Error: email already exists in our databases", Toast.LENGTH_SHORT).show();
+                            break;
+                        default: //all input info is correct
+                            addUser();
+                            break;
+                    }
                 }
             }
         });
