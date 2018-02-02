@@ -19,9 +19,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+
 import app.classlink.R;
 import app.classlink.backend.adapters.displayStatementAdapter;
 import app.classlink.backend.core.baseActivity;
@@ -197,8 +199,8 @@ public class lectureRoom extends baseActivity
         this.backgroundLayout = (ConstraintLayout) findViewById(R.id.main_lecture_room_layout);
         this.backgroundLayout.setBackgroundColor(Color.parseColor("#bdecfd"));
         //Initialising the constrained layout for all other views in the main activity
-        this.viewHelperClass = new viewHelperClass(this.backgroundLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        this.viewHelperClass = new viewHelperClass(this.backgroundLayout, getApplicationContext(), this.getWindowManager().getDefaultDisplay());
         this.inputText = new EditText(getApplicationContext());
         this.viewHelperClass.addGraphicInputBox("Ask an anonymous question...", R.drawable.inputbox, this.inputText, InputType.TYPE_CLASS_TEXT, 15, 40f, 81, 0.7f, 0.85f);
     }

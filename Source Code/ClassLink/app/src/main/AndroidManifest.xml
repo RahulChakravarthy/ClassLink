@@ -61,7 +61,6 @@
             android:label="@string/title_activity_lecture_room"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".MVP.Presenter.Login"></activity>
     </application>
 
 </manifest>
